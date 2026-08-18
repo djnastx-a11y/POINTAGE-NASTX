@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111111">
+<title>Mon Pointage</title>
+<style>
+:root{--bg:#0d0d0f;--card:rgba(20,20,24,.88);--text:#fff;--muted:#aaa;--accent:#ff7a00}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;background-size:cover;background-position:center;background-attachment:fixed}
+.wrap{max-width:520px;margin:auto;padding:22px 16px 60px}.top{display:flex;justify-content:space-between;align-items:center}.gear{border:0;background:#222;color:white;border-radius:14px;padding:11px 14px;font-size:20px}
+h1{font-size:28px;margin:8px 0 3px}.date{color:var(--muted);margin-bottom:18px}.card{background:var(--card);backdrop-filter:blur(12px);border-radius:22px;padding:18px;margin:14px 0}
+.status{text-align:center}.clock{font-size:46px;font-weight:800;letter-spacing:-2px}.state{color:var(--muted);margin-top:4px}
+.actions{display:grid;gap:12px}.action{width:100%;min-height:72px;border:0;border-radius:20px;font-size:20px;font-weight:800;background:var(--accent);color:#fff;background-size:cover;background-position:center}
+.action.secondary{background:#29292e}.action:disabled{opacity:.35}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:#202024;border-radius:16px;padding:14px}.num{font-size:25px;font-weight:800}.label{font-size:12px;color:var(--muted);margin-top:4px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid #333}.row:last-child{border:0}
+input{width:100%;padding:12px;border-radius:12px;border:1px solid #444;background:#151518;color:#fff;margin:5px 0 12px}
+.hidden{display:none}.small{font-size:13px;color:#aaa}.danger{background:#6b1d1d}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="top"><div><h1>MON POINTAGE</h1><div class="date" id="date"></div></div><button class="gear" onclick="toggleSettings()">⚙︎</button></div>
+ <div class="card status"><div class="clock" id="clock">00:00:00</div><div class="state" id="state">Pas encore commencé</div></div>
+ <div class="card actions">
+  <button id="start" class="action" onclick="act('start')">DÉBUT</button>
+  <button id="pause" class="action secondary" onclick="act('pause')">PAUSE</button>
+  <button id="resume" class="action secondary" onclick="act('resume')">REPRENDRE</button>
+  <button id="stop" class="action secondary" onclick="act('stop')">FIN</button>
+ </div>
+ <div class="card"><div class="stats">
+  <div class="stat"><div class="num" id="today">0h00</div><div class="label">AUJOURD'HUI</div></div>
+  <div class="stat"><div class="num" id="week">0h00</div><div class="label">CETTE SEMAINE</div></div>
+ </div></div>
+ <div class="card"><b>Historique</b><div id="history" class="small" style="margin-top:10px">Aucun pointage.</div></div>
+ <div id="settings" class="card hidden">
+  <b>Personnalisation</b><p class="small">Choisis tes images depuis ton téléphone ou ton Mac. Elles restent enregistrées sur cet appareil.</p>
+  <label>Image de fond</label><input type="file" accept="image/*" onchange="setImage(event,'background')">
+  <label>Image bouton DÉBUT</label><input type="file" accept="image/*" onchange="setImage(event,'start')">
+  <label>Image bouton PAUSE</label><input type="file" accept="image/*" onchange="setImage(event,'pause')">
+  <label>Image bouton REPRENDRE</label><input type="file" accept="image/*" onchange="setImage(event,'resume')">
+  <label>Image bouton FIN</label><input type="file" accept="image/*" onchange="setImage(event,'stop')">
+  <button class="action danger" onclick="resetDesign()">RÉINITIALISER LE DESIGN</button>
+ </div>
+</div>
+<script>
+const KEY='nastx_time_v1', DESIGN='nastx_design_v1';
+let data=JSON.parse(localStorage.getItem(KEY)||'{"days":{}}');
+const pad=n=>String(n).padStart(2,'0'), dayKey=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+function now(){return Date.now()} function todayData(){let k=dayKey(new Date());return data.days[k]||(data.days[k]={events:[]})}
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
+function act(type){todayData().events.push({type,time:now()});save()}
+function duration(events,endNow=true){let total=0,start=null; for(const e of events){if(e.type==='start'||e.type==='resume')start=e.time;if((e.type==='pause'||e.type==='stop')&&start){total+=e.time-start;start=null}} if(start&&endNow)total+=now()-start;return total}
+function fmt(ms){let m=Math.floor(ms/60000);return `${Math.floor(m/60)}h${pad(m%60)}`}
+function status(events){if(!events.length)return 'Pas encore commencé';let t=events.at(-1).type;return ({start:'En poste',resume:'En poste',pause:'En pause',stop:'Journée terminée'})[t]}
+function weekTotal(){let d=new Date(), diff=(d.getDay()+6)%7, monday=new Date(d);monday.setDate(d.getDate()-diff);monday.setHours(0,0,0,0);let sum=0;for(const [k,v] of Object.entries(data.days)){let x=new Date(k+'T00:00:00');if(x>=monday&&x<=d)sum+=duration(v.events,k===dayKey(d))}return sum}
+function render(){
+ let ev=todayData().events,last=ev.at(-1)?.type;
+ document.getElementById('state').textContent=status(ev);
+ document.getElementById('today').textContent=fmt(duration(ev));
+ document.getElementById('week').textContent=fmt(weekTotal());
+ start.disabled=ev.length&&last!=='stop'; pause.disabled=!['start','resume'].includes(last); resume.disabled=last!=='pause'; stop.disabled=!['start','resume','pause'].includes(last);
+ let rows=Object.entries(data.days).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,14).map(([k,v])=>`<div class="row"><span>${new Date(k+'T12:00').toLocaleDateString('fr-FR',{weekday:'short',day:'2-digit',month:'2-digit'})}</span><b>${fmt(duration(v.events,k===dayKey(new Date())))}</b></div>`).join('');
+ history.innerHTML=rows||'Aucun pointage.';
+}
+function tick(){let d=new Date();clock.textContent=d.toLocaleTimeString('fr-FR');date.textContent=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});render()}
+function toggleSettings(){settings.classList.toggle('hidden')}
+function setImage(e,target){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{let design=JSON.parse(localStorage.getItem(DESIGN)||'{}');design[target]=r.result;localStorage.setItem(DESIGN,JSON.stringify(design));applyDesign()};r.readAsDataURL(f)}
+function applyDesign(){let d=JSON.parse(localStorage.getItem(DESIGN)||'{}');if(d.background)document.body.style.backgroundImage=`linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.35)),url(${d.background})`;['start','pause','resume','stop'].forEach(x=>{if(d[x]){let b=document.getElementById(x);b.style.backgroundImage=`linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.18)),url(${d[x]})`;b.style.backgroundColor='transparent'}})}
+function resetDesign(){localStorage.removeItem(DESIGN);location.reload()}
+applyDesign();tick();setInterval(tick,1000);
+</script>
+</body></html>
