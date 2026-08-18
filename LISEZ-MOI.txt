@@ -1,0 +1,20 @@
+MON POINTAGE V5 — INSTALLATION GITHUB PAGES
+
+1. Décompressez le ZIP.
+2. Déposez tous les fichiers contenus dans le dossier Mon-Pointage-V5 à la racine du dépôt GitHub.
+3. Dans GitHub : Settings > Pages.
+4. Choisissez Deploy from a branch, branche main, dossier /(root), puis Save.
+5. Ouvrez ensuite l’adresse GitHub Pages sur Android avec Chrome.
+6. Utilisez « INSTALLER L’APPLI » ou le menu Chrome > Ajouter à l’écran d’accueil.
+
+La V5 réutilise la même configuration Supabase et les mêmes clés de stockage que la V4.
+Les comptes, le PIN local, les réglages et les heures existantes restent donc compatibles.
+
+Fichiers indispensables :
+- index.html
+- manifest.webmanifest
+- sw.js
+- icon-192.png
+- icon-512.png
+
+Version : V5 Sidebar Pro noir et or — priorité Android.

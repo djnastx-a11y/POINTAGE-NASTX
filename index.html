@@ -3,14 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#111318">
+<meta name="theme-color" content="#080807">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./icon-192.png">
-<title>Mon Pointage</title>
+<meta name="description" content="Mon Pointage V5 — suivi premium des heures de travail">
+<title>Mon Pointage · V5</title>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
 <style>
 :root{
@@ -93,6 +94,16 @@ input[type="checkbox"]{width:20px;height:20px;accent-color:var(--accent)}
 .install-banner{border-color:rgba(255,138,31,.25)}
 @media(min-width:640px){.overlay{align-items:center;padding:24px}.sheet{border-radius:28px;max-height:90vh}}
 @media(max-width:380px){.clock{font-size:40px}.num{font-size:18px}.stats{gap:6px}.stat{padding:11px 6px}.calendar-grid,.weekdays{gap:4px}.cal-day{min-height:58px;padding:6px 4px}.cal-hours{font-size:9px}}
+
+/* V5 · Sidebar Pro noir & or */
+:root{--accent:#c9a66b;--accent-soft:rgba(201,166,107,.14);--bg1:#070706;--bg2:#11100e;--text:#f4efe7;--muted:#989186;--line:rgba(201,166,107,.16);--card-alpha:.88}
+body{background:radial-gradient(circle at 86% 5%,rgba(201,166,107,.1),transparent 26%),linear-gradient(145deg,#12110f,#070706 62%);letter-spacing:.005em}
+.app-shell{min-height:100vh}.sidebar{position:fixed;inset:0 auto 0 0;width:264px;padding:28px 18px 24px;background:rgba(8,8,7,.96);border-right:1px solid var(--line);z-index:50;display:flex;flex-direction:column;box-shadow:20px 0 60px rgba(0,0,0,.25)}
+.side-brand{padding:3px 12px 28px}.side-mark{width:42px;height:42px;border:1px solid rgba(201,166,107,.45);border-radius:13px;display:grid;place-items:center;color:var(--accent);font-size:22px;margin-bottom:16px}.side-name{font-family:Georgia,serif;font-size:22px;letter-spacing:-.02em}.side-version{font-size:9px;letter-spacing:.2em;color:var(--accent);margin-top:5px;font-weight:800}
+.nav{display:grid;gap:5px}.nav-btn{width:100%;height:46px;border:0;border-radius:12px;background:transparent;color:#a59e94;display:flex;align-items:center;gap:13px;padding:0 13px;text-align:left;cursor:pointer;font-size:13px;font-weight:700}.nav-btn:hover,.nav-btn.active{background:linear-gradient(90deg,rgba(201,166,107,.14),rgba(201,166,107,.04));color:#f4efe7}.nav-btn.active{box-shadow:inset 2px 0 var(--accent)}.nav-icon{width:22px;text-align:center;color:var(--accent);font-size:17px}.side-foot{margin-top:auto;padding:18px 12px 0;border-top:1px solid var(--line);font-size:10px;color:#6f6a62;line-height:1.5}
+.wrap{max-width:none;margin-left:264px;padding:36px 42px 80px}.top{align-items:center;margin-bottom:26px}.eyebrow{color:var(--accent);letter-spacing:.22em}.top h1{font-family:Georgia,serif;font-size:34px;font-weight:500}.icon-btn{display:none}.content-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(280px,.7fr);gap:18px}.hero-card{min-height:280px;display:grid;align-content:center;text-align:left;padding:32px;background:linear-gradient(135deg,rgba(26,24,21,.97),rgba(12,12,10,.92));border-color:rgba(201,166,107,.23);position:relative;overflow:hidden}.hero-card::after{content:"";position:absolute;width:240px;height:240px;border:1px solid rgba(201,166,107,.12);border-radius:50%;right:-80px;top:-80px}.hero-kicker{font-size:10px;letter-spacing:.2em;color:var(--accent);font-weight:800}.clock{font-family:Georgia,serif;font-size:64px;font-weight:500;margin:12px 0 4px}.state{text-transform:uppercase;letter-spacing:.13em;font-size:11px}.quick-panel{padding:22px}.panel-label{font-size:10px;letter-spacing:.16em;color:var(--muted);font-weight:800;margin-bottom:15px}.actions{grid-template-columns:1fr 1fr}.action{background:linear-gradient(135deg,#d1b47b,#a77d3d);color:#0a0907;border:1px solid rgba(255,255,255,.12);font-size:13px;letter-spacing:.08em;min-height:62px}.action.secondary{background:#1a1917;color:#d8d1c7;border:1px solid var(--line)}.action.good{background:#345e49;color:white}.action.danger{background:#673937;color:white}.action.warn{background:#72572d;color:white}.overview{grid-column:1/-1;padding:22px}.stats{gap:10px}.stat{padding:18px;border-radius:14px}.num{font-family:Georgia,serif;font-size:27px;font-weight:500}.label{color:#817b72}.history-card{grid-column:1/-1}.mobile-bar{display:none}.menu-toggle{display:none}.sheet{background:#11100e;border-color:rgba(201,166,107,.2)}.sheet-head{background:#11100e}.auth-screen,.pin-screen{background:radial-gradient(circle at 80% 10%,rgba(201,166,107,.13),transparent 28%),linear-gradient(145deg,#141310,#060605 70%)}.auth-box,.pin-box{background:#11100f;border-color:rgba(201,166,107,.24)}.auth-logo{color:var(--accent);border:1px solid rgba(201,166,107,.25)}
+@media(max-width:900px){.sidebar{transform:translateX(-100%);transition:transform .25s ease;width:278px}.sidebar.open{transform:translateX(0)}.sidebar-scrim{position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:40}.wrap{margin-left:0;padding:24px 18px 100px}.menu-toggle{display:grid}.icon-btn{display:grid;place-items:center}.content-grid{grid-template-columns:1fr 1fr}.hero-card{grid-column:1/-1}.top h1{font-size:29px}}
+@media(max-width:620px){.sidebar{width:min(88vw,340px);padding:24px 16px}.side-brand{padding-bottom:20px}.nav{gap:7px}.nav-btn{height:52px;font-size:14px}.wrap{padding:18px 14px 98px}.content-grid{grid-template-columns:1fr}.hero-card,.overview,.history-card{grid-column:1}.hero-card{min-height:230px;padding:24px}.clock{font-size:49px}.quick-panel{margin:0}.stats{grid-template-columns:repeat(3,1fr)}.num{font-size:20px}.mobile-bar{position:fixed;z-index:35;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(4,1fr);background:rgba(14,14,12,.94);border:1px solid var(--line);border-radius:18px;padding:7px;backdrop-filter:blur(20px);box-shadow:0 15px 45px rgba(0,0,0,.4)}.mobile-nav{border:0;background:transparent;color:#8e887e;padding:7px 2px;font-size:9px;font-weight:800;display:grid;gap:4px;place-items:center}.mobile-nav span{font-size:17px;color:var(--accent)}.top-actions{display:flex;gap:8px}.sheet{max-height:94vh}.calendar-grid,.weekdays{gap:4px}.cal-day{min-height:58px}}
 </style>
 </head>
 <body>
@@ -131,14 +142,29 @@ input[type="checkbox"]{width:20px;height:20px;accent-color:var(--accent)}
   </div>
 </div>
 
-<div id="app" class="wrap hidden">
+<div id="app" class="app-shell hidden">
+  <div id="sidebarScrim" class="sidebar-scrim hidden" onclick="toggleSidebar(false)"></div>
+  <aside id="sidebar" class="sidebar" aria-label="Navigation principale">
+    <div class="side-brand"><div class="side-mark">◷</div><div class="side-name">Mon Pointage</div><div class="side-version">SIDEBAR PRO · V5</div></div>
+    <nav class="nav">
+      <button class="nav-btn active" onclick="goHome()"><span class="nav-icon">⌂</span>Vue d'ensemble</button>
+      <button class="nav-btn" onclick="openManual()"><span class="nav-icon">◷</span>Mes horaires</button>
+      <button class="nav-btn" onclick="openCalendar()"><span class="nav-icon">▦</span>Calendrier</button>
+      <button class="nav-btn" onclick="openStats()"><span class="nav-icon">⌁</span>Statistiques</button>
+      <button class="nav-btn" onclick="openReport()"><span class="nav-icon">▤</span>Récapitulatifs</button>
+      <button class="nav-btn" onclick="openCorrections()"><span class="nav-icon">!</span>À corriger <span id="correctionBadge"></span></button>
+      <button class="nav-btn" onclick="openSettings()"><span class="nav-icon">⚙</span>Réglages</button>
+    </nav>
+    <div class="side-foot">Synchronisation Supabase<br>et mode hors connexion actifs.</div>
+  </aside>
+  <main class="wrap">
   <div class="top">
     <div class="brand">
-      <div class="eyebrow">HEURES DE TRAVAIL</div>
-      <h1>MON POINTAGE</h1>
+      <div class="eyebrow">TABLEAU DE BORD</div>
+      <h1>Vue d'ensemble</h1>
       <div class="date" id="date"></div>
     </div>
-    <button class="icon-btn" onclick="openSettings()" aria-label="Réglages">⚙︎</button>
+    <div class="top-actions"><button class="icon-btn menu-toggle" onclick="toggleSidebar(true)" aria-label="Ouvrir le menu">☰</button><button class="icon-btn" onclick="openSettings()" aria-label="Réglages">⚙︎</button></div>
   </div>
 
   <div id="forgotCard" class="card warning-card hidden">
@@ -147,13 +173,11 @@ input[type="checkbox"]{width:20px;height:20px;accent-color:var(--accent)}
     <button class="mini-btn" onclick="fixForgottenDay()">CORRIGER MAINTENANT</button>
   </div>
 
-  <div class="card status">
-    <div class="clock" id="clock">00:00:00</div>
-    <div class="state" id="state">Chargement...</div>
-    <div class="sync" id="sync">Connexion...</div>
+  <div class="content-grid">
+  <div class="card status hero-card">
+    <div class="hero-kicker">TEMPS EN COURS</div><div class="clock" id="clock">00:00:00</div><div class="state" id="state">Chargement...</div><div class="sync" id="sync">Connexion...</div>
   </div>
-
-  <div class="card">
+  <div class="card quick-panel"><div class="panel-label">ACTIONS RAPIDES</div>
     <div class="actions" id="actionsCard">
       <button id="start" class="action" onclick="act('start')">DÉBUT</button>
       <button id="pause" class="action secondary" onclick="act('pause')">PAUSE</button>
@@ -162,7 +186,8 @@ input[type="checkbox"]{width:20px;height:20px;accent-color:var(--accent)}
     </div>
   </div>
 
-  <div class="card">
+  <div class="card overview">
+    <div class="panel-label">RÉSUMÉ</div>
     <div class="stats">
       <div class="stat"><div class="num" id="today">0h00</div><div class="label">AUJOURD'HUI</div></div>
       <div class="stat"><div class="num" id="week">0h00</div><div class="label">CETTE SEMAINE</div></div>
@@ -171,30 +196,18 @@ input[type="checkbox"]{width:20px;height:20px;accent-color:var(--accent)}
     <div class="goal" id="goal">Objectif semaine : 39h00</div>
   </div>
 
-  <button class="launcher" onclick="openCalendar()">
-    <div class="launcher-left"><div class="launcher-icon">▦</div><div><div class="launcher-title">CALENDRIER</div><div class="launcher-sub" id="calendarSummary">Voir et modifier tes journées</div></div></div>
-    <div class="launcher-arrow">›</div>
-  </button>
-
-  <button class="launcher" onclick="openStats()">
-    <div class="launcher-left"><div class="launcher-icon">⌁</div><div><div class="launcher-title">STATISTIQUES</div><div class="launcher-sub">Heures sup, moyenne, journée la plus longue</div></div></div>
-    <div class="launcher-arrow">›</div>
-  </button>
-
-  <button class="launcher" onclick="openReport()">
-    <div class="launcher-left"><div class="launcher-icon">▤</div><div><div class="launcher-title">RÉCAP DU MOIS</div><div class="launcher-sub">PDF ou PNG prêt à envoyer</div></div></div>
-    <div class="launcher-arrow">›</div>
-  </button>
-
   <button id="installLauncher" class="launcher install-banner hidden" onclick="installApp()">
     <div class="launcher-left"><div class="launcher-icon">↓</div><div><div class="launcher-title">INSTALLER L'APPLI</div><div class="launcher-sub">Ajouter Mon Pointage à ton téléphone</div></div></div>
     <div class="launcher-arrow">›</div>
   </button>
 
-  <div class="card">
+  <div class="card history-card">
     <div class="section-title"><b>Derniers pointages</b><button class="mini-btn" onclick="openCalendar()">VOIR TOUT</button></div>
     <div id="history" class="small">Chargement...</div>
   </div>
+  </div>
+  </main>
+  <nav class="mobile-bar" aria-label="Navigation mobile"><button class="mobile-nav" onclick="goHome()"><span>⌂</span>Accueil</button><button class="mobile-nav" onclick="openManual()"><span>◷</span>Horaires</button><button class="mobile-nav" onclick="openCalendar()"><span>▦</span>Calendrier</button><button class="mobile-nav" onclick="toggleSidebar(true)"><span>☰</span>Menu</button></nav>
 </div>
 
 <div id="calendarOverlay" class="overlay hidden" onclick="overlayClose(event,'calendarOverlay')"><div class="sheet">
@@ -273,6 +286,11 @@ input[type="checkbox"]{width:20px;height:20px;accent-color:var(--accent)}
 
   <div class="setting-group"><div class="setting-title">Sécurité</div><button class="mini-btn" onclick="changePin()">CHANGER LE CODE PIN</button><button class="mini-btn" style="margin-left:6px" onclick="logout()">DÉCONNEXION</button></div>
   <div class="setting-group"><button class="reset-btn" onclick="resetDesign()">RÉINITIALISER LE DESIGN</button></div>
+</div></div>
+
+<div id="correctionsOverlay" class="overlay hidden" onclick="overlayClose(event,'correctionsOverlay')"><div class="sheet">
+  <div class="sheet-head"><div><div class="sheet-title">À corriger</div><div class="small">Journées incomplètes ou incohérentes</div></div><button class="close-btn" onclick="closeOverlay('correctionsOverlay')">✕</button></div>
+  <div id="correctionsList" class="report-list small"></div>
 </div></div>
 
 <div id="toast" class="toast hidden"></div>
@@ -387,7 +405,8 @@ async function boot(){
   await afterAuthenticated()
 }
 async function showApp(){
-  $("app").classList.remove("hidden");loadSettingsUI();tick();await loadEvents();flushQueue();checkReminder();setInterval(checkReminder,60000)
+  $("app").classList.remove("hidden");loadSettingsUI();tick();await loadEvents();flushQueue();checkReminder();setInterval(checkReminder,60000);
+  if(matchMedia("(max-width: 900px)").matches&&!localStorage.getItem("pointage_v5_menu_seen")){setTimeout(()=>toggleSidebar(true),250);localStorage.setItem("pointage_v5_menu_seen","1")}
 }
 
 async function apiFetch(path="",options={}){
@@ -508,6 +527,12 @@ function fixForgottenDay(){const s=getForgottenSession();if(s)openManual(dayKey(
 function openOverlay(id){$(id).classList.remove("hidden");document.body.style.overflow="hidden"}
 function closeOverlay(id){$(id).classList.add("hidden");document.body.style.overflow=""}
 function overlayClose(ev,id){if(ev.target.id===id)closeOverlay(id)}
+function toggleSidebar(open){$("sidebar").classList.toggle("open",open);$("sidebarScrim").classList.toggle("hidden",!open)}
+function goHome(){toggleSidebar(false);document.querySelectorAll(".overlay").forEach(x=>x.classList.add("hidden"));document.body.style.overflow="";window.scrollTo({top:0,behavior:"smooth"})}
+function correctionSessions(){return buildSessions().filter(s=>!s.stop||sessionDuration(s,false)>18*3600000||sessionPauses(s).some(p=>!p.resume))}
+function openCorrections(){
+  const list=correctionSessions();$("correctionsList").innerHTML=list.length?list.map(s=>{const d=new Date(s.start.time),reason=!s.stop?"Fin manquante":sessionPauses(s).some(p=>!p.resume)?"Reprise manquante":"Journée anormalement longue";return`<button class="launcher" onclick="closeOverlay('correctionsOverlay');openManual('${dayKey(d)}')"><div class="launcher-left"><div class="launcher-icon">!</div><div><div class="launcher-title">${d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}</div><div class="launcher-sub">${reason} · début ${hm(d)}</div></div></div><div class="launcher-arrow">›</div></button>`}).join(""):"<div class='card' style='text-align:center'><div style='font-size:28px;color:var(--accent)'>✓</div><b>Tout est en ordre</b><div class='small' style='margin-top:7px'>Aucune journée ne demande de correction.</div></div>";openOverlay("correctionsOverlay");toggleSidebar(false)
+}
 
 function buildMonthOptions(futureOnly=false){
   const now=new Date(),opts=[];
@@ -597,10 +622,10 @@ function setImage(e,target){const f=e.target.files[0];if(!f)return;const r=new F
 function setAccent(v){const d=readDesign();d.accent=v;saveDesign(d);$("accentPreview").style.background=v}
 function setCardOpacity(v){const d=readDesign();d.opacity=Number(v);saveDesign(d)}
 function removeBackground(){const d=readDesign();delete d.background;saveDesign(d);toast("Fond retiré")}
-function applyDesign(){const d=readDesign(),accent=d.accent||"#ff8a1f",opacity=(d.opacity??80)/100;document.documentElement.style.setProperty("--accent",accent);document.documentElement.style.setProperty("--accent-soft",hexToRgba(accent,.16));document.documentElement.style.setProperty("--card-alpha",opacity);document.body.style.backgroundImage=d.background?`linear-gradient(rgba(6,8,12,.42),rgba(6,8,12,.74)),url(${d.background})`:"";["start","pause","resume","stop"].forEach(id=>{const b=$(id);if(!b)return;b.style.backgroundImage="";b.style.backgroundColor="";if(d[id]){b.style.backgroundImage=`linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.18)),url(${d[id]})`;b.style.backgroundColor="transparent"}})}
+function applyDesign(){const d=readDesign(),accent=d.accent||"#c9a66b",opacity=(d.opacity??88)/100;document.documentElement.style.setProperty("--accent",accent);document.documentElement.style.setProperty("--accent-soft",hexToRgba(accent,.16));document.documentElement.style.setProperty("--card-alpha",opacity);document.body.style.backgroundImage=d.background?`linear-gradient(rgba(6,8,12,.55),rgba(6,8,12,.82)),url(${d.background})`:"";["start","pause","resume","stop"].forEach(id=>{const b=$(id);if(!b)return;b.style.backgroundImage="";b.style.backgroundColor="";if(d[id]){b.style.backgroundImage=`linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.18)),url(${d[id]})`;b.style.backgroundColor="transparent"}})}
 function hexToRgba(hex,a){const h=hex.replace("#",""),r=parseInt(h.slice(0,2),16),g=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);return`rgba(${r},${g},${b},${a})`}
 function resetDesign(){if(confirm("Réinitialiser toute la personnalisation ?")){localStorage.removeItem(DESIGN_KEY);location.reload()}}
-function loadSettingsUI(){const s=getSettings(),d=readDesign();$("profileName").value=s.profileName||"";$("weeklyTarget").value=s.weeklyTarget;$("monthlyTarget").value=s.monthlyTarget;$("reminderEnabled").checked=!!s.reminderEnabled;$("reminderTime").value=s.reminderTime||"03:30";$("accentPicker").value=d.accent||"#ff8a1f";$("accentPreview").style.background=d.accent||"#ff8a1f";$("cardOpacity").value=d.opacity??80}
+function loadSettingsUI(){const s=getSettings(),d=readDesign();$("profileName").value=s.profileName||"";$("weeklyTarget").value=s.weeklyTarget;$("monthlyTarget").value=s.monthlyTarget;$("reminderEnabled").checked=!!s.reminderEnabled;$("reminderTime").value=s.reminderTime||"03:30";$("accentPicker").value=d.accent||"#c9a66b";$("accentPreview").style.background=d.accent||"#c9a66b";$("cardOpacity").value=d.opacity??88}
 function saveSettingField(){const s=getSettings();s.profileName=$("profileName").value.trim();s.weeklyTarget=Number($("weeklyTarget").value)||39;s.monthlyTarget=Number($("monthlyTarget").value)||169;s.reminderTime=$("reminderTime").value||"03:30";saveSettings(s)}
 async function toggleReminder(){const s=getSettings();s.reminderEnabled=$("reminderEnabled").checked;saveSettings(s);if(s.reminderEnabled&&"Notification"in window&&Notification.permission==="default"){const p=await Notification.requestPermission();if(p!=="granted"){s.reminderEnabled=false;$("reminderEnabled").checked=false;saveSettings(s);toast("Notifications non autorisées")}}}
 async function checkReminder(){
