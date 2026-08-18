@@ -1,0 +1,12 @@
+FIX FINAL V5
+
+Le bug venait de deux choses :
+1. render() essayait d'écrire dans #calendarSummary alors que cet élément n'existait pas.
+2. Le service worker V5 gardait index.html en cache, donc Android pouvait continuer à utiliser l'ancienne version après un remplacement sur GitHub.
+
+À remplacer sur GitHub :
+- index.html
+- sw.js
+
+Après le déploiement, ferme complètement l'application sur Android puis rouvre-la.
+Si l'ancienne version reste affichée, supprime l'icône de l'application et réinstalle-la une fois depuis Chrome.
