@@ -1,0 +1,4 @@
+Correction V5
+Bug corrigé : l’enregistrement manuel plantait quand render() essayait de modifier calendarSummary alors que cet élément pouvait être absent du nouveau design.
+La correction vérifie maintenant l’existence de l’élément avant de modifier textContent.
+setLoading() est aussi sécurisé si actionsCard est absent.

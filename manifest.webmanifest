@@ -1,12 +1,12 @@
 {
   "name": "Mon Pointage",
   "short_name": "Pointage",
-  "description": "Suivi premium des heures de travail, synchronisé et installable",
+  "description": "Pointage personnel et récapitulatif des heures de travail",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#070706",
-  "theme_color": "#080807",
+  "background_color": "#090b0f",
+  "theme_color": "#111318",
   "orientation": "portrait-primary",
   "icons": [
     {
