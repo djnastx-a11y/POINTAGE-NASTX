@@ -3,52 +3,1124 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#111111">
+<meta name="theme-color" content="#111318">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
 <title>Mon Pointage</title>
+
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+
 <style>
-:root{--bg:#0d0d0f;--card:rgba(20,20,24,.88);--text:#fff;--muted:#aaa;--accent:#ff7a00;--danger:#7d2020;--ok:#1f7a45}
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;background-size:cover;background-position:center;background-attachment:fixed}.wrap{max-width:560px;margin:auto;padding:22px 16px 70px}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.gear{border:0;background:#222;color:white;border-radius:14px;padding:11px 14px;font-size:20px;cursor:pointer}h1{font-size:28px;margin:8px 0 3px}.date{color:var(--muted);margin-bottom:18px}.card{background:var(--card);backdrop-filter:blur(12px);border-radius:22px;padding:18px;margin:14px 0}.status{text-align:center}.clock{font-size:46px;font-weight:800;letter-spacing:-2px}.state{color:var(--muted);margin-top:4px}.sync{font-size:12px;margin-top:8px;color:var(--muted)}.sync.ok{color:#7de3a7}.sync.err{color:#ff8585}.actions{display:grid;gap:12px}.action{width:100%;min-height:66px;border:0;border-radius:20px;font-size:19px;font-weight:800;background:var(--accent);color:#fff;background-size:cover;background-position:center;cursor:pointer;padding:12px}.action.secondary{background:#29292e}.action.small{min-height:48px;font-size:15px;border-radius:14px}.action.danger{background:var(--danger)}.action.good{background:var(--ok)}.action:disabled{opacity:.35;cursor:not-allowed}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.stat{background:#202024;border-radius:16px;padding:13px 10px;min-width:0}.num{font-size:22px;font-weight:800;white-space:nowrap}.label{font-size:10px;color:var(--muted);margin-top:4px}.goal{font-size:12px;color:var(--muted);margin-top:12px;text-align:center}.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #333}.row:last-child{border:0}.row-main{min-width:0}.row-date{font-weight:700}.row-detail{font-size:12px;color:var(--muted);margin-top:3px}.row-total{font-weight:800;white-space:nowrap}input{width:100%;padding:12px;border-radius:12px;border:1px solid #444;background:#151518;color:#fff;margin:5px 0 12px;font-size:16px}label{font-size:13px;color:#ddd}.hidden{display:none}.small{font-size:13px;color:#aaa}.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.section-title b{font-size:17px}.manual-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.manual-grid .full{grid-column:1/-1}.manual-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}.note{font-size:12px;color:var(--muted);line-height:1.4}.loader{opacity:.6;pointer-events:none}@media(max-width:380px){.clock{font-size:39px}.num{font-size:19px}.stats{gap:6px}.stat{padding:11px 7px}}
+:root{
+  --accent:#ff8a1f;
+  --accent-soft:rgba(255,138,31,.16);
+  --bg1:#0a0c10;
+  --bg2:#151922;
+  --card-alpha:.78;
+  --text:#f7f8fa;
+  --muted:#9aa2b1;
+  --line:rgba(255,255,255,.08);
+  --danger:#a63b3b;
+  --good:#218a57;
+}
+*{box-sizing:border-box}
+html{background:#090b0f}
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 15% 0%,rgba(255,138,31,.12),transparent 30%),
+    radial-gradient(circle at 90% 15%,rgba(113,91,255,.10),transparent 28%),
+    linear-gradient(155deg,var(--bg2),var(--bg1) 58%);
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(to bottom,rgba(0,0,0,.05),rgba(0,0,0,.38));
+  z-index:-1;
+}
+button,input,select{font:inherit}
+button{touch-action:manipulation}
+.wrap{max-width:560px;margin:0 auto;padding:20px 15px 80px}
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
+.brand{min-width:0}
+.eyebrow{font-size:11px;letter-spacing:.18em;color:var(--muted);font-weight:700;margin-bottom:4px}
+h1{font-size:29px;line-height:1;margin:0 0 7px;letter-spacing:-.04em}
+.date{color:var(--muted);font-size:14px;text-transform:capitalize}
+.icon-btn{
+  width:44px;height:44px;border:1px solid var(--line);border-radius:15px;
+  background:rgba(18,21,28,.72);color:white;font-size:20px;cursor:pointer;
+  backdrop-filter:blur(16px)
+}
+.card{
+  background:rgba(20,23,30,var(--card-alpha));
+  border:1px solid var(--line);
+  box-shadow:0 14px 40px rgba(0,0,0,.20);
+  backdrop-filter:blur(18px);
+  border-radius:24px;
+  padding:17px;
+  margin:13px 0
+}
+.status{text-align:center;padding:20px 16px}
+.clock{font-size:45px;font-weight:800;letter-spacing:-.055em;font-variant-numeric:tabular-nums}
+.state{font-size:14px;color:var(--muted);margin-top:4px}
+.sync{font-size:11px;color:var(--muted);margin-top:8px}
+.sync.ok{color:#75dca5}
+.sync.err{color:#ff8e8e}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.action{
+  border:0;border-radius:18px;min-height:68px;padding:12px;
+  background:var(--accent);color:white;font-size:18px;font-weight:800;
+  cursor:pointer;background-size:cover;background-position:center;
+  box-shadow:0 8px 22px rgba(0,0,0,.16)
+}
+.action.secondary{background:#292d37}
+.action.good{background:var(--good)}
+.action.danger{background:var(--danger)}
+.action:disabled{opacity:.34;cursor:not-allowed;box-shadow:none}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:17px;padding:13px 9px}
+.num{font-size:21px;font-weight:850;letter-spacing:-.04em;white-space:nowrap}
+.label{font-size:9px;letter-spacing:.08em;color:var(--muted);margin-top:5px;font-weight:700}
+.goal{font-size:12px;color:var(--muted);text-align:center;margin-top:12px}
+.launcher{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  border:1px solid var(--line);border-radius:22px;padding:18px;
+  background:rgba(20,23,30,var(--card-alpha));color:var(--text);cursor:pointer;
+  box-shadow:0 14px 40px rgba(0,0,0,.20);backdrop-filter:blur(18px);text-align:left;
+  margin:13px 0
+}
+.launcher-left{display:flex;align-items:center;gap:13px;min-width:0}
+.launcher-icon{
+  width:44px;height:44px;border-radius:15px;background:var(--accent-soft);
+  display:grid;place-items:center;font-size:22px;flex:0 0 auto
+}
+.launcher-title{font-weight:800;font-size:17px}
+.launcher-sub{font-size:12px;color:var(--muted);margin-top:3px}
+.launcher-arrow{font-size:25px;color:var(--muted)}
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.section-title b{font-size:17px}
+.mini-btn{
+  border:1px solid var(--line);background:#292d37;color:white;border-radius:13px;
+  padding:9px 11px;font-size:12px;font-weight:800;cursor:pointer
+}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row-main{min-width:0}
+.row-date{font-weight:750;font-size:14px;text-transform:capitalize}
+.row-detail{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4}
+.row-total{font-weight:850;white-space:nowrap}
+.small{font-size:12px;color:var(--muted)}
+.hidden{display:none!important}
+
+.overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.68);z-index:1000;
+  display:flex;align-items:flex-end;justify-content:center;padding:0
+}
+.sheet{
+  width:min(100%,620px);max-height:92vh;overflow:auto;
+  background:#12151c;border:1px solid var(--line);border-radius:28px 28px 0 0;
+  padding:18px 16px calc(24px + env(safe-area-inset-bottom));
+  box-shadow:0 -25px 70px rgba(0,0,0,.45)
+}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px;position:sticky;top:-18px;background:#12151c;padding:16px 0 10px;z-index:5}
+.sheet-title{font-size:21px;font-weight:850;letter-spacing:-.03em}
+.close-btn{width:40px;height:40px;border:1px solid var(--line);border-radius:14px;background:#252933;color:white;font-size:18px;cursor:pointer}
+.calendar-toolbar{display:grid;grid-template-columns:42px 1fr 42px;gap:9px;align-items:center;margin-bottom:13px}
+.cal-nav{height:42px;border:1px solid var(--line);border-radius:13px;background:#252933;color:white;font-size:24px;cursor:pointer}
+.cal-nav:disabled{opacity:.25;cursor:not-allowed}
+.month-select{
+  height:42px;border:1px solid var(--line);border-radius:13px;background:#1b1f27;color:white;
+  padding:0 12px;text-align:center;font-weight:800;outline:none
+}
+.weekdays,.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.weekdays div{text-align:center;color:var(--muted);font-size:9px;font-weight:800;padding:5px 0}
+.cal-day{
+  min-height:65px;border:1px solid var(--line);border-radius:15px;background:#1a1e26;color:white;
+  padding:7px 5px;text-align:left;cursor:pointer;position:relative
+}
+.cal-day.empty{visibility:hidden}
+.cal-day.today{border-color:var(--accent)}
+.cal-day.has-hours{background:linear-gradient(160deg,rgba(255,138,31,.12),rgba(255,255,255,.035))}
+.cal-day.selected{outline:2px solid var(--accent);outline-offset:1px}
+.cal-num{font-weight:850;font-size:13px}
+.cal-hours{position:absolute;left:6px;bottom:7px;font-size:10px;font-weight:800;color:#f3f3f3}
+.cal-dot{position:absolute;top:8px;right:8px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.calendar-tip{text-align:center;color:var(--muted);font-size:11px;margin:13px 0 4px}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.full{grid-column:1/-1}
+label{display:block;color:#c9ced8;font-size:12px;margin:0 0 5px}
+input[type="date"],input[type="time"],input[type="color"],input[type="range"],select{
+  width:100%;min-height:46px;border:1px solid var(--line);border-radius:13px;
+  background:#1a1e26;color:white;padding:10px 12px;outline:none
+}
+input[type="file"]{
+  width:100%;border:1px solid var(--line);border-radius:13px;background:#1a1e26;color:#cdd2da;
+  padding:10px;margin:3px 0 13px
+}
+.form-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:13px}
+.form-actions .action{min-height:50px;font-size:14px;border-radius:14px}
+.note{font-size:11px;color:var(--muted);line-height:1.45;margin-top:8px}
+.manual-total{padding:11px 12px;border-radius:13px;background:rgba(255,255,255,.04);margin-top:4px;font-size:13px}
+.manual-total strong{font-size:17px}
+
+.report-summary{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0
+}
+.report-box{border:1px solid var(--line);border-radius:16px;padding:13px;background:rgba(255,255,255,.035)}
+.report-box .big{font-size:23px;font-weight:850}
+.report-box .cap{font-size:10px;color:var(--muted);margin-top:3px}
+.report-list{margin-top:10px}
+.report-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
+.report-actions .action{min-height:52px;font-size:14px;border-radius:14px}
+
+.setting-group{padding:13px 0;border-bottom:1px solid var(--line)}
+.setting-group:last-child{border-bottom:0}
+.setting-title{font-weight:800;margin-bottom:9px}
+.setting-help{font-size:11px;color:var(--muted);margin-bottom:9px}
+.inline-setting{display:grid;grid-template-columns:1fr 90px;gap:10px;align-items:center}
+.preview-chip{height:44px;border-radius:13px;border:1px solid var(--line);background:var(--accent)}
+.reset-btn{width:100%;min-height:48px;border:0;border-radius:14px;background:#3a2424;color:#ffd8d8;font-weight:800;cursor:pointer}
+
+.toast{
+  position:fixed;left:50%;bottom:22px;transform:translateX(-50%);
+  background:#20242d;color:white;border:1px solid var(--line);border-radius:14px;
+  padding:11px 14px;font-size:12px;z-index:2000;box-shadow:0 12px 30px rgba(0,0,0,.35)
+}
+
+@media(min-width:640px){
+  .overlay{align-items:center;padding:24px}
+  .sheet{border-radius:28px;max-height:90vh}
+}
+@media(max-width:380px){
+  .clock{font-size:40px}
+  .num{font-size:18px}
+  .stats{gap:6px}
+  .stat{padding:11px 6px}
+  .calendar-grid,.weekdays{gap:4px}
+  .cal-day{min-height:58px;padding:6px 4px}
+  .cal-hours{font-size:9px}
+}
 </style>
 </head>
 <body>
+
 <div class="wrap">
-<div class="top"><div><h1>MON POINTAGE</h1><div class="date" id="date"></div></div><button class="gear" onclick="toggleSettings()">⚙︎</button></div>
-<div class="card status"><div class="clock" id="clock">00:00:00</div><div class="state" id="state">Chargement...</div><div class="sync" id="sync">Connexion à la sauvegarde...</div></div>
-<div class="card actions" id="actionsCard"><button id="start" class="action" onclick="act('start')">DÉBUT</button><button id="pause" class="action secondary" onclick="act('pause')">PAUSE</button><button id="resume" class="action secondary" onclick="act('resume')">REPRENDRE</button><button id="stop" class="action secondary" onclick="act('stop')">FIN</button></div>
-<div class="card"><div class="stats"><div class="stat"><div class="num" id="today">0h00</div><div class="label">AUJOURD'HUI</div></div><div class="stat"><div class="num" id="week">0h00</div><div class="label">CETTE SEMAINE</div></div><div class="stat"><div class="num" id="month">0h00</div><div class="label">CE MOIS</div></div></div><div class="goal" id="goal">Objectif semaine : 39h00</div></div>
-<div class="card"><div class="section-title"><b>Historique</b><button class="action secondary small" style="width:auto;min-width:150px" onclick="openManual()">AJOUTER / MODIFIER</button></div><div id="history" class="small">Chargement...</div></div>
-<div id="manual" class="card hidden"><div class="section-title"><b>Ajouter ou modifier une journée</b><button class="gear" onclick="closeManual()" style="font-size:16px;padding:8px 11px">✕</button></div><div class="manual-grid"><div class="full"><label>Date de début de poste</label><input id="manualDate" type="date" onchange="loadManualDay()"></div><div><label>Début</label><input id="manualStart" type="time"></div><div><label>Pause</label><input id="manualPause" type="time"></div><div><label>Reprendre</label><input id="manualResume" type="time"></div><div><label>Fin</label><input id="manualStop" type="time"></div></div><div class="note">Si ton poste finit après minuit, mets simplement l'heure réelle. L'application comprend automatiquement que la fin est le lendemain.</div><div class="manual-actions"><button class="action good small" onclick="saveManualDay()">ENREGISTRER</button><button class="action danger small" onclick="deleteManualDay()">SUPPRIMER LA JOURNÉE</button></div><div id="manualMsg" class="sync" style="margin-top:10px"></div></div>
-<div id="settings" class="card hidden"><div class="section-title"><b>Personnalisation</b><button class="gear" onclick="toggleSettings()" style="font-size:16px;padding:8px 11px">✕</button></div><p class="small">Choisis tes images depuis ton téléphone ou ton Mac. Elles restent enregistrées sur cet appareil.</p><label>Image de fond</label><input type="file" accept="image/*" onchange="setImage(event,'background')"><label>Image bouton DÉBUT</label><input type="file" accept="image/*" onchange="setImage(event,'start')"><label>Image bouton PAUSE</label><input type="file" accept="image/*" onchange="setImage(event,'pause')"><label>Image bouton REPRENDRE</label><input type="file" accept="image/*" onchange="setImage(event,'resume')"><label>Image bouton FIN</label><input type="file" accept="image/*" onchange="setImage(event,'stop')"><button class="action danger small" onclick="resetDesign()">RÉINITIALISER LE DESIGN</button></div>
+  <div class="top">
+    <div class="brand">
+      <div class="eyebrow">HEURES DE TRAVAIL</div>
+      <h1>MON POINTAGE</h1>
+      <div class="date" id="date"></div>
+    </div>
+    <button class="icon-btn" onclick="openSettings()" aria-label="Personnalisation">⚙︎</button>
+  </div>
+
+  <div class="card status">
+    <div class="clock" id="clock">00:00:00</div>
+    <div class="state" id="state">Chargement...</div>
+    <div class="sync" id="sync">Connexion à la sauvegarde...</div>
+  </div>
+
+  <div class="card">
+    <div class="actions" id="actionsCard">
+      <button id="start" class="action" onclick="act('start')">DÉBUT</button>
+      <button id="pause" class="action secondary" onclick="act('pause')">PAUSE</button>
+      <button id="resume" class="action secondary" onclick="act('resume')">REPRENDRE</button>
+      <button id="stop" class="action secondary" onclick="act('stop')">FIN</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="stats">
+      <div class="stat"><div class="num" id="today">0h00</div><div class="label">AUJOURD'HUI</div></div>
+      <div class="stat"><div class="num" id="week">0h00</div><div class="label">CETTE SEMAINE</div></div>
+      <div class="stat"><div class="num" id="month">0h00</div><div class="label">CE MOIS</div></div>
+    </div>
+    <div class="goal" id="goal">Objectif semaine : 39h00</div>
+  </div>
+
+  <button class="launcher" onclick="openCalendar()">
+    <div class="launcher-left">
+      <div class="launcher-icon">▦</div>
+      <div>
+        <div class="launcher-title">CALENDRIER</div>
+        <div class="launcher-sub" id="calendarSummary">Voir et modifier tes journées</div>
+      </div>
+    </div>
+    <div class="launcher-arrow">›</div>
+  </button>
+
+  <button class="launcher" onclick="openReport()">
+    <div class="launcher-left">
+      <div class="launcher-icon">▤</div>
+      <div>
+        <div class="launcher-title">RÉCAP DU MOIS</div>
+        <div class="launcher-sub">PDF ou PNG prêt à envoyer</div>
+      </div>
+    </div>
+    <div class="launcher-arrow">›</div>
+  </button>
+
+  <div class="card">
+    <div class="section-title">
+      <b>Derniers pointages</b>
+      <button class="mini-btn" onclick="openCalendar()">VOIR TOUT</button>
+    </div>
+    <div id="history" class="small">Chargement...</div>
+  </div>
 </div>
+
+<div id="calendarOverlay" class="overlay hidden" onclick="overlayClose(event,'calendarOverlay')">
+  <div class="sheet">
+    <div class="sheet-head">
+      <div class="sheet-title">Calendrier</div>
+      <button class="close-btn" onclick="closeOverlay('calendarOverlay')">✕</button>
+    </div>
+    <div class="calendar-toolbar">
+      <button id="prevMonthBtn" class="cal-nav" onclick="changeCalendarMonth(-1)">‹</button>
+      <select id="monthSelect" class="month-select" onchange="chooseCalendarMonth()"></select>
+      <button class="cal-nav" onclick="changeCalendarMonth(1)">›</button>
+    </div>
+    <div class="weekdays">
+      <div>LUN</div><div>MAR</div><div>MER</div><div>JEU</div><div>VEN</div><div>SAM</div><div>DIM</div>
+    </div>
+    <div id="calendarGrid" class="calendar-grid"></div>
+    <div class="calendar-tip">Le nombre d'heures apparaît directement sur les jours travaillés.</div>
+  </div>
+</div>
+
+<div id="manualOverlay" class="overlay hidden" onclick="overlayClose(event,'manualOverlay')">
+  <div class="sheet">
+    <div class="sheet-head">
+      <div>
+        <div class="sheet-title" id="manualTitle">Journée</div>
+        <div class="small" id="manualSubtitle"></div>
+      </div>
+      <button class="close-btn" onclick="closeOverlay('manualOverlay')">✕</button>
+    </div>
+
+    <div class="form-grid">
+      <div class="full">
+        <label>Date</label>
+        <input id="manualDate" type="date" onchange="loadManualDay()">
+      </div>
+      <div>
+        <label>Début</label>
+        <input id="manualStart" type="time" oninput="updateManualPreview()">
+      </div>
+      <div>
+        <label>Pause</label>
+        <input id="manualPause" type="time" oninput="updateManualPreview()">
+      </div>
+      <div>
+        <label>Reprendre</label>
+        <input id="manualResume" type="time" oninput="updateManualPreview()">
+      </div>
+      <div>
+        <label>Fin</label>
+        <input id="manualStop" type="time" oninput="updateManualPreview()">
+      </div>
+    </div>
+
+    <div class="manual-total">Total calculé : <strong id="manualTotal">0h00</strong></div>
+    <div class="note">Si tu finis après minuit, indique simplement l'heure réelle. L'application comprend que la fin est le lendemain.</div>
+
+    <div class="form-actions">
+      <button class="action good" onclick="saveManualDay()">ENREGISTRER</button>
+      <button class="action danger" onclick="deleteManualDay()">SUPPRIMER</button>
+    </div>
+    <div id="manualMsg" class="sync"></div>
+  </div>
+</div>
+
+<div id="reportOverlay" class="overlay hidden" onclick="overlayClose(event,'reportOverlay')">
+  <div class="sheet">
+    <div class="sheet-head">
+      <div class="sheet-title">Récapitulatif mensuel</div>
+      <button class="close-btn" onclick="closeOverlay('reportOverlay')">✕</button>
+    </div>
+
+    <label>Mois à récapituler</label>
+    <select id="reportMonth" onchange="renderReport()"></select>
+
+    <div class="report-summary">
+      <div class="report-box"><div class="big" id="reportHours">0h00</div><div class="cap">TOTAL DU MOIS</div></div>
+      <div class="report-box"><div class="big" id="reportDays">0</div><div class="cap">JOURS TRAVAILLÉS</div></div>
+    </div>
+
+    <div id="reportList" class="report-list small"></div>
+
+    <div class="report-actions">
+      <button class="action secondary" onclick="downloadPDF()">PDF</button>
+      <button class="action secondary" onclick="downloadPNG()">PNG</button>
+    </div>
+  </div>
+</div>
+
+<div id="settingsOverlay" class="overlay hidden" onclick="overlayClose(event,'settingsOverlay')">
+  <div class="sheet">
+    <div class="sheet-head">
+      <div class="sheet-title">Personnalisation</div>
+      <button class="close-btn" onclick="closeOverlay('settingsOverlay')">✕</button>
+    </div>
+
+    <div class="setting-group">
+      <div class="setting-title">Fond de l'application</div>
+      <div class="setting-help">Choisis n'importe quelle photo depuis ton téléphone ou ton Mac.</div>
+      <input type="file" accept="image/*" onchange="setImage(event,'background')">
+      <button class="mini-btn" onclick="removeBackground()">RETIRER LE FOND</button>
+    </div>
+
+    <div class="setting-group">
+      <div class="setting-title">Couleur principale</div>
+      <div class="inline-setting">
+        <input id="accentPicker" type="color" value="#ff8a1f" oninput="setAccent(this.value)">
+        <div id="accentPreview" class="preview-chip"></div>
+      </div>
+    </div>
+
+    <div class="setting-group">
+      <div class="setting-title">Transparence des cartes</div>
+      <input id="cardOpacity" type="range" min="45" max="96" value="78" oninput="setCardOpacity(this.value)">
+    </div>
+
+    <div class="setting-group">
+      <div class="setting-title">Images des boutons</div>
+      <div class="setting-help">Facultatif. Tu peux mettre tes propres visuels sur chaque bouton.</div>
+      <label>Bouton DÉBUT</label><input type="file" accept="image/*" onchange="setImage(event,'start')">
+      <label>Bouton PAUSE</label><input type="file" accept="image/*" onchange="setImage(event,'pause')">
+      <label>Bouton REPRENDRE</label><input type="file" accept="image/*" onchange="setImage(event,'resume')">
+      <label>Bouton FIN</label><input type="file" accept="image/*" onchange="setImage(event,'stop')">
+    </div>
+
+    <div class="setting-group">
+      <button class="reset-btn" onclick="resetDesign()">RÉINITIALISER LE DESIGN</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
 <script>
 const SUPABASE_URL="https://mqgrvddgmfdebpvozipa.supabase.co";
 const SUPABASE_KEY="sb_publishable_gXHAAlDIYLEq6nO-VT1Hag_a7VMElzP";
-const TABLE="POINTAGES",DESIGN="nastx_design_v1",CACHE="nastx_pointages_cache_v2";
+const TABLE="POINTAGES";
+const DESIGN="nastx_design_v3";
+const CACHE="nastx_pointages_cache_v3";
 const API=`${SUPABASE_URL}/rest/v1/${encodeURIComponent(TABLE)}`;
-const HEADERS={apikey:SUPABASE_KEY,Authorization:`Bearer ${SUPABASE_KEY}`,"Content-Type":"application/json",Prefer:"return=representation"};
-let events=[],loading=false;
-const $=id=>document.getElementById(id),pad=n=>String(n).padStart(2,"0"),localDayKey=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`,hm=d=>`${pad(d.getHours())}:${pad(d.getMinutes())}`;
-function setSync(text,cls=""){const e=$("sync");e.textContent=text;e.className="sync "+cls}function setLoading(v){loading=v;$("actionsCard").classList.toggle("loader",v)}
-async function apiFetch(path="",options={}){const r=await fetch(API+path,{...options,headers:{...HEADERS,...(options.headers||{})}});if(!r.ok)throw new Error(await r.text()||`Erreur ${r.status}`);if(r.status===204)return[];const t=await r.text();return t?JSON.parse(t):[]}
-function normalizeRows(rows){return rows.filter(r=>r&&r.event_time&&r.type).map(r=>({id:r.id,type:r.type,time:new Date(r.event_time).getTime(),event_time:r.event_time})).sort((a,b)=>a.time-b.time)}
-async function loadEvents(msg=true){try{if(msg)setSync("Synchronisation...");const rows=await apiFetch("?select=id,type,event_time,created_at&order=event_time.asc");events=normalizeRows(rows);localStorage.setItem(CACHE,JSON.stringify(events));setSync("Sauvegarde en ligne active","ok");render();return true}catch(err){const c=JSON.parse(localStorage.getItem(CACHE)||"[]");events=Array.isArray(c)?c:[];setSync("Hors ligne ou connexion impossible","err");render();console.error(err);return false}}
-function buildSessions(list=events){const sessions=[];let s=null;for(const e of [...list].sort((a,b)=>a.time-b.time)){if(e.type==="start"){if(s&&!s.stop)sessions.push(s);s={start:e,pause:null,resume:null,stop:null,events:[e]};continue}if(!s)continue;s.events.push(e);if(e.type==="pause")s.pause=e;if(e.type==="resume")s.resume=e;if(e.type==="stop"){s.stop=e;sessions.push(s);s=null}}if(s)sessions.push(s);return sessions}
-function sessionDuration(s,live=true){if(!s||!s.start)return 0;let total=0,workStart=s.start.time;for(const e of s.events.slice(1)){if(e.type==="pause"&&workStart){total+=Math.max(0,e.time-workStart);workStart=null}else if(e.type==="resume"&&!workStart)workStart=e.time;else if(e.type==="stop"){if(workStart)total+=Math.max(0,e.time-workStart);workStart=null}}if(workStart&&live&&!s.stop)total+=Date.now()-workStart;return total}
-function fmt(ms){const m=Math.max(0,Math.floor(ms/60000));return`${Math.floor(m/60)}h${pad(m%60)}`}function currentState(){const l=events.at(-1);if(!l)return"none";if(l.type==="start"||l.type==="resume")return"work";if(l.type==="pause")return"pause";return"stopped"}function sumSessions(fn){return buildSessions().reduce((s,x)=>s+(fn(x)?sessionDuration(x,true):0),0)}
-function startOfWeek(d=new Date()){const x=new Date(d),diff=(x.getDay()+6)%7;x.setDate(x.getDate()-diff);x.setHours(0,0,0,0);return x}
-function render(){const state=currentState(),labels={none:"Pas encore commencé",work:"En poste",pause:"En pause",stopped:"Journée terminée"};$("state").textContent=labels[state];$("start").disabled=loading||(state!=="none"&&state!=="stopped");$("pause").disabled=loading||state!=="work";$("resume").disabled=loading||state!=="pause";$("stop").disabled=loading||!["work","pause"].includes(state);const now=new Date(),tk=localDayKey(now),ws=startOfWeek(now),ms=new Date(now.getFullYear(),now.getMonth(),1);const td=sumSessions(s=>localDayKey(new Date(s.start.time))===tk),wk=sumSessions(s=>new Date(s.start.time)>=ws),mo=sumSessions(s=>new Date(s.start.time)>=ms);$("today").textContent=fmt(td);$("week").textContent=fmt(wk);$("month").textContent=fmt(mo);const goal=39*3600000,diff=wk-goal;$("goal").textContent=diff>=0?`Objectif 39h atteint, +${fmt(diff)}`:`Objectif 39h, il reste ${fmt(-diff)}`;const ss=buildSessions().slice().reverse().slice(0,40);$("history").innerHTML=ss.length?ss.map(s=>{const d=new Date(s.start.time),det=[`Début ${hm(d)}`];if(s.pause)det.push(`pause ${hm(new Date(s.pause.time))}`);if(s.resume)det.push(`reprise ${hm(new Date(s.resume.time))}`);if(s.stop)det.push(`fin ${hm(new Date(s.stop.time))}`);else det.push("en cours");return`<div class="row"><div class="row-main"><div class="row-date">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"2-digit",year:"2-digit"})}</div><div class="row-detail">${det.join(" · ")}</div></div><div class="row-total">${fmt(sessionDuration(s,true))}</div></div>`}).join(""):"Aucun pointage."}
-async function act(type){if(loading)return;setLoading(true);try{await apiFetch("",{method:"POST",body:JSON.stringify({type,event_time:new Date().toISOString()})});await loadEvents(false);setSync("Pointage enregistré","ok")}catch(err){setSync("Erreur, pointage non enregistré","err");console.error(err)}finally{setLoading(false);render()}}
-function openManual(){$("manual").classList.remove("hidden");$("manualDate").value=localDayKey(new Date());loadManualDay();$("manual").scrollIntoView({behavior:"smooth",block:"start"})}function closeManual(){$("manual").classList.add("hidden")}function manualMsg(t,c=""){const e=$("manualMsg");e.textContent=t;e.className="sync "+c}function sessionsForManualDate(ds){return buildSessions().filter(s=>localDayKey(new Date(s.start.time))===ds)}
-function loadManualDay(){const ds=$("manualDate").value;["manualStart","manualPause","manualResume","manualStop"].forEach(id=>$(id).value="");manualMsg("");if(!ds)return;const s=sessionsForManualDate(ds)[0];if(!s){manualMsg("Aucun horaire enregistré pour cette date.");return}$("manualStart").value=hm(new Date(s.start.time));if(s.pause)$("manualPause").value=hm(new Date(s.pause.time));if(s.resume)$("manualResume").value=hm(new Date(s.resume.time));if(s.stop)$("manualStop").value=hm(new Date(s.stop.time));manualMsg("Horaires chargés. Tu peux les modifier.","ok")}
-function buildManualEvents(){const ds=$("manualDate").value,vals=[["start",$("manualStart").value],["pause",$("manualPause").value],["resume",$("manualResume").value],["stop",$("manualStop").value]];if(!ds)throw new Error("Choisis une date.");if(!vals[0][1])throw new Error("L'heure de début est obligatoire.");const out=[];let prev=null,off=0;for(const [type,time] of vals){if(!time)continue;let d=new Date(`${ds}T${time}:00`);d.setDate(d.getDate()+off);if(prev&&d.getTime()<=prev){off++;d=new Date(`${ds}T${time}:00`);d.setDate(d.getDate()+off)}prev=d.getTime();out.push({type,event_time:d.toISOString()})}return out}
-async function deleteSessionRowsForDate(ds){const ids=sessionsForManualDate(ds).flatMap(s=>s.events.map(e=>e.id)).filter(v=>v!==undefined&&v!==null);if(!ids.length)return;await apiFetch(`?id=in.(${ids.map(encodeURIComponent).join(",")})`,{method:"DELETE"})}
-async function saveManualDay(){if(loading)return;try{const ds=$("manualDate").value,rows=buildManualEvents();setLoading(true);manualMsg("Enregistrement...");await deleteSessionRowsForDate(ds);await apiFetch("",{method:"POST",body:JSON.stringify(rows)});await loadEvents(false);loadManualDay();manualMsg("Journée enregistrée.","ok")}catch(err){manualMsg(err.message||"Erreur pendant l'enregistrement.","err");console.error(err)}finally{setLoading(false);render()}}
-async function deleteManualDay(){const ds=$("manualDate").value;if(!ds)return;if(!sessionsForManualDate(ds).length){manualMsg("Aucune journée à supprimer.");return}if(!confirm("Supprimer tous les pointages de cette journée ?"))return;try{setLoading(true);await deleteSessionRowsForDate(ds);await loadEvents(false);loadManualDay();manualMsg("Journée supprimée.","ok")}catch(err){manualMsg("Erreur pendant la suppression.","err");console.error(err)}finally{setLoading(false);render()}}
-function toggleSettings(){$("settings").classList.toggle("hidden")}function setImage(e,target){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const d=JSON.parse(localStorage.getItem(DESIGN)||"{}");d[target]=r.result;localStorage.setItem(DESIGN,JSON.stringify(d));applyDesign()};r.readAsDataURL(f)}
-function applyDesign(){const d=JSON.parse(localStorage.getItem(DESIGN)||"{}");if(d.background)document.body.style.backgroundImage=`linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.35)),url(${d.background})`;["start","pause","resume","stop"].forEach(x=>{const b=$(x);b.style.backgroundImage="";if(d[x]){b.style.backgroundImage=`linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.18)),url(${d[x]})`;b.style.backgroundColor="transparent"}})}function resetDesign(){localStorage.removeItem(DESIGN);location.reload()}
-function tick(){const d=new Date();$("clock").textContent=d.toLocaleTimeString("fr-FR");$("date").textContent=d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});render()}
-applyDesign();tick();setInterval(tick,1000);loadEvents();
+const HEADERS={
+  apikey:SUPABASE_KEY,
+  Authorization:`Bearer ${SUPABASE_KEY}`,
+  "Content-Type":"application/json",
+  Prefer:"return=representation"
+};
+
+let events=[];
+let loading=false;
+let calendarMonth=new Date(new Date().getFullYear(),new Date().getMonth(),1);
+let selectedDate=null;
+
+const $=id=>document.getElementById(id);
+const pad=n=>String(n).padStart(2,"0");
+const dayKey=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const hm=d=>`${pad(d.getHours())}:${pad(d.getMinutes())}`;
+
+function toast(text){
+  const el=$("toast");
+  el.textContent=text;
+  el.classList.remove("hidden");
+  clearTimeout(toast._t);
+  toast._t=setTimeout(()=>el.classList.add("hidden"),2300);
+}
+
+function setSync(text,cls=""){
+  const e=$("sync");
+  e.textContent=text;
+  e.className="sync "+cls;
+}
+function setLoading(v){
+  loading=v;
+  $("actionsCard").style.opacity=v?".55":"1";
+  $("actionsCard").style.pointerEvents=v?"none":"auto";
+}
+
+async function apiFetch(path="",options={}){
+  const r=await fetch(API+path,{
+    ...options,
+    headers:{...HEADERS,...(options.headers||{})}
+  });
+  if(!r.ok)throw new Error(await r.text()||`Erreur ${r.status}`);
+  if(r.status===204)return[];
+  const t=await r.text();
+  return t?JSON.parse(t):[];
+}
+
+function normalizeRows(rows){
+  return rows
+    .filter(r=>r&&r.event_time&&r.type)
+    .map(r=>({id:r.id,type:r.type,time:new Date(r.event_time).getTime(),event_time:r.event_time}))
+    .sort((a,b)=>a.time-b.time);
+}
+
+async function loadEvents(show=true){
+  try{
+    if(show)setSync("Synchronisation...");
+    const rows=await apiFetch("?select=id,type,event_time,created_at&order=event_time.asc");
+    events=normalizeRows(rows);
+    localStorage.setItem(CACHE,JSON.stringify(events));
+    setSync("Sauvegarde en ligne active","ok");
+    render();
+    return true;
+  }catch(err){
+    const cached=JSON.parse(localStorage.getItem(CACHE)||"[]");
+    events=Array.isArray(cached)?cached:[];
+    setSync("Hors ligne ou connexion impossible","err");
+    render();
+    console.error(err);
+    return false;
+  }
+}
+
+function buildSessions(list=events){
+  const sessions=[];
+  let s=null;
+  for(const e of [...list].sort((a,b)=>a.time-b.time)){
+    if(e.type==="start"){
+      if(s&&!s.stop)sessions.push(s);
+      s={start:e,pause:null,resume:null,stop:null,events:[e]};
+      continue;
+    }
+    if(!s)continue;
+    s.events.push(e);
+    if(e.type==="pause")s.pause=e;
+    if(e.type==="resume")s.resume=e;
+    if(e.type==="stop"){
+      s.stop=e;
+      sessions.push(s);
+      s=null;
+    }
+  }
+  if(s)sessions.push(s);
+  return sessions;
+}
+
+function sessionDuration(s,live=true){
+  if(!s||!s.start)return 0;
+  let total=0,workStart=s.start.time;
+  for(const e of s.events.slice(1)){
+    if(e.type==="pause"&&workStart){
+      total+=Math.max(0,e.time-workStart);
+      workStart=null;
+    }else if(e.type==="resume"&&!workStart){
+      workStart=e.time;
+    }else if(e.type==="stop"){
+      if(workStart)total+=Math.max(0,e.time-workStart);
+      workStart=null;
+    }
+  }
+  if(workStart&&live&&!s.stop)total+=Date.now()-workStart;
+  return total;
+}
+
+function fmt(ms){
+  const m=Math.max(0,Math.floor(ms/60000));
+  return`${Math.floor(m/60)}h${pad(m%60)}`;
+}
+function fmtClock(ms){
+  const m=Math.max(0,Math.round(ms/60000));
+  return`${Math.floor(m/60)} h ${pad(m%60)}`;
+}
+function currentState(){
+  const l=events.at(-1);
+  if(!l)return"none";
+  if(l.type==="start"||l.type==="resume")return"work";
+  if(l.type==="pause")return"pause";
+  return"stopped";
+}
+function sumSessions(fn){
+  return buildSessions().reduce((s,x)=>s+(fn(x)?sessionDuration(x,true):0),0);
+}
+function startOfWeek(d=new Date()){
+  const x=new Date(d),diff=(x.getDay()+6)%7;
+  x.setDate(x.getDate()-diff);
+  x.setHours(0,0,0,0);
+  return x;
+}
+
+function daySessions(ds){
+  return buildSessions().filter(s=>dayKey(new Date(s.start.time))===ds);
+}
+function dayTotal(ds){
+  return daySessions(ds).reduce((sum,s)=>sum+sessionDuration(s,true),0);
+}
+function monthSessions(year,month){
+  return buildSessions().filter(s=>{
+    const d=new Date(s.start.time);
+    return d.getFullYear()===year&&d.getMonth()===month;
+  });
+}
+function monthTotal(year,month){
+  return monthSessions(year,month).reduce((sum,s)=>sum+sessionDuration(s,true),0);
+}
+
+function render(){
+  const state=currentState();
+  const labels={none:"Pas encore commencé",work:"En poste",pause:"En pause",stopped:"Journée terminée"};
+  $("state").textContent=labels[state];
+
+  $("start").disabled=loading||(state!=="none"&&state!=="stopped");
+  $("pause").disabled=loading||state!=="work";
+  $("resume").disabled=loading||state!=="pause";
+  $("stop").disabled=loading||!["work","pause"].includes(state);
+
+  const now=new Date();
+  const tk=dayKey(now);
+  const ws=startOfWeek(now);
+  const ms=new Date(now.getFullYear(),now.getMonth(),1);
+
+  const td=sumSessions(s=>dayKey(new Date(s.start.time))===tk);
+  const wk=sumSessions(s=>new Date(s.start.time)>=ws);
+  const mo=sumSessions(s=>new Date(s.start.time)>=ms);
+
+  $("today").textContent=fmt(td);
+  $("week").textContent=fmt(wk);
+  $("month").textContent=fmt(mo);
+
+  const goal=39*3600000,diff=wk-goal;
+  $("goal").textContent=diff>=0
+    ?`Objectif 39h atteint, +${fmt(diff)}`
+    :`Objectif 39h, il reste ${fmt(-diff)}`;
+
+  const currentMonthSessions=monthSessions(now.getFullYear(),now.getMonth());
+  const workedDays=new Set(currentMonthSessions.map(s=>dayKey(new Date(s.start.time)))).size;
+  $("calendarSummary").textContent=`${now.toLocaleDateString("fr-FR",{month:"long",year:"numeric"})} · ${workedDays} jour${workedDays>1?"s":""} pointé${workedDays>1?"s":""}`;
+
+  const ss=buildSessions().slice().reverse().slice(0,8);
+  $("history").innerHTML=ss.length?ss.map(s=>{
+    const d=new Date(s.start.time);
+    const det=[`Début ${hm(d)}`];
+    if(s.pause)det.push(`pause ${hm(new Date(s.pause.time))}`);
+    if(s.resume)det.push(`reprise ${hm(new Date(s.resume.time))}`);
+    if(s.stop)det.push(`fin ${hm(new Date(s.stop.time))}`);
+    else det.push("en cours");
+    return`<div class="row" onclick="openManual('${dayKey(d)}')" style="cursor:pointer">
+      <div class="row-main">
+        <div class="row-date">${d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}</div>
+        <div class="row-detail">${det.join(" · ")}</div>
+      </div>
+      <div class="row-total">${fmt(sessionDuration(s,true))}</div>
+    </div>`;
+  }).join(""):"Aucun pointage.";
+
+  if(!$("calendarOverlay").classList.contains("hidden"))renderCalendar();
+  if(!$("reportOverlay").classList.contains("hidden"))renderReport();
+}
+
+async function act(type){
+  if(loading)return;
+  setLoading(true);
+  try{
+    await apiFetch("",{
+      method:"POST",
+      body:JSON.stringify({type,event_time:new Date().toISOString()})
+    });
+    await loadEvents(false);
+    setSync("Pointage enregistré","ok");
+    toast("Pointage enregistré");
+  }catch(err){
+    setSync("Erreur, pointage non enregistré","err");
+    toast("Erreur de sauvegarde");
+    console.error(err);
+  }finally{
+    setLoading(false);
+    render();
+  }
+}
+
+function openOverlay(id){$(id).classList.remove("hidden");document.body.style.overflow="hidden"}
+function closeOverlay(id){$(id).classList.add("hidden");document.body.style.overflow=""}
+function overlayClose(ev,id){if(ev.target.id===id)closeOverlay(id)}
+
+function buildMonthOptions(){
+  const now=new Date();
+  const opts=[];
+  for(let i=0;i<18;i++){
+    const d=new Date(now.getFullYear(),now.getMonth()+i,1);
+    opts.push({
+      value:`${d.getFullYear()}-${pad(d.getMonth()+1)}`,
+      label:d.toLocaleDateString("fr-FR",{month:"long",year:"numeric"})
+    });
+  }
+  return opts;
+}
+
+function openCalendar(){
+  const now=new Date();
+  if(calendarMonth<new Date(now.getFullYear(),now.getMonth(),1)){
+    calendarMonth=new Date(now.getFullYear(),now.getMonth(),1);
+  }
+  const opts=buildMonthOptions();
+  $("monthSelect").innerHTML=opts.map(o=>`<option value="${o.value}">${o.label}</option>`).join("");
+  $("monthSelect").value=`${calendarMonth.getFullYear()}-${pad(calendarMonth.getMonth()+1)}`;
+  renderCalendar();
+  openOverlay("calendarOverlay");
+}
+
+function chooseCalendarMonth(){
+  const [y,m]=$("monthSelect").value.split("-").map(Number);
+  calendarMonth=new Date(y,m-1,1);
+  renderCalendar();
+}
+function changeCalendarMonth(delta){
+  const now=new Date();
+  const min=new Date(now.getFullYear(),now.getMonth(),1);
+  const next=new Date(calendarMonth.getFullYear(),calendarMonth.getMonth()+delta,1);
+  if(next<min)return;
+  calendarMonth=next;
+  const value=`${calendarMonth.getFullYear()}-${pad(calendarMonth.getMonth()+1)}`;
+  if([...$("monthSelect").options].some(o=>o.value===value))$("monthSelect").value=value;
+  renderCalendar();
+}
+function renderCalendar(){
+  const now=new Date();
+  const min=new Date(now.getFullYear(),now.getMonth(),1);
+  $("prevMonthBtn").disabled=calendarMonth<=min;
+
+  const y=calendarMonth.getFullYear(),m=calendarMonth.getMonth();
+  const first=new Date(y,m,1);
+  const lastDay=new Date(y,m+1,0).getDate();
+  const offset=(first.getDay()+6)%7;
+  const todayKey=dayKey(now);
+
+  let cells="";
+  for(let i=0;i<offset;i++)cells+=`<button class="cal-day empty" tabindex="-1"></button>`;
+
+  for(let day=1;day<=lastDay;day++){
+    const d=new Date(y,m,day,12);
+    const key=dayKey(d);
+    const total=dayTotal(key);
+    const classes=["cal-day"];
+    if(key===todayKey)classes.push("today");
+    if(key===selectedDate)classes.push("selected");
+    if(total>0)classes.push("has-hours");
+
+    cells+=`<button class="${classes.join(" ")}" onclick="selectCalendarDay('${key}')">
+      <div class="cal-num">${day}</div>
+      ${total>0?`<div class="cal-dot"></div><div class="cal-hours">${fmt(total)}</div>`:""}
+    </button>`;
+  }
+  $("calendarGrid").innerHTML=cells;
+}
+function selectCalendarDay(ds){
+  selectedDate=ds;
+  renderCalendar();
+  openManual(ds);
+}
+
+function openManual(ds=null){
+  const chosen=ds||dayKey(new Date());
+  selectedDate=chosen;
+  $("manualDate").value=chosen;
+  loadManualDay();
+  openOverlay("manualOverlay");
+}
+function manualMsg(t,c=""){
+  const e=$("manualMsg");
+  e.textContent=t;
+  e.className="sync "+c;
+}
+function loadManualDay(){
+  const ds=$("manualDate").value;
+  selectedDate=ds||null;
+  ["manualStart","manualPause","manualResume","manualStop"].forEach(id=>$(id).value="");
+  manualMsg("");
+
+  if(!ds)return;
+  const d=new Date(ds+"T12:00:00");
+  $("manualTitle").textContent=d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+  $("manualSubtitle").textContent=dayTotal(ds)>0?`Total actuel : ${fmt(dayTotal(ds))}`:"Aucun horaire enregistré";
+
+  const s=daySessions(ds)[0];
+  if(s){
+    $("manualStart").value=hm(new Date(s.start.time));
+    if(s.pause)$("manualPause").value=hm(new Date(s.pause.time));
+    if(s.resume)$("manualResume").value=hm(new Date(s.resume.time));
+    if(s.stop)$("manualStop").value=hm(new Date(s.stop.time));
+    manualMsg("Tu peux modifier les horaires puis enregistrer.","ok");
+  }
+  updateManualPreview();
+  if(!$("calendarOverlay").classList.contains("hidden"))renderCalendar();
+}
+
+function buildManualEvents(){
+  const ds=$("manualDate").value;
+  const vals=[
+    ["start",$("manualStart").value],
+    ["pause",$("manualPause").value],
+    ["resume",$("manualResume").value],
+    ["stop",$("manualStop").value]
+  ];
+  if(!ds)throw new Error("Choisis une date.");
+  if(!vals[0][1])throw new Error("L'heure de début est obligatoire.");
+
+  const out=[];
+  let prev=null,off=0;
+  for(const [type,time] of vals){
+    if(!time)continue;
+    let d=new Date(`${ds}T${time}:00`);
+    d.setDate(d.getDate()+off);
+    if(prev&&d.getTime()<=prev){
+      off++;
+      d=new Date(`${ds}T${time}:00`);
+      d.setDate(d.getDate()+off);
+    }
+    prev=d.getTime();
+    out.push({type,event_time:d.toISOString()});
+  }
+  return out;
+}
+function previewManualDuration(){
+  try{
+    const rows=buildManualEvents().map((r,i)=>({id:i,type:r.type,time:new Date(r.event_time).getTime(),event_time:r.event_time}));
+    const ss=buildSessions(rows);
+    return ss.length?sessionDuration(ss[0],false):0;
+  }catch(e){return 0}
+}
+function updateManualPreview(){
+  $("manualTotal").textContent=fmt(previewManualDuration());
+}
+
+async function deleteRowsForDate(ds){
+  const ids=daySessions(ds)
+    .flatMap(s=>s.events.map(e=>e.id))
+    .filter(v=>v!==undefined&&v!==null);
+  if(!ids.length)return;
+  await apiFetch(`?id=in.(${ids.map(encodeURIComponent).join(",")})`,{method:"DELETE"});
+}
+
+async function saveManualDay(){
+  if(loading)return;
+  try{
+    const ds=$("manualDate").value;
+    const rows=buildManualEvents();
+    setLoading(true);
+    manualMsg("Enregistrement...");
+    await deleteRowsForDate(ds);
+    await apiFetch("",{method:"POST",body:JSON.stringify(rows)});
+    await loadEvents(false);
+    loadManualDay();
+    manualMsg("Journée enregistrée.","ok");
+    toast("Journée enregistrée");
+  }catch(err){
+    manualMsg(err.message||"Erreur pendant l'enregistrement.","err");
+    console.error(err);
+  }finally{
+    setLoading(false);
+    render();
+  }
+}
+
+async function deleteManualDay(){
+  const ds=$("manualDate").value;
+  if(!ds)return;
+  if(!daySessions(ds).length){
+    manualMsg("Aucune journée à supprimer.");
+    return;
+  }
+  if(!confirm("Supprimer tous les pointages de cette journée ?"))return;
+  try{
+    setLoading(true);
+    await deleteRowsForDate(ds);
+    await loadEvents(false);
+    loadManualDay();
+    manualMsg("Journée supprimée.","ok");
+    toast("Journée supprimée");
+  }catch(err){
+    manualMsg("Erreur pendant la suppression.","err");
+    console.error(err);
+  }finally{
+    setLoading(false);
+    render();
+  }
+}
+
+function reportMonthKeys(){
+  const keys=new Set();
+  for(const s of buildSessions()){
+    const d=new Date(s.start.time);
+    keys.add(`${d.getFullYear()}-${pad(d.getMonth()+1)}`);
+  }
+  const now=new Date();
+  keys.add(`${now.getFullYear()}-${pad(now.getMonth()+1)}`);
+  return [...keys].sort().reverse();
+}
+
+function openReport(){
+  const keys=reportMonthKeys();
+  $("reportMonth").innerHTML=keys.map(k=>{
+    const [y,m]=k.split("-").map(Number);
+    const d=new Date(y,m-1,1);
+    return`<option value="${k}">${d.toLocaleDateString("fr-FR",{month:"long",year:"numeric"})}</option>`;
+  }).join("");
+  renderReport();
+  openOverlay("reportOverlay");
+}
+
+function getReportData(){
+  const value=$("reportMonth").value;
+  if(!value)return{label:"",sessions:[],rows:[],total:0,days:0};
+  const [y,m]=value.split("-").map(Number);
+  const ss=monthSessions(y,m-1).slice().sort((a,b)=>a.start.time-b.start.time);
+  const rows=ss.map(s=>{
+    const d=new Date(s.start.time);
+    return{
+      date:d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"2-digit"}),
+      start:hm(d),
+      pause:s.pause?hm(new Date(s.pause.time)):"",
+      resume:s.resume?hm(new Date(s.resume.time)):"",
+      stop:s.stop?hm(new Date(s.stop.time)):"",
+      total:sessionDuration(s,true)
+    };
+  });
+  const total=rows.reduce((s,r)=>s+r.total,0);
+  const days=new Set(ss.map(s=>dayKey(new Date(s.start.time)))).size;
+  const label=new Date(y,m-1,1).toLocaleDateString("fr-FR",{month:"long",year:"numeric"});
+  return{label,sessions:ss,rows,total,days};
+}
+
+function renderReport(){
+  const r=getReportData();
+  $("reportHours").textContent=fmt(r.total);
+  $("reportDays").textContent=r.days;
+  $("reportList").innerHTML=r.rows.length?r.rows.map(x=>`<div class="row">
+    <div class="row-main">
+      <div class="row-date">${x.date}</div>
+      <div class="row-detail">Début ${x.start}${x.pause?` · pause ${x.pause}`:""}${x.resume?` · reprise ${x.resume}`:""}${x.stop?` · fin ${x.stop}`:""}</div>
+    </div>
+    <div class="row-total">${fmt(x.total)}</div>
+  </div>`).join(""):"Aucun horaire enregistré pour ce mois.";
+}
+
+function safeFileName(label){
+  return label.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g,"-").replace(/[^a-z0-9-]/g,"");
+}
+
+function downloadPNG(){
+  const r=getReportData();
+  if(!r.rows.length){toast("Aucune heure à exporter");return}
+
+  const W=1400;
+  const rowH=94;
+  const H=330+r.rows.length*rowH+110;
+  const c=document.createElement("canvas");
+  c.width=W;c.height=H;
+  const ctx=c.getContext("2d");
+
+  ctx.fillStyle="#ffffff";
+  ctx.fillRect(0,0,W,H);
+  ctx.fillStyle="#111318";
+  ctx.font="700 54px Arial";
+  ctx.fillText("MON POINTAGE",70,85);
+  ctx.font="700 36px Arial";
+  ctx.fillText(`Récapitulatif · ${r.label}`,70,140);
+
+  ctx.font="700 30px Arial";
+  ctx.fillText(`Total : ${fmtClock(r.total)}`,70,205);
+  ctx.font="26px Arial";
+  ctx.fillText(`${r.days} jour${r.days>1?"s":""} travaillé${r.days>1?"s":""}`,70,250);
+
+  let y=325;
+  ctx.font="700 24px Arial";
+  ctx.fillStyle="#454b55";
+  ctx.fillText("DATE",70,y);
+  ctx.fillText("HORAIRES",310,y);
+  ctx.fillText("TOTAL",1190,y);
+  y+=34;
+
+  for(const x of r.rows){
+    ctx.strokeStyle="#e3e5e8";
+    ctx.beginPath();ctx.moveTo(70,y);ctx.lineTo(1330,y);ctx.stroke();
+    y+=43;
+    ctx.fillStyle="#111318";
+    ctx.font="700 25px Arial";
+    ctx.fillText(x.date,70,y);
+    ctx.font="23px Arial";
+    const details=`${x.start}${x.pause?`  /  ${x.pause}`:""}${x.resume?`  /  ${x.resume}`:""}${x.stop?`  /  ${x.stop}`:""}`;
+    ctx.fillText(details,310,y);
+    ctx.font="700 25px Arial";
+    ctx.fillText(fmt(x.total),1190,y);
+    y+=51;
+  }
+
+  ctx.fillStyle="#666c76";
+  ctx.font="20px Arial";
+  ctx.fillText("Généré depuis Mon Pointage",70,H-45);
+
+  c.toBlob(blob=>{
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);
+    a.download=`heures-${safeFileName(r.label)}.png`;
+    a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  },"image/png");
+}
+
+function downloadPDF(){
+  const r=getReportData();
+  if(!r.rows.length){toast("Aucune heure à exporter");return}
+  if(!window.jspdf||!window.jspdf.jsPDF){toast("PDF indisponible, réessaie dans quelques secondes");return}
+
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({unit:"mm",format:"a4"});
+  const left=15,right=195;
+  let y=20;
+
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(19);
+  doc.text("MON POINTAGE",left,y);y+=9;
+  doc.setFontSize(14);
+  doc.text(`Recapitulatif - ${r.label}`,left,y);y+=10;
+
+  doc.setFontSize(11);
+  doc.text(`Total du mois : ${fmtClock(r.total)}`,left,y);y+=6;
+  doc.text(`Jours travailles : ${r.days}`,left,y);y+=12;
+
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(9);
+  doc.text("Date",left,y);
+  doc.text("Debut",48,y);
+  doc.text("Pause",70,y);
+  doc.text("Reprise",92,y);
+  doc.text("Fin",119,y);
+  doc.text("Total",150,y);
+  y+=4;
+  doc.line(left,y,right,y);y+=6;
+
+  doc.setFont("helvetica","normal");
+  for(const x of r.rows){
+    if(y>275){
+      doc.addPage();
+      y=18;
+    }
+    doc.text(x.date,left,y);
+    doc.text(x.start||"-",48,y);
+    doc.text(x.pause||"-",70,y);
+    doc.text(x.resume||"-",92,y);
+    doc.text(x.stop||"-",119,y);
+    doc.setFont("helvetica","bold");
+    doc.text(fmt(x.total),150,y);
+    doc.setFont("helvetica","normal");
+    y+=7;
+  }
+
+  y+=5;
+  doc.line(left,y,right,y);y+=8;
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(12);
+  doc.text(`TOTAL : ${fmtClock(r.total)}`,left,y);
+
+  doc.save(`heures-${safeFileName(r.label)}.pdf`);
+}
+
+function openSettings(){
+  const d=readDesign();
+  $("accentPicker").value=d.accent||"#ff8a1f";
+  $("accentPreview").style.background=d.accent||"#ff8a1f";
+  $("cardOpacity").value=d.opacity||78;
+  openOverlay("settingsOverlay");
+}
+function readDesign(){
+  try{return JSON.parse(localStorage.getItem(DESIGN)||"{}")}catch{return{}}
+}
+function saveDesign(d){
+  localStorage.setItem(DESIGN,JSON.stringify(d));
+  applyDesign();
+}
+function setImage(e,target){
+  const f=e.target.files[0];
+  if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{
+    const d=readDesign();
+    d[target]=r.result;
+    saveDesign(d);
+    toast("Image enregistrée");
+  };
+  r.readAsDataURL(f);
+}
+function setAccent(value){
+  const d=readDesign();
+  d.accent=value;
+  saveDesign(d);
+  $("accentPreview").style.background=value;
+}
+function setCardOpacity(value){
+  const d=readDesign();
+  d.opacity=Number(value);
+  saveDesign(d);
+}
+function removeBackground(){
+  const d=readDesign();
+  delete d.background;
+  saveDesign(d);
+  toast("Fond retiré");
+}
+function applyDesign(){
+  const d=readDesign();
+  const accent=d.accent||"#ff8a1f";
+  const opacity=(d.opacity??78)/100;
+  document.documentElement.style.setProperty("--accent",accent);
+  document.documentElement.style.setProperty("--accent-soft",hexToRgba(accent,.16));
+  document.documentElement.style.setProperty("--card-alpha",opacity);
+
+  if(d.background){
+    document.body.style.backgroundImage=`linear-gradient(rgba(6,8,12,.40),rgba(6,8,12,.72)),url(${d.background})`;
+  }else{
+    document.body.style.backgroundImage="";
+  }
+
+  ["start","pause","resume","stop"].forEach(id=>{
+    const b=$(id);
+    b.style.backgroundImage="";
+    if(d[id]){
+      b.style.backgroundImage=`linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.18)),url(${d[id]})`;
+      b.style.backgroundColor="transparent";
+    }else{
+      b.style.backgroundColor="";
+    }
+  });
+}
+function hexToRgba(hex,a){
+  const h=hex.replace("#","");
+  const r=parseInt(h.substring(0,2),16),g=parseInt(h.substring(2,4),16),b=parseInt(h.substring(4,6),16);
+  return`rgba(${r},${g},${b},${a})`;
+}
+function resetDesign(){
+  if(!confirm("Réinitialiser toute la personnalisation ?"))return;
+  localStorage.removeItem(DESIGN);
+  location.reload();
+}
+
+function tick(){
+  const d=new Date();
+  $("clock").textContent=d.toLocaleTimeString("fr-FR");
+  $("date").textContent=d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+  render();
+}
+
+applyDesign();
+tick();
+setInterval(tick,1000);
+loadEvents();
 </script>
 </body>
 </html>
