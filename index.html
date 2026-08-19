@@ -10,7 +10,7 @@
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./icon-192.png">
-<title>Mon Pointage</title>
+<title>Mon Pointage · V6</title>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
 <style>
 :root{
@@ -94,7 +94,7 @@ input[type="checkbox"]{width:20px;height:20px;accent-color:var(--accent)}
 @media(min-width:640px){.overlay{align-items:center;padding:24px}.sheet{border-radius:28px;max-height:90vh}}
 @media(max-width:380px){.clock{font-size:40px}.num{font-size:18px}.stats{gap:6px}.stat{padding:11px 6px}.calendar-grid,.weekdays{gap:4px}.cal-day{min-height:58px;padding:6px 4px}.cal-hours{font-size:9px}}
 
-/* ===== V5 SIDEBAR PRO ===== */
+/* ===== V6 SIDEBAR PRO ===== */
 :root{
   --accent:#c88a3d;
   --accent2:#f3c47a;
@@ -240,6 +240,26 @@ body::before{
   .v5-historybox{padding:15px}.v5-headleft{gap:10px}
 }
 
+
+/* ===== V6 FEATURES ===== */
+.v6-badge{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:rgba(200,138,61,.18);border:1px solid rgba(200,138,61,.25);color:#efc17f;font-size:10px;font-weight:850;margin-left:auto}
+.v6-homeinsights{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+.v6-insight{border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,#121519,#0b0d10);color:var(--text);padding:14px;text-align:left;cursor:pointer;min-height:104px}
+.v6-insight .cap{font-size:9px;letter-spacing:.1em;color:var(--muted);font-weight:800}.v6-insight .big{font:500 24px Georgia,serif;margin:9px 0 3px}.v6-insight .sub{font-size:11px;color:var(--muted);line-height:1.35}
+.v6-card{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.027);padding:14px;margin:10px 0}.v6-card.gold{background:linear-gradient(145deg,rgba(200,138,61,.12),rgba(255,255,255,.02));border-color:rgba(200,138,61,.24)}
+.v6-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin:10px 0}.v6-metric{border:1px solid var(--line);border-radius:16px;background:#171a20;padding:12px}.v6-metric .big{font-size:22px;font-weight:850}.v6-metric .cap{font-size:9px;color:var(--muted);letter-spacing:.08em;margin-top:4px}.v6-metric .hint{font-size:10px;color:#b9bdc4;margin-top:5px}
+.v6-list{display:grid;gap:8px;margin-top:10px}.v6-listitem{border:1px solid var(--line);border-radius:15px;padding:12px;background:rgba(255,255,255,.025);display:flex;align-items:center;justify-content:space-between;gap:10px}.v6-listmain{min-width:0}.v6-listtitle{font-weight:800;font-size:13px}.v6-listmeta{font-size:10px;color:var(--muted);margin-top:4px;line-height:1.4}.v6-listactions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.v6-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 8px;border:1px solid var(--line);border-radius:999px;font-size:10px;color:#cfd1d5;background:#171a20}.v6-chip.good{color:#79dca2;border-color:rgba(72,201,122,.26);background:rgba(72,201,122,.05)}.v6-chip.warn{color:#efc17f;border-color:rgba(200,138,61,.26);background:rgba(200,138,61,.06)}.v6-chip.danger{color:#ff9f9f;border-color:rgba(166,59,59,.3);background:rgba(166,59,59,.08)}
+.v6-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}.v6-toolbar .mini-btn{flex:0 0 auto}.v6-sectiontitle{font-size:12px;font-weight:850;letter-spacing:.08em;color:#dedede;margin:18px 0 9px}.v6-empty{padding:20px 12px;text-align:center;color:var(--muted);font-size:12px;border:1px dashed var(--line);border-radius:16px}
+.v6-progress{height:7px;border-radius:99px;background:#1b1e23;overflow:hidden;margin-top:9px}.v6-progress i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:inherit}
+.v6-tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.v6-tier{border:1px solid var(--line);border-radius:14px;padding:10px 7px;background:#171a20;text-align:center}.v6-tier .n{font-weight:850;font-size:15px}.v6-tier .l{font-size:8px;color:var(--muted);margin-top:4px}
+.v6-inline3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.v6-inline4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.v6-hero-number{font:500 38px Georgia,serif;color:#f3c47a;margin:4px 0}.v6-muted{font-size:11px;color:var(--muted);line-height:1.45}.v6-separator{height:1px;background:var(--line);margin:14px 0}
+.v6-searchresults{margin-top:10px;max-height:280px;overflow:auto}.cal-marker{position:absolute;right:6px;border-radius:4px;height:4px}.cal-marker.plan{bottom:6px;left:6px;background:#d5a251}.cal-marker.leave{bottom:13px;left:6px;background:#6b9ddf}.cal-hours.has-extra{bottom:19px}
+.v6-lock{color:#efc17f}.v6-cloud{font-size:11px;margin-top:6px;color:var(--muted)}.v6-cloud.ok{color:#75dca5}.v6-cloud.err{color:#ffb0b0}
+.v6-dangerzone{border:1px solid rgba(166,59,59,.25);background:rgba(166,59,59,.05);border-radius:16px;padding:12px;margin-top:10px}
+@media(max-width:820px){.v6-homeinsights{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.v6-homeinsights{grid-template-columns:1fr 1fr;gap:8px}.v6-insight{min-height:92px;padding:11px}.v6-insight .big{font-size:20px}.v6-metrics{grid-template-columns:1fr 1fr}.v6-tiers{grid-template-columns:repeat(2,1fr)}.v6-inline3,.v6-inline4{grid-template-columns:1fr 1fr}.v6-listitem{align-items:flex-start;flex-direction:column}.v6-listactions{justify-content:flex-start}}
+
 </style>
 </head>
 <body>
@@ -291,9 +311,13 @@ body::before{
         <button class="v5-navbtn active" onclick="closeSidebar()"><span class="v5-navicon">⌂</span>Accueil</button>
         <button class="v5-navbtn" onclick="closeSidebar();openCalendar()"><span class="v5-navicon">◷</span>Mes horaires</button>
         <button class="v5-navbtn" onclick="closeSidebar();openCalendar()"><span class="v5-navicon">▦</span>Calendrier</button>
+        <button class="v5-navbtn" onclick="closeSidebar();openPlanning()"><span class="v5-navicon">◫</span>Planning</button>
+        <button class="v5-navbtn" onclick="closeSidebar();openSalary()"><span class="v5-navicon">€</span>Salaire</button>
+        <button class="v5-navbtn" onclick="closeSidebar();openLeave()"><span class="v5-navicon">◇</span>Congés</button>
         <button class="v5-navbtn" onclick="closeSidebar();openStats()"><span class="v5-navicon">▥</span>Statistiques</button>
-        <button class="v5-navbtn" onclick="closeSidebar();openReport()"><span class="v5-navicon">▤</span>Récap du mois</button>
-        <button class="v5-navbtn" onclick="closeSidebar();showCorrectionPanel()"><span class="v5-navicon">△</span>À corriger</button>
+        <button class="v5-navbtn" onclick="closeSidebar();openReport()"><span class="v5-navicon">▤</span>Récapitulatifs</button>
+        <button class="v5-navbtn" onclick="closeSidebar();showCorrectionPanel()"><span class="v5-navicon">△</span>À corriger <span id="v6CorrectionBadge" class="v6-badge hidden">0</span></button>
+        <button class="v5-navbtn" onclick="closeSidebar();openArchives()"><span class="v5-navicon">□</span>Archives</button>
         <button class="v5-navbtn" onclick="closeSidebar();openSettings()"><span class="v5-navicon">⚙</span>Réglages</button>
       </nav>
 
@@ -357,11 +381,22 @@ body::before{
           <div class="v5-goalbar"><i id="v5GoalBar"></i></div>
         </section>
 
+        <section class="v6-homeinsights">
+          <button class="v6-insight" onclick="openSalary()"><div class="cap">SALAIRE ESTIMÉ</div><div id="homeSalary" class="big">0 €</div><div id="homeSalarySub" class="sub">Calcul automatique</div></button>
+          <button class="v6-insight" onclick="openPlanning()"><div class="cap">PROCHAINE JOURNÉE</div><div id="homeNextShift" class="big">—</div><div id="homeNextShiftSub" class="sub">Aucun planning</div></button>
+          <button class="v6-insight" onclick="openLeave()"><div class="cap">CONGÉS ESTIMÉS</div><div id="homeLeave" class="big">—</div><div id="homeLeaveSub" class="sub">D'après ta dernière fiche</div></button>
+          <button class="v6-insight" onclick="showCorrectionPanel()"><div class="cap">À CORRIGER</div><div id="homeCorrections" class="big">0</div><div id="homeFinishForecast" class="sub">Aucune anomalie</div></button>
+        </section>
+
         <section class="v5-links">
           <button class="v5-link" onclick="openCalendar()"><span class="li">◷</span><span><b>Mes horaires</b><span>Voir tes horaires et jours travaillés</span></span><span class="arr">›</span></button>
           <button class="v5-link" onclick="openCalendar()"><span class="li">▦</span><span><b>Calendrier</b><span id="calendarSummary">Voir et modifier tes journées</span></span><span class="arr">›</span></button>
+          <button class="v5-link" onclick="openPlanning()"><span class="li">◫</span><span><b>Planning</b><span>Prévu, prochaine journée et comparaison avec le réel</span></span><span class="arr">›</span></button>
+          <button class="v5-link" onclick="openSalary()"><span class="li">€</span><span><b>Salaire</b><span>Brut, net, heures sup et projection</span></span><span class="arr">›</span></button>
+          <button class="v5-link" onclick="openLeave()"><span class="li">◇</span><span><b>Congés</b><span>Acquis, pris, restants et projection</span></span><span class="arr">›</span></button>
           <button class="v5-link" onclick="openStats()"><span class="li">▥</span><span><b>Statistiques</b><span>Heures sup, moyenne, journée la plus longue</span></span><span class="arr">›</span></button>
-          <button class="v5-link" onclick="openReport()"><span class="li">▤</span><span><b>Récap du mois</b><span>PDF ou PNG prêt à envoyer</span></span><span class="arr">›</span></button>
+          <button class="v5-link" onclick="openReport()"><span class="li">▤</span><span><b>Récap du mois</b><span>PDF, PNG ou CSV prêt à envoyer</span></span><span class="arr">›</span></button>
+          <button class="v5-link" onclick="openArchives()"><span class="li">□</span><span><b>Archives</b><span>Mois clôturés, paies réelles et historique</span></span><span class="arr">›</span></button>
         </section>
 
         <button id="installLauncher" class="launcher install-banner hidden" onclick="installApp()">
@@ -382,7 +417,10 @@ body::before{
   <div class="sheet-head"><div class="sheet-title">Calendrier</div><button class="close-btn" onclick="closeOverlay('calendarOverlay')">✕</button></div>
   <div class="calendar-toolbar"><button id="prevMonthBtn" class="cal-nav" onclick="changeCalendarMonth(-1)">‹</button><select id="monthSelect" class="month-select" onchange="chooseCalendarMonth()"></select><button class="cal-nav" onclick="changeCalendarMonth(1)">›</button></div>
   <div class="weekdays"><div>LUN</div><div>MAR</div><div>MER</div><div>JEU</div><div>VEN</div><div>SAM</div><div>DIM</div></div>
-  <div id="calendarGrid" class="calendar-grid"></div><div class="calendar-tip">Le total apparaît directement sur les jours travaillés. Appuie sur un jour pour l'ouvrir.</div>
+  <div id="calendarGrid" class="calendar-grid"></div><div class="calendar-tip">Le total apparaît directement sur les jours travaillés. Les traits indiquent planning ou congé.</div>
+  <div class="v6-sectiontitle">RECHERCHE RAPIDE</div>
+  <input id="calendarSearch" type="text" placeholder="Note, dimanche, nuit, >10h…" oninput="renderCalendarSearch()">
+  <div id="calendarSearchResults" class="v6-searchresults"></div>
 </div></div>
 
 <div id="manualOverlay" class="overlay hidden" onclick="overlayClose(event,'manualOverlay')"><div class="sheet">
@@ -398,6 +436,7 @@ body::before{
   <div style="margin-top:15px"><label>Note sur la journée</label><textarea id="manualNote" placeholder="Exemple : Festival, fermeture tardive, remplacement..."></textarea></div>
   <div class="manual-total">Total calculé : <strong id="manualTotal">0h00</strong></div>
   <div class="note">Tu peux ajouter plusieurs pauses. Si tu finis après minuit, indique simplement l'heure réelle.</div>
+  <div class="v6-card"><div class="v6-listtitle">Dupliquer cette journée</div><div class="form-grid" style="margin-top:9px"><div><label>Nouvelle date</label><input id="duplicateTarget" type="date"></div><div style="display:flex;align-items:end"><button class="mini-btn" style="width:100%;min-height:46px" onclick="duplicateManualDay()">DUPLIQUER</button></div></div></div>
   <div class="form-actions"><button class="action good" onclick="saveManualDay()">ENREGISTRER</button><button class="action danger" onclick="deleteManualDay()">SUPPRIMER</button></div>
   <div id="manualMsg" class="sync"></div>
 </div></div>
@@ -410,7 +449,7 @@ body::before{
     <div class="stats-box"><div class="big" id="statsDays">0</div><div class="cap">JOURS TRAVAILLÉS</div></div>
     <div class="stats-box"><div class="big" id="statsAvg">0h00</div><div class="cap">MOYENNE / JOUR</div></div>
     <div class="stats-box"><div class="big" id="statsLongest">0h00</div><div class="cap">JOURNÉE LA PLUS LONGUE</div></div>
-    <div class="stats-box"><div class="big" id="statsOvertime">0h00</div><div class="cap">ÉCART OBJECTIF MOIS</div></div>
+    <div class="stats-box"><div class="big" id="statsOvertime">0h00</div><div class="cap">HEURES SUP ESTIMÉES</div></div>
     <div class="stats-box"><div class="big" id="statsCompare">0h00</div><div class="cap">VS MOIS PRÉCÉDENT</div></div>
   </div>
 </div></div>
@@ -422,6 +461,75 @@ body::before{
   <div id="reportList" class="report-list small"></div>
   <div class="report-actions"><button class="action secondary" onclick="sharePDF()">PARTAGER PDF</button><button class="action secondary" onclick="sharePNG()">PARTAGER PNG</button></div>
   <div class="report-actions"><button class="mini-btn" onclick="downloadPDF()">TÉLÉCHARGER PDF</button><button class="mini-btn" onclick="downloadPNG()">TÉLÉCHARGER PNG</button></div>
+  <div class="report-actions"><button class="mini-btn" onclick="downloadCSV()">EXPORTER CSV</button><button class="mini-btn" onclick="toggleCloseSelectedMonth()" id="closeMonthBtn">CLÔTURER LE MOIS</button></div>
+</div></div>
+
+
+<div id="planningOverlay" class="overlay hidden" onclick="overlayClose(event,'planningOverlay')"><div class="sheet">
+  <div class="sheet-head"><div><div class="sheet-title">Planning</div><div class="small">Prévu vs réellement travaillé</div></div><button class="close-btn" onclick="closeOverlay('planningOverlay')">✕</button></div>
+  <div class="v6-card gold"><div class="small">PROCHAINE JOURNÉE</div><div id="planningNext" class="v6-hero-number">—</div><div id="planningNextMeta" class="v6-muted">Aucune journée prévue.</div></div>
+  <div class="v6-sectiontitle">AJOUTER / MODIFIER</div>
+  <input id="planId" type="hidden">
+  <div class="form-grid">
+    <div class="full"><label>Date</label><input id="planDate" type="date"></div>
+    <div><label>Début prévu</label><input id="planStart" type="time"></div><div><label>Fin prévue</label><input id="planEnd" type="time"></div>
+    <div class="full"><label>Type / modèle</label><input id="planLabel" type="text" placeholder="Ouverture, fermeture, DJ…"></div>
+    <div class="full"><label>Note</label><input id="planNote" type="text" placeholder="Facultatif"></div>
+  </div>
+  <div id="planTemplates" class="v6-toolbar"></div>
+  <div class="form-actions"><button class="action good" onclick="savePlan()">ENREGISTRER</button><button class="action danger" onclick="deletePlan()">SUPPRIMER</button></div>
+  <div class="v6-sectiontitle">CRÉER UN MODÈLE</div>
+  <div class="form-grid"><div class="full"><label>Nom</label><input id="tplName" type="text" placeholder="Ex. Fermeture"></div><div><label>Début</label><input id="tplStart" type="time"></div><div><label>Fin</label><input id="tplEnd" type="time"></div></div>
+  <button class="mini-btn" onclick="saveTemplate()">+ AJOUTER LE MODÈLE</button>
+  <div class="v6-sectiontitle">JOURNÉES PRÉVUES</div><div id="planningList" class="v6-list"></div>
+</div></div>
+
+<div id="salaryOverlay" class="overlay hidden" onclick="overlayClose(event,'salaryOverlay')"><div class="sheet">
+  <div class="sheet-head"><div><div class="sheet-title">Salaire</div><div class="small">Estimation automatique à partir de tes pointages</div></div><button class="close-btn" onclick="closeOverlay('salaryOverlay')">✕</button></div>
+  <label>Mois</label><select id="salaryMonth" onchange="renderSalary()"></select>
+  <div class="v6-metrics">
+    <div class="v6-metric"><div id="salaryHours" class="big">0h00</div><div class="cap">HEURES RÉELLES</div></div>
+    <div class="v6-metric"><div id="salaryDiff" class="big">0h00</div><div class="cap">ÉCART 169H</div></div>
+    <div class="v6-metric"><div id="salaryGross" class="big">0 €</div><div class="cap">BRUT ESTIMÉ</div></div>
+    <div class="v6-metric"><div id="salaryNet" class="big">0 €</div><div class="cap">NET ESTIMÉ</div></div>
+    <div class="v6-metric"><div id="salaryMeals" class="big">0 €</div><div class="cap">REPAS ESTIMÉS</div></div>
+    <div class="v6-metric"><div id="salaryProjected" class="big">0 €</div><div class="cap">NET PROJETÉ FIN DE MOIS</div></div>
+  </div>
+  <div class="v6-sectiontitle">RÉPARTITION DES HEURES</div>
+  <div class="v6-tiers"><div class="v6-tier"><div id="tierNormal" class="n">0h00</div><div class="l">NORMALES</div></div><div class="v6-tier"><div id="tier10" class="n">0h00</div><div class="l">+10 %</div></div><div class="v6-tier"><div id="tier20" class="n">0h00</div><div class="l">+20 %</div></div><div class="v6-tier"><div id="tier50" class="n">0h00</div><div class="l">+50 %</div></div></div>
+  <div class="v6-card"><div class="v6-listtitle">Projection</div><div id="salaryProjectionText" class="v6-muted" style="margin-top:6px"></div></div>
+  <div class="v6-sectiontitle">SIMULATEUR « SI JE TRAVAILLE… »</div>
+  <div class="form-grid"><div><label>Journées en plus</label><input id="simDays" type="number" min="0" step="1" value="4" oninput="renderSalarySimulator()"></div><div><label>Heures par journée</label><input id="simHours" type="number" min="0" step="0.25" value="8" oninput="renderSalarySimulator()"></div></div>
+  <div class="v6-card gold"><div class="small">APRÈS CES JOURNÉES</div><div id="simResult" class="v6-hero-number">—</div><div id="simResultMeta" class="v6-muted"></div></div>
+  <div class="v6-sectiontitle">FICHE DE PAIE RÉELLE</div>
+  <div class="form-grid"><div><label>Heures indiquées</label><input id="payActualHours" type="number" min="0" step="0.01" placeholder="Ex. 169"></div><div><label>Net payé</label><input id="payActualNet" type="number" min="0" step="0.01" placeholder="Ex. 1714.80"></div><div class="full"><label>Brut (facultatif)</label><input id="payActualGross" type="number" min="0" step="0.01"></div></div>
+  <button class="mini-btn" onclick="saveActualPayslip()">ENREGISTRER LA FICHE</button>
+  <div id="salaryPaidCompare" class="v6-card hidden"></div>
+  <div class="note">Estimation uniquement. Les paramètres sont modifiables dans Réglages. Les majorations HCR utilisées sont 10 %, 20 % et 50 % selon la semaine.</div>
+</div></div>
+
+<div id="leaveOverlay" class="overlay hidden" onclick="overlayClose(event,'leaveOverlay')"><div class="sheet">
+  <div class="sheet-head"><div><div class="sheet-title">Congés & repos</div><div class="small">Acquis, pris, restants et récupérations</div></div><button class="close-btn" onclick="closeOverlay('leaveOverlay')">✕</button></div>
+  <div class="v6-metrics"><div class="v6-metric"><div id="leaveOfficial" class="big">21,5 j</div><div class="cap">SOLDE DERNIÈRE FICHE</div></div><div class="v6-metric"><div id="leaveEstimated" class="big">—</div><div class="cap">SOLDE ESTIMÉ AUJOURD'HUI</div></div><div class="v6-metric"><div id="leaveTaken" class="big">0 j</div><div class="cap">CP SAISIS DEPUIS</div></div><div class="v6-metric"><div id="leaveProjection" class="big">—</div><div class="cap">PROJECTION + 3 MOIS</div></div></div>
+  <div class="v6-card"><div class="v6-listtitle">Référence de ta fiche de juin 2026</div><div id="leaveReferenceText" class="v6-muted" style="margin-top:5px"></div></div>
+  <div class="v6-sectiontitle">AJOUTER UN JOUR / UNE PÉRIODE</div>
+  <div class="form-grid"><div><label>Date</label><input id="leaveDate" type="date"></div><div><label>Nombre de jours</label><input id="leaveDays" type="number" min="0.5" step="0.5" value="1"></div><div class="full"><label>Type</label><select id="leaveType"><option value="cp">Congé payé</option><option value="rest">Repos</option><option value="recovery">Récupération</option><option value="absence">Absence</option></select></div><div class="full"><label>Note</label><input id="leaveNote" type="text" placeholder="Facultatif"></div></div>
+  <button class="mini-btn" onclick="saveLeaveRecord()">+ AJOUTER</button>
+  <div class="v6-sectiontitle">HISTORIQUE</div><div id="leaveList" class="v6-list"></div>
+  <div class="v6-sectiontitle">METTRE À JOUR AVEC UNE NOUVELLE FICHE DE PAIE</div>
+  <div class="form-grid"><div><label>Solde N-1</label><input id="leaveN1" type="number" step="0.5"></div><div><label>Congés N</label><input id="leaveN" type="number" step="0.5"></div><div><label>Date de référence</label><input id="leaveRefDate" type="date"></div><div><label>Acquisition / mois</label><input id="leaveRate" type="number" step="0.1"></div></div>
+  <button class="mini-btn" onclick="saveLeaveReference()">METTRE À JOUR LE SOLDE OFFICIEL</button>
+</div></div>
+
+<div id="correctionOverlay" class="overlay hidden" onclick="overlayClose(event,'correctionOverlay')"><div class="sheet">
+  <div class="sheet-head"><div><div class="sheet-title">À corriger</div><div class="small">Contrôle automatique de tes pointages</div></div><button class="close-btn" onclick="closeOverlay('correctionOverlay')">✕</button></div>
+  <div id="correctionSummary" class="v6-card gold"></div><div id="correctionList" class="v6-list"></div>
+</div></div>
+
+<div id="archivesOverlay" class="overlay hidden" onclick="overlayClose(event,'archivesOverlay')"><div class="sheet">
+  <div class="sheet-head"><div><div class="sheet-title">Archives</div><div class="small">Mois clôturés, fiche réelle et historique</div></div><button class="close-btn" onclick="closeOverlay('archivesOverlay')">✕</button></div>
+  <div id="archivesList" class="v6-list"></div>
+  <div class="v6-sectiontitle">DERNIÈRES MODIFICATIONS</div><div id="modificationList" class="v6-list"></div>
 </div></div>
 
 <div id="settingsOverlay" class="overlay hidden" onclick="overlayClose(event,'settingsOverlay')"><div class="sheet">
@@ -452,6 +560,20 @@ body::before{
     <label>FIN</label><input type="file" accept="image/*" onchange="setImage(event,'stop')">
   </div>
 
+
+  <div class="setting-group"><div class="setting-title">Salaire & paie</div><div class="form-grid">
+    <div><label>Taux horaire brut</label><input id="salaryHourlyRate" type="number" step="0.01" oninput="saveSalarySettings()"></div>
+    <div><label>Net / brut estimé</label><input id="salaryNetRatio" type="number" step="0.001" oninput="saveSalarySettings()"></div>
+    <div><label>Indemnité repas</label><input id="salaryMealRate" type="number" step="0.01" oninput="saveSalarySettings()"></div>
+    <div><label>Objectif journée</label><input id="dailyTarget" type="number" step="0.25" oninput="saveSettingField()"></div>
+  </div><div class="setting-help">Référence initiale : fiche de juin 2026, 12,31 € brut/h, repas 4,35 €, net observé 1 714,80 € pour 2 166,98 € brut.</div></div>
+
+  <div class="setting-group"><div class="setting-title">Sauvegarde & synchro V6</div>
+    <div id="v6CloudStatus" class="v6-cloud">Vérification…</div>
+    <div class="v6-toolbar"><button class="mini-btn" onclick="exportBackup()">EXPORTER SAUVEGARDE</button><label class="mini-btn" style="display:inline-block;cursor:pointer">RESTAURER<input type="file" accept="application/json" onchange="restoreBackup(event)" style="display:none"></label></div>
+    <div class="setting-help">Le backup contient tes réglages V6 et tes pointages. La restauration demande confirmation avant de remplacer les heures en ligne.</div>
+  </div>
+
   <div class="setting-group"><div class="setting-title">Sécurité</div><button class="mini-btn" onclick="changePin()">CHANGER LE CODE PIN</button><button class="mini-btn" style="margin-left:6px" onclick="logout()">DÉCONNEXION</button></div>
   <div class="setting-group"><button class="reset-btn" onclick="resetDesign()">RÉINITIALISER LE DESIGN</button></div>
 </div></div>
@@ -469,14 +591,7 @@ function closeSidebar(){
   const s=document.getElementById("v5Sidebar"),b=document.getElementById("v5Backdrop");
   if(s)s.classList.remove("open"); if(b)b.classList.remove("open");
 }
-function showCorrectionPanel(){
-  const f=document.getElementById("forgotCard");
-  if(f && !f.classList.contains("hidden")){
-    f.scrollIntoView({behavior:"smooth",block:"center"});
-  }else{
-    alert("Aucune journée à corriger pour le moment.");
-  }
-}
+function showCorrectionPanel(){renderCorrections();openOverlay("correctionOverlay")}
 function updateV5Chrome(){
   try{
     const name=(document.getElementById("profileName")?.value||localStorage.getItem("mp_profile_name")||"NASTX").trim()||"NASTX";
@@ -507,6 +622,9 @@ const DESIGN_KEY="pointage_design_v4";
 const SETTINGS_KEY="pointage_settings_v4";
 const CACHE_KEY="pointage_cache_v4";
 const QUEUE_KEY="pointage_queue_v4";
+const APPSTATE_KEY="pointage_app_state_v6";
+const APPDATA_TABLE="APP_DATA";
+let appDataCloudReady=null,appStateSyncTimer=null;
 
 let serverEvents=[],events=[],loading=false,authMode="login",pinBuffer="",pinMode="unlock",pinFirst="",deferredInstallPrompt=null;
 let calendarMonth=new Date(new Date().getFullYear(),new Date().getMonth(),1),selectedDate=null,pauseCounter=0;
@@ -519,7 +637,7 @@ const hm=d=>`${pad(d.getHours())}:${pad(d.getMinutes())}`;
 function toast(text){const e=$("toast");e.textContent=text;e.classList.remove("hidden");clearTimeout(toast._t);toast._t=setTimeout(()=>e.classList.add("hidden"),2300)}
 function setSync(text,cls=""){const e=$("sync");e.textContent=text;e.className="sync "+cls}
 function setLoading(v){loading=v;const e=$("actionsCard");if(e){e.style.opacity=v?".55":"1";e.style.pointerEvents=v?"none":"auto"}}
-function getSettings(){try{return{weeklyTarget:39,monthlyTarget:169,profileName:"",reminderEnabled:false,reminderTime:"03:30",...JSON.parse(localStorage.getItem(SETTINGS_KEY)||"{}")}}catch{return{weeklyTarget:39,monthlyTarget:169,profileName:"",reminderEnabled:false,reminderTime:"03:30"}}}
+function getSettings(){try{return{weeklyTarget:39,monthlyTarget:169,dailyTarget:8,profileName:"",reminderEnabled:false,reminderTime:"03:30",...JSON.parse(localStorage.getItem(SETTINGS_KEY)||"{}")}}catch{return{weeklyTarget:39,monthlyTarget:169,dailyTarget:8,profileName:"",reminderEnabled:false,reminderTime:"03:30"}}}
 function saveSettings(s){localStorage.setItem(SETTINGS_KEY,JSON.stringify(s));render()}
 function getSession(){try{return JSON.parse(localStorage.getItem(AUTH_KEY)||"null")}catch{return null}}
 function saveSession(s){localStorage.setItem(AUTH_KEY,JSON.stringify(s))}
@@ -607,7 +725,7 @@ async function boot(){
   await afterAuthenticated()
 }
 async function showApp(){
-  $("app").classList.remove("hidden");loadSettingsUI();tick();await loadEvents();flushQueue();checkReminder();setInterval(checkReminder,60000)
+  $("app").classList.remove("hidden");loadSettingsUI();loadAppStateLocal();tick();await loadEvents();await loadAppStateCloud();flushQueue();checkReminder();setInterval(checkReminder,60000);renderExtra();setTimeout(processLaunchParams,250)
 }
 
 async function apiFetch(path="",options={}){
@@ -710,13 +828,19 @@ function render(){
   const ss=buildSessions().slice().reverse().slice(0,8);
   $("history").innerHTML=ss.length?ss.map(s=>{const d=new Date(s.start.time),det=[`Début ${hm(d)}`];for(const p of sessionPauses(s)){det.push(`pause ${hm(new Date(p.pause.time))}${p.resume?` → ${hm(new Date(p.resume.time))}`:""}`)}if(s.stop)det.push(`fin ${hm(new Date(s.stop.time))}`);else det.push("en cours");if(s.note)det.push(`note : ${escapeHtml(s.note)}`);return`<div class="row" onclick="openManual('${dayKey(d)}')" style="cursor:pointer"><div class="row-main"><div class="row-date">${d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}${s.events.some(e=>e.pending)?" · à synchroniser":""}</div><div class="row-detail">${det.join(" · ")}</div></div><div class="row-total">${fmt(sessionDuration(s,true))}</div></div>`}).join(""):"Aucun pointage.";
   renderForgotten();
-  if(!$("calendarOverlay").classList.contains("hidden"))renderCalendar();
+  renderExtra();
+  if(!$("calendarOverlay").classList.contains("hidden")){renderCalendar();renderCalendarSearch()}
   if(!$("statsOverlay").classList.contains("hidden"))renderStats();
-  if(!$("reportOverlay").classList.contains("hidden"))renderReport()
+  if(!$("reportOverlay").classList.contains("hidden"))renderReport();
+  if(!$("salaryOverlay").classList.contains("hidden"))renderSalary();
+  if(!$("planningOverlay").classList.contains("hidden"))renderPlanning();
+  if(!$("leaveOverlay").classList.contains("hidden"))renderLeave();
+  if(!$("correctionOverlay").classList.contains("hidden"))renderCorrections();
+  if(!$("archivesOverlay").classList.contains("hidden"))renderArchives()
 }
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 async function act(type){
-  if(loading)return;const row={user_id:userId(),type,event_time:new Date().toISOString(),note:null};
+  if(loading)return;if(isMonthLocked(monthKeyFromDate(new Date()))){toast("Ce mois est clôturé. Déverrouille-le dans Archives.");return}const row={user_id:userId(),type,event_time:new Date().toISOString(),note:null};
   if(!navigator.onLine){applyLocalInsert(row);enqueue({kind:"insert",row});setSync(`Hors connexion · ${queue().length} en attente`,"err");toast("Enregistré hors connexion");return}
   setLoading(true);try{await apiFetch("",{method:"POST",body:JSON.stringify(row)});await loadEvents(false);setSync("Pointage enregistré","ok");toast("Pointage enregistré")}catch(e){applyLocalInsert(row);enqueue({kind:"insert",row});setSync("Sauvegardé localement, synchro plus tard","err");toast("Sauvegardé hors ligne");console.error(e)}finally{setLoading(false);render()}
 }
@@ -734,13 +858,15 @@ function buildMonthOptions(futureOnly=false){
   if(futureOnly){for(let i=0;i<18;i++){const d=new Date(now.getFullYear(),now.getMonth()+i,1);opts.push({value:`${d.getFullYear()}-${pad(d.getMonth()+1)}`,label:d.toLocaleDateString("fr-FR",{month:"long",year:"numeric"})})}}
   else{
     const keys=new Set();for(const s of buildSessions()){const d=new Date(s.start.time);keys.add(`${d.getFullYear()}-${pad(d.getMonth()+1)}`)}
+    try{for(const p of getAppState().planning)keys.add(p.date.slice(0,7));Object.keys(getAppState().actualPayslips).forEach(k=>keys.add(k));Object.keys(getAppState().lockedMonths).forEach(k=>keys.add(k))}catch{}
     keys.add(`${now.getFullYear()}-${pad(now.getMonth()+1)}`);[...keys].sort().reverse().forEach(k=>{const[y,m]=k.split("-").map(Number),d=new Date(y,m-1,1);opts.push({value:k,label:d.toLocaleDateString("fr-FR",{month:"long",year:"numeric"})})})
   }return opts
 }
-function openCalendar(){const now=new Date(),min=new Date(now.getFullYear(),now.getMonth(),1);if(calendarMonth<min)calendarMonth=min;const opts=buildMonthOptions(true);$("monthSelect").innerHTML=opts.map(o=>`<option value="${o.value}">${o.label}</option>`).join("");$("monthSelect").value=`${calendarMonth.getFullYear()}-${pad(calendarMonth.getMonth()+1)}`;renderCalendar();openOverlay("calendarOverlay")}
+function calendarMonthOptions(){const now=new Date(),opts=[];for(let i=-24;i<=18;i++){const d=new Date(now.getFullYear(),now.getMonth()+i,1);opts.push({value:monthKeyFromDate(d),label:d.toLocaleDateString("fr-FR",{month:"long",year:"numeric"})})}return opts}
+function openCalendar(){const now=new Date();const opts=calendarMonthOptions();$("monthSelect").innerHTML=opts.map(o=>`<option value="${o.value}">${o.label}</option>`).join("");$("monthSelect").value=`${calendarMonth.getFullYear()}-${pad(calendarMonth.getMonth()+1)}`;renderCalendar();openOverlay("calendarOverlay")}
 function chooseCalendarMonth(){const[y,m]=$("monthSelect").value.split("-").map(Number);calendarMonth=new Date(y,m-1,1);renderCalendar()}
-function changeCalendarMonth(delta){const now=new Date(),min=new Date(now.getFullYear(),now.getMonth(),1),next=new Date(calendarMonth.getFullYear(),calendarMonth.getMonth()+delta,1);if(next<min)return;calendarMonth=next;const v=`${calendarMonth.getFullYear()}-${pad(calendarMonth.getMonth()+1)}`;if([...$("monthSelect").options].some(o=>o.value===v))$("monthSelect").value=v;renderCalendar()}
-function renderCalendar(){const now=new Date(),min=new Date(now.getFullYear(),now.getMonth(),1);$("prevMonthBtn").disabled=calendarMonth<=min;const y=calendarMonth.getFullYear(),m=calendarMonth.getMonth(),first=new Date(y,m,1),last=new Date(y,m+1,0).getDate(),offset=(first.getDay()+6)%7,today=dayKey(now);let cells="";for(let i=0;i<offset;i++)cells+=`<button class="cal-day empty"></button>`;for(let day=1;day<=last;day++){const d=new Date(y,m,day,12),key=dayKey(d),total=dayTotal(key),classes=["cal-day"];if(key===today)classes.push("today");if(key===selectedDate)classes.push("selected");if(total>0)classes.push("has-hours");cells+=`<button class="${classes.join(" ")}" onclick="selectCalendarDay('${key}')"><div class="cal-num">${day}</div>${total>0?`<div class="cal-dot"></div><div class="cal-hours">${fmt(total)}</div>`:""}</button>`}$("calendarGrid").innerHTML=cells}
+function changeCalendarMonth(delta){const next=new Date(calendarMonth.getFullYear(),calendarMonth.getMonth()+delta,1);calendarMonth=next;const v=`${calendarMonth.getFullYear()}-${pad(calendarMonth.getMonth()+1)}`;if([...$("monthSelect").options].some(o=>o.value===v))$("monthSelect").value=v;renderCalendar()}
+function renderCalendar(){const now=new Date();$("prevMonthBtn").disabled=false;const y=calendarMonth.getFullYear(),m=calendarMonth.getMonth(),first=new Date(y,m,1),last=new Date(y,m+1,0).getDate(),offset=(first.getDay()+6)%7,today=dayKey(now);let cells="";for(let i=0;i<offset;i++)cells+=`<button class="cal-day empty"></button>`;for(let day=1;day<=last;day++){const d=new Date(y,m,day,12),key=dayKey(d),total=dayTotal(key),plan=getPlansForDate(key).length>0,leave=getLeaveForDate(key).length>0,classes=["cal-day"];if(key===today)classes.push("today");if(key===selectedDate)classes.push("selected");if(total>0)classes.push("has-hours");cells+=`<button class="${classes.join(" ")}" onclick="selectCalendarDay('${key}')"><div class="cal-num">${day}${isMonthLocked(key.slice(0,7))?` <span class="v6-lock">•</span>`:""}</div>${total>0?`<div class="cal-dot"></div><div class="cal-hours ${plan||leave?"has-extra":""}">${fmt(total)}</div>`:""}${plan?`<i class="cal-marker plan"></i>`:""}${leave?`<i class="cal-marker leave"></i>`:""}</button>`}$("calendarGrid").innerHTML=cells}
 function selectCalendarDay(ds){selectedDate=ds;renderCalendar();openManual(ds)}
 
 function addPauseRow(pause="",resume=""){const id=++pauseCounter,row=document.createElement("div");row.className="pause-line";row.dataset.pauseId=id;row.innerHTML=`<div><label>Début pause</label><input type="time" class="pause-start" value="${pause}" oninput="updateManualPreview()"></div><div><label>Reprise</label><input type="time" class="pause-end" value="${resume}" oninput="updateManualPreview()"></div><button class="pause-remove" onclick="removePauseRow(${id})">✕</button>`;$("pauseList").appendChild(row);updateManualPreview()}
@@ -766,19 +892,22 @@ function buildManualEvents(){
 function previewManualDuration(){try{const rows=buildManualEvents().map((r,i)=>({id:i,type:r.type,time:new Date(r.event_time).getTime(),event_time:r.event_time,note:r.note||""})),ss=buildSessions(rows);return ss.length?sessionDuration(ss[0],false):0}catch{return 0}}
 function updateManualPreview(){$("manualTotal").textContent=fmt(previewManualDuration())}
 async function saveManualDay(){
-  if(loading)return;try{const ds=$("manualDate").value,rows=buildManualEvents();setLoading(true);manualMsg("Enregistrement...");
+  if(loading)return;try{const ds=$("manualDate").value;if(isMonthLocked(ds.slice(0,7)))throw new Error("Ce mois est clôturé. Déverrouille-le dans Archives avant de modifier cette journée.");const rows=buildManualEvents();setLoading(true);manualMsg("Enregistrement...");
     if(!navigator.onLine){replaceLocalDay(ds,rows);enqueue({kind:"replaceDay",date:ds,rows});manualMsg("Enregistré hors connexion. Synchronisation automatique plus tard.","ok");toast("Journée enregistrée hors ligne")}
     else{await serverDeleteDay(ds);await apiFetch("",{method:"POST",body:JSON.stringify(rows)});await loadEvents(false);loadManualDay();manualMsg("Journée enregistrée.","ok");toast("Journée enregistrée")}
+    recordChange("Journée enregistrée",ds,`${fmt(previewManualDuration())}`);scheduleAppStateSync()
   }catch(e){manualMsg(e.message||"Erreur pendant l'enregistrement.","err");console.error(e)}finally{setLoading(false);render()}
 }
+async function duplicateManualDay(){const target=$("duplicateTarget").value,source=$("manualDate").value;if(!target){toast("Choisis la nouvelle date");return}if(target===source){toast("Choisis une autre date");return}if(isMonthLocked(target.slice(0,7))){toast("Le mois de destination est clôturé");return}if(daySessions(target).length&&!confirm("Cette date contient déjà des heures. Les remplacer par cette journée dupliquée ?"))return;const original=$("manualDate").value;try{$("manualDate").value=target;const rows=buildManualEvents();$("manualDate").value=original;if(!navigator.onLine){replaceLocalDay(target,rows);enqueue({kind:"replaceDay",date:target,rows})}else{await serverDeleteDay(target);await apiFetch("",{method:"POST",body:JSON.stringify(rows)});await loadEvents(false)}recordChange("Journée dupliquée",target,`Depuis ${source}`);scheduleAppStateSync();toast("Journée dupliquée");render()}catch(e){$("manualDate").value=original;toast(e.message||"Duplication impossible")}}
+
 async function deleteManualDay(){
-  const ds=$("manualDate").value;if(!ds)return;if(!daySessions(ds).length){manualMsg("Aucune journée à supprimer.");return}if(!confirm("Supprimer tous les pointages de cette journée ?"))return;
-  try{setLoading(true);if(!navigator.onLine){replaceLocalDay(ds,[]);enqueue({kind:"deleteDay",date:ds});manualMsg("Suppression enregistrée hors connexion.","ok")}else{await serverDeleteDay(ds);await loadEvents(false);loadManualDay();manualMsg("Journée supprimée.","ok")}toast("Journée supprimée")}catch(e){manualMsg("Erreur pendant la suppression.","err");console.error(e)}finally{setLoading(false);render()}
+  const ds=$("manualDate").value;if(!ds)return;if(isMonthLocked(ds.slice(0,7))){manualMsg("Ce mois est clôturé. Déverrouille-le dans Archives.","err");return}if(!daySessions(ds).length){manualMsg("Aucune journée à supprimer.");return}if(!confirm("Supprimer tous les pointages de cette journée ?"))return;
+  try{setLoading(true);if(!navigator.onLine){replaceLocalDay(ds,[]);enqueue({kind:"deleteDay",date:ds});manualMsg("Suppression enregistrée hors connexion.","ok")}else{await serverDeleteDay(ds);await loadEvents(false);loadManualDay();manualMsg("Journée supprimée.","ok")}toast("Journée supprimée");recordChange("Journée supprimée",ds,"");scheduleAppStateSync()}catch(e){manualMsg("Erreur pendant la suppression.","err");console.error(e)}finally{setLoading(false);render()}
 }
 
 function reportDataFor(value){if(!value)return{label:"",rows:[],total:0,days:0};const[y,m]=value.split("-").map(Number),ss=monthSessions(y,m-1).slice().sort((a,b)=>a.start.time-b.start.time),rows=ss.map(s=>{const d=new Date(s.start.time),pauses=sessionPauses(s);return{date:d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"2-digit"}),start:hm(d),pauses:pauses.map(p=>`${hm(new Date(p.pause.time))}${p.resume?`-${hm(new Date(p.resume.time))}`:""}`).join(", "),stop:s.stop?hm(new Date(s.stop.time)):"",total:sessionDuration(s,true),note:s.note||""}}),total=rows.reduce((a,r)=>a+r.total,0),days=new Set(ss.map(s=>dayKey(new Date(s.start.time)))).size,label=new Date(y,m-1,1).toLocaleDateString("fr-FR",{month:"long",year:"numeric"});return{label,rows,total,days,y,m:m-1}}
 function openReport(){const opts=buildMonthOptions(false);$("reportMonth").innerHTML=opts.map(o=>`<option value="${o.value}">${o.label}</option>`).join("");renderReport();openOverlay("reportOverlay")}
-function renderReport(){const r=reportDataFor($("reportMonth").value);$("reportHours").textContent=fmt(r.total);$("reportDays").textContent=r.days;$("reportList").innerHTML=r.rows.length?r.rows.map(x=>`<div class="row"><div class="row-main"><div class="row-date">${x.date}</div><div class="row-detail">Début ${x.start}${x.pauses?` · pauses ${x.pauses}`:""}${x.stop?` · fin ${x.stop}`:""}${x.note?` · ${escapeHtml(x.note)}`:""}</div></div><div class="row-total">${fmt(x.total)}</div></div>`).join(""):"Aucun horaire enregistré pour ce mois."}
+function renderReport(){const r=reportDataFor($("reportMonth").value);$("reportHours").textContent=fmt(r.total);$("reportDays").textContent=r.days;$("reportList").innerHTML=r.rows.length?r.rows.map(x=>`<div class="row"><div class="row-main"><div class="row-date">${x.date}</div><div class="row-detail">Début ${x.start}${x.pauses?` · pauses ${x.pauses}`:""}${x.stop?` · fin ${x.stop}`:""}${x.note?` · ${escapeHtml(x.note)}`:""}</div></div><div class="row-total">${fmt(x.total)}</div></div>`).join(""):"Aucun horaire enregistré pour ce mois.";const v=$("reportMonth").value,b=$("closeMonthBtn");if(b)b.textContent=isMonthLocked(v)?"DÉVERROUILLER LE MOIS":"CLÔTURER LE MOIS"}
 function safeFileName(s){return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g,"-").replace(/[^a-z0-9-]/g,"")}
 function makePNGBlob(){
   const r=reportDataFor($("reportMonth").value);if(!r.rows.length)throw new Error("Aucune heure à exporter");
@@ -804,10 +933,88 @@ async function downloadPNG(){try{const r=reportDataFor($("reportMonth").value),b
 async function sharePDF(){try{const r=reportDataFor($("reportMonth").value),b=makePDFBlob();await shareFile(b,`heures-${safeFileName(r.label)}.pdf`,"application/pdf")}catch(e){toast(e.message)}}
 async function downloadPDF(){try{const r=reportDataFor($("reportMonth").value),b=makePDFBlob();downloadBlob(b,`heures-${safeFileName(r.label)}.pdf`)}catch(e){toast(e.message)}}
 
+
+/* ===== V6 DATA + FEATURES ===== */
+let appState=null;
+function defaultAppState(){return{
+  version:6,updatedAt:"1970-01-01T00:00:00.000Z",
+  planning:[],templates:[],leaveRecords:[],lockedMonths:{},actualPayslips:{},modifications:[],
+  salary:{hourlyRate:12.31,netRatio:Number((1714.80/2166.98).toFixed(5)),mealRate:4.35,baseMonthlyHours:151.67,contractMonthlyHours:169},
+  leave:{n1Balance:19,nBalance:2.5,referenceDate:"2026-06-30",accrualRate:2.5}
+}}
+function normalizeAppState(x){const d=defaultAppState(),s=x&&typeof x==="object"?x:{};return{...d,...s,salary:{...d.salary,...(s.salary||{})},leave:{...d.leave,...(s.leave||{})},planning:Array.isArray(s.planning)?s.planning:[],templates:Array.isArray(s.templates)?s.templates:[],leaveRecords:Array.isArray(s.leaveRecords)?s.leaveRecords:[],lockedMonths:s.lockedMonths&&typeof s.lockedMonths==="object"?s.lockedMonths:{},actualPayslips:s.actualPayslips&&typeof s.actualPayslips==="object"?s.actualPayslips:{},modifications:Array.isArray(s.modifications)?s.modifications:[]}}
+function loadAppStateLocal(){try{appState=normalizeAppState(JSON.parse(localStorage.getItem(APPSTATE_KEY)||"null"))}catch{appState=defaultAppState()}localStorage.setItem(APPSTATE_KEY,JSON.stringify(appState));return appState}
+function getAppState(){return appState||loadAppStateLocal()}
+function saveAppState(sync=true){appState=normalizeAppState(appState);appState.updatedAt=new Date().toISOString();localStorage.setItem(APPSTATE_KEY,JSON.stringify(appState));renderExtra();if(sync)scheduleAppStateSync()}
+function monthKeyFromDate(d){return`${d.getFullYear()}-${pad(d.getMonth()+1)}`}
+function monthLabel(k){const[y,m]=k.split("-").map(Number);return new Date(y,m-1,1).toLocaleDateString("fr-FR",{month:"long",year:"numeric"})}
+function money(v){return new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR",maximumFractionDigits:2}).format(Number(v)||0)}
+function hoursNum(ms){return(Math.max(0,ms)/3600000)}
+function msHours(h){return(Number(h)||0)*3600000}
+function planDurationMs(p){if(!p?.date||!p?.start||!p?.end)return 0;let a=new Date(`${p.date}T${p.start}:00`),b=new Date(`${p.date}T${p.end}:00`);if(b<=a)b.setDate(b.getDate()+1);return Math.max(0,b-a)}
+function getPlansForDate(ds){return getAppState().planning.filter(p=>p.date===ds)}
+function getLeaveForDate(ds){return getAppState().leaveRecords.filter(r=>r.date===ds)}
+function nextPlan(){const today=dayKey(new Date());return getAppState().planning.filter(p=>p.date>=today).sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start))[0]||null}
+function isMonthLocked(k){return!!getAppState().lockedMonths?.[k]}
+function recordChange(action,date,detail=""){const s=getAppState();const now=new Date().toISOString();s.modifications.unshift({id:crypto.randomUUID(),action,date:date||"",detail:detail||"",at:now});s.modifications=s.modifications.slice(0,200);s.updatedAt=now;localStorage.setItem(APPSTATE_KEY,JSON.stringify(s))}
+
+async function appDataFetch(path="",options={}){let s=await ensureSession();if(!s&&navigator.onLine)throw new Error("Connexion expirée");const headers={"apikey":SUPABASE_KEY,"Content-Type":"application/json","Prefer":options.prefer||"return=representation",...(options.headers||{})};if(s?.access_token)headers.Authorization=`Bearer ${s.access_token}`;const r=await fetch(`${SUPABASE_URL}/rest/v1/${encodeURIComponent(APPDATA_TABLE)}${path}`,{...options,headers});if(!r.ok){const t=await r.text();throw new Error(t||`Erreur ${r.status}`)}if(r.status===204)return[];const t=await r.text();return t?JSON.parse(t):[]}
+async function loadAppStateCloud(){if(!navigator.onLine){appDataCloudReady=false;updateCloudStatus();return}try{const uid=userId(),rows=await appDataFetch(`?select=payload,updated_at&user_id=eq.${encodeURIComponent(uid)}&limit=1`);if(rows?.[0]?.payload){const cloud=normalizeAppState(rows[0].payload),local=normalizeAppState(getAppState()),cloudTs=new Date(rows[0].updated_at||cloud.updatedAt||0).getTime(),localTs=new Date(local.updatedAt||0).getTime();if(localTs>cloudTs){appState=local;await syncAppStateNow()}else{appState=cloud;localStorage.setItem(APPSTATE_KEY,JSON.stringify(appState))}}else await syncAppStateNow();appDataCloudReady=true;updateCloudStatus();renderExtra()}catch(e){appDataCloudReady=false;updateCloudStatus();console.warn("V6 cloud unavailable",e.message)}}
+function scheduleAppStateSync(){clearTimeout(appStateSyncTimer);appStateSyncTimer=setTimeout(syncAppStateNow,650)}
+async function syncAppStateNow(){const state=getAppState();state.updatedAt=new Date().toISOString();localStorage.setItem(APPSTATE_KEY,JSON.stringify(state));if(!navigator.onLine){appDataCloudReady=false;updateCloudStatus();return false}try{const row={user_id:userId(),payload:state,updated_at:state.updatedAt};await appDataFetch(`?on_conflict=user_id`,{method:"POST",body:JSON.stringify(row),prefer:"resolution=merge-duplicates,return=representation"});appDataCloudReady=true;updateCloudStatus();return true}catch(e){appDataCloudReady=false;updateCloudStatus();console.warn(e.message);return false}}
+function updateCloudStatus(){const e=$("v6CloudStatus");if(!e)return;if(appDataCloudReady===true){e.textContent="Fonctions V6 : synchronisation Supabase active";e.className="v6-cloud ok"}else if(appDataCloudReady===false){e.textContent="Fonctions V6 : enregistrées sur cet appareil. Lance supabase_v6.sql une fois pour les synchroniser entre téléphone et Mac.";e.className="v6-cloud err"}else{e.textContent="Fonctions V6 : vérification de la synchronisation…";e.className="v6-cloud"}}
+
+function renderExtra(){if(!$("app")||$("app").classList.contains("hidden"))return;const now=new Date(),mk=monthKeyFromDate(now),sal=salaryBreakdown(mk,false),leave=leaveSummary(),np=nextPlan(),corr=buildCorrections();if($("homeSalary"))$("homeSalary").textContent=money(sal.net);if($("homeSalarySub"))$("homeSalarySub").textContent=`${fmt(sal.totalMs)} · ${sal.days} jour${sal.days>1?"s":""}`;if($("homeNextShift"))$("homeNextShift").textContent=np?new Date(np.date+"T12:00:00").toLocaleDateString("fr-FR",{weekday:"short",day:"numeric"}):"—";if($("homeNextShiftSub"))$("homeNextShiftSub").textContent=np?`${np.start} → ${np.end}${np.label?` · ${np.label}`:""}`:"Aucun planning";if($("homeLeave"))$("homeLeave").textContent=`${formatDays(leave.estimated)} j`;if($("homeLeaveSub"))$("homeLeaveSub").textContent=`Officiel ${formatDays(leave.official)} j · estimation`;if($("homeCorrections"))$("homeCorrections").textContent=String(corr.length);const badge=$("v6CorrectionBadge");if(badge){badge.textContent=String(corr.length);badge.classList.toggle("hidden",!corr.length)}const ff=$("homeFinishForecast");if(ff){const forecast=finishForecast();ff.textContent=corr.length?`${corr.length} élément${corr.length>1?"s":""} à vérifier`:forecast||"Aucune anomalie"}}
+function finishForecast(){const s=buildSessions().at(-1),state=currentState();if(!s||s.stop||!['work','pause'].includes(state))return"Aucune anomalie";const target=msHours(getSettings().dailyTarget||8),done=sessionDuration(s,true),remain=Math.max(0,target-done);if(remain<=0)return`Objectif ${getSettings().dailyTarget||8}h atteint`;if(state==="pause")return`Après reprise : encore ${fmt(remain)}`;const end=new Date(Date.now()+remain);return`Pour ${getSettings().dailyTarget||8}h : fin vers ${hm(end)}`}
+
+function openPlanning(){const np=nextPlan();$("planDate").value=np?.date||dayKey(new Date());if(!$("planId").value){$("planStart").value="";$("planEnd").value="";$("planLabel").value="";$("planNote").value=""}renderPlanning();openOverlay("planningOverlay")}
+function renderPlanning(){const s=getAppState(),np=nextPlan();$("planningNext").textContent=np?new Date(np.date+"T12:00:00").toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"}):"—";$("planningNextMeta").textContent=np?`${np.start} → ${np.end} · ${fmt(planDurationMs(np))}${np.label?` · ${np.label}`:""}`:"Aucune journée prévue.";$("planTemplates").innerHTML=s.templates.length?s.templates.map(t=>`<button class="mini-btn" onclick="applyTemplate('${t.id}')">${escapeHtml(t.name)}</button>`).join(""):'';const list=s.planning.slice().sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start));$("planningList").innerHTML=list.length?list.map(p=>{const actual=dayTotal(p.date),diff=actual-planDurationMs(p),past=p.date<dayKey(new Date());return`<div class="v6-listitem"><div class="v6-listmain"><div class="v6-listtitle">${new Date(p.date+"T12:00:00").toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}${p.label?` · ${escapeHtml(p.label)}`:""}</div><div class="v6-listmeta">Prévu ${p.start} → ${p.end} · ${fmt(planDurationMs(p))}${actual?` · Réel ${fmt(actual)} · ${diff>=0?"+":"-"}${fmt(Math.abs(diff))}`:past?" · pas de pointage":""}${p.note?` · ${escapeHtml(p.note)}`:""}</div></div><div class="v6-listactions"><button class="mini-btn" onclick="editPlan('${p.id}')">MODIFIER</button></div></div>`}).join(""):`<div class="v6-empty">Aucune journée prévue.</div>`}
+function savePlan(){const id=$("planId").value||crypto.randomUUID(),date=$("planDate").value,start=$("planStart").value,end=$("planEnd").value,label=$("planLabel").value.trim(),note=$("planNote").value.trim();if(!date||!start||!end){toast("Date, début et fin sont obligatoires");return}const s=getAppState(),row={id,date,start,end,label,note};const i=s.planning.findIndex(p=>p.id===id);if(i>=0)s.planning[i]=row;else s.planning.push(row);$("planId").value="";recordChange("Planning enregistré",date,`${start}-${end}${label?` · ${label}`:""}`);saveAppState();renderPlanning();toast("Planning enregistré")}
+function editPlan(id){const p=getAppState().planning.find(x=>x.id===id);if(!p)return;$("planId").value=p.id;$("planDate").value=p.date;$("planStart").value=p.start;$("planEnd").value=p.end;$("planLabel").value=p.label||"";$("planNote").value=p.note||"";$("planningOverlay").querySelector('.sheet').scrollTo({top:0,behavior:'smooth'})}
+function deletePlan(){const id=$("planId").value;if(!id){toast("Choisis d'abord une journée à modifier");return}const s=getAppState(),p=s.planning.find(x=>x.id===id);if(!p)return;s.planning=s.planning.filter(x=>x.id!==id);recordChange("Planning supprimé",p.date,p.label||"");$("planId").value="";saveAppState();renderPlanning();toast("Planning supprimé")}
+function saveTemplate(){const name=$("tplName").value.trim(),start=$("tplStart").value,end=$("tplEnd").value;if(!name||!start||!end){toast("Nom, début et fin sont obligatoires");return}const s=getAppState();s.templates.push({id:crypto.randomUUID(),name,start,end});$("tplName").value="";$("tplStart").value="";$("tplEnd").value="";saveAppState();renderPlanning();toast("Modèle ajouté")}
+function applyTemplate(id){const t=getAppState().templates.find(x=>x.id===id);if(!t)return;$("planStart").value=t.start;$("planEnd").value=t.end;$("planLabel").value=t.name}
+
+function weekKey(d){const s=startOfWeek(d);return dayKey(s)}
+function salaryBreakdown(mk,withFuturePlans=false){const[y,m]=mk.split("-").map(Number),cfg=getAppState().salary,rate=cfg.hourlyRate,mealRate=cfg.mealRate,netRatio=cfg.netRatio,byWeek=new Map(),daySet=new Set();for(const ses of monthSessions(y,m-1)){const d=new Date(ses.start.time),ms=sessionDuration(ses,true);byWeek.set(weekKey(d),(byWeek.get(weekKey(d))||0)+ms);daySet.add(dayKey(d))}if(withFuturePlans){const today=dayKey(new Date());for(const p of getAppState().planning){if(!p.date.startsWith(mk)||p.date<today||dayTotal(p.date)>0)continue;const d=new Date(p.date+"T12:00:00"),ms=planDurationMs(p);byWeek.set(weekKey(d),(byWeek.get(weekKey(d))||0)+ms);daySet.add(p.date)}}let normal=0,ot10=0,ot20=0,ot50=0,totalMs=0;for(const ms of byWeek.values()){const h=hoursNum(ms);normal+=Math.min(h,35);ot10+=Math.min(Math.max(h-35,0),4);ot20+=Math.min(Math.max(h-39,0),4);ot50+=Math.max(h-43,0);totalMs+=ms}const mealCount=daySet.size,mealGross=mealCount*mealRate,cpDays=getAppState().leaveRecords.filter(r=>r.type==="cp"&&r.date.startsWith(mk)).reduce((sum,r)=>sum+Number(r.days||0),0),contractGross=cfg.baseMonthlyHours*rate+(cfg.contractMonthlyHours-cfg.baseMonthlyHours)*rate*1.10,cpGross=cpDays*(contractGross/26),gross=normal*rate+ot10*rate*1.10+ot20*rate*1.20+ot50*rate*1.50+mealGross+cpGross,net=gross*netRatio;return{mk,totalMs,days:daySet.size,normal,ot10,ot20,ot50,mealCount,mealGross,cpDays,cpGross,gross,net}}
+function fallbackProjectedHours(mk){const now=new Date(),cur=monthKeyFromDate(now);if(mk!==cur)return hoursNum(monthTotal(...mk.split('-').map((x,i)=>Number(x)-(i?1:0))));const[y,m]=mk.split('-').map(Number),actual=hoursNum(monthTotal(y,m-1)),daysElapsed=Math.max(1,now.getDate()),daysInMonth=new Date(y,m,0).getDate();return actual/daysElapsed*daysInMonth}
+function monthlySimulation(totalHours,days){const a=getAppState().salary,base=Math.min(totalHours,a.baseMonthlyHours),t10=Math.min(Math.max(totalHours-a.baseMonthlyHours,0),a.contractMonthlyHours-a.baseMonthlyHours),rest=Math.max(totalHours-a.contractMonthlyHours,0),gross=base*a.hourlyRate+t10*a.hourlyRate*1.10+rest*a.hourlyRate*1.20+(days||0)*a.mealRate;return{gross,net:gross*a.netRatio}}
+function openSalary(){const opts=buildMonthOptions(false);const now=monthKeyFromDate(new Date());$("salaryMonth").innerHTML=opts.map(o=>`<option value="${o.value}">${o.label}</option>`).join("");if([...$("salaryMonth").options].some(o=>o.value===now))$("salaryMonth").value=now;renderSalary();openOverlay("salaryOverlay")}
+function renderSalary(){const mk=$("salaryMonth").value;if(!mk)return;const s=salaryBreakdown(mk,false),projByPlan=salaryBreakdown(mk,true),target=Number(getSettings().monthlyTarget||169),diff=hoursNum(s.totalMs)-target;$("salaryHours").textContent=fmt(s.totalMs);$("salaryDiff").textContent=`${diff>=0?"+":"-"}${fmt(msHours(Math.abs(diff)))}`;$("salaryGross").textContent=money(s.gross);$("salaryNet").textContent=money(s.net);$("salaryMeals").textContent=`${money(s.mealGross)} · ${s.mealCount}`;let projected=projByPlan.net,projectionHours=hoursNum(projByPlan.totalMs),source="planning saisi";if(projByPlan.totalMs===s.totalMs&&mk===monthKeyFromDate(new Date())){projectionHours=fallbackProjectedHours(mk);projected=monthlySimulation(projectionHours,Math.round(s.days*Math.max(1,projectionHours/Math.max(1,hoursNum(s.totalMs))))).net;source="rythme actuel"}$("salaryProjected").textContent=money(projected);$("tierNormal").textContent=fmt(msHours(s.normal));$("tier10").textContent=fmt(msHours(s.ot10));$("tier20").textContent=fmt(msHours(s.ot20));$("tier50").textContent=fmt(msHours(s.ot50));$("salaryProjectionText").textContent=`Projection basée sur le ${source} : environ ${projectionHours.toFixed(1).replace('.',',')} h et ${money(projected)} net estimé en fin de mois.${s.cpDays?` ${formatDays(s.cpDays)} j de congé payé saisi${s.cpDays>1?"s":""} sont intégrés à l'estimation.`:""}`;const pay=getAppState().actualPayslips[mk],box=$("salaryPaidCompare");if(pay){$("payActualHours").value=pay.hours??"";$("payActualNet").value=pay.net??"";$("payActualGross").value=pay.gross??"";const delta=(Number(pay.net)||0)-s.net;box.classList.remove("hidden");box.innerHTML=`<div class="v6-listtitle">Travail estimé vs payé</div><div class="v6-muted" style="margin-top:6px">Net estimé ${money(s.net)} · net payé ${money(pay.net)} · écart <b>${delta>=0?"+":""}${money(delta)}</b></div>`}else{box.classList.add("hidden");$("payActualHours").value="";$("payActualNet").value="";$("payActualGross").value=""}renderSalarySimulator()}
+function renderSalarySimulator(){const mk=$("salaryMonth")?.value;if(!mk)return;const s=salaryBreakdown(mk,false),days=Math.max(0,Number($("simDays").value)||0),hours=Math.max(0,Number($("simHours").value)||0),total=hoursNum(s.totalMs)+days*hours,sim=monthlySimulation(total,s.days+days);$("simResult").textContent=`${total.toFixed(1).replace('.',',')} h · ${money(sim.net)}`;$("simResultMeta").textContent=`Brut estimé ${money(sim.gross)} après ${days} journée${days>1?"s":""} de ${hours} h.`}
+function saveActualPayslip(){const mk=$("salaryMonth").value;if(!mk)return;const hours=Number($("payActualHours").value)||0,net=Number($("payActualNet").value)||0,gross=Number($("payActualGross").value)||0;if(!hours&&!net&&!gross){toast("Entre au moins une valeur de la fiche");return}getAppState().actualPayslips[mk]={hours,net,gross,savedAt:new Date().toISOString()};recordChange("Fiche de paie enregistrée",mk,`${hours||0} h · ${money(net)}`);saveAppState();renderSalary();toast("Fiche de paie enregistrée")}
+function saveSalarySettings(){const a=getAppState();a.salary.hourlyRate=Number($("salaryHourlyRate").value)||12.31;a.salary.netRatio=Number($("salaryNetRatio").value)||0.79133;a.salary.mealRate=Number($("salaryMealRate").value)||4.35;saveAppState();renderSalary()}
+
+function fullMonthsSince(refStr,to=new Date()){const r=new Date(refStr+"T12:00:00");let months=(to.getFullYear()-r.getFullYear())*12+(to.getMonth()-r.getMonth());if(to.getDate()<r.getDate())months--;return Math.max(0,months)}
+function formatDays(n){return(Number(n)||0).toLocaleString("fr-FR",{maximumFractionDigits:1})}
+function leaveSummary(){const a=getAppState(),l=a.leave,official=Number(l.n1Balance||0)+Number(l.nBalance||0),earned=fullMonthsSince(l.referenceDate)*Number(l.accrualRate||0),taken=a.leaveRecords.filter(r=>r.type==="cp"&&r.date>l.referenceDate).reduce((x,r)=>x+Number(r.days||0),0),estimated=Math.max(0,official+earned-taken),projection=Math.max(0,estimated+3*Number(l.accrualRate||0));return{official,earned,taken,estimated,projection}}
+function openLeave(){renderLeave();openOverlay("leaveOverlay")}
+function renderLeave(){const a=getAppState(),s=leaveSummary(),l=a.leave;$("leaveOfficial").textContent=`${formatDays(s.official)} j`;$("leaveEstimated").textContent=`${formatDays(s.estimated)} j`;$("leaveTaken").textContent=`${formatDays(s.taken)} j`;$("leaveProjection").textContent=`${formatDays(s.projection)} j`;$("leaveReferenceText").textContent=`Au ${new Date(l.referenceDate+"T12:00:00").toLocaleDateString("fr-FR")} : solde N-1 ${formatDays(l.n1Balance)} j + N ${formatDays(l.nBalance)} j. Acquisition paramétrée à ${formatDays(l.accrualRate)} j/mois.`;$("leaveN1").value=l.n1Balance;$("leaveN").value=l.nBalance;$("leaveRefDate").value=l.referenceDate;$("leaveRate").value=l.accrualRate;const names={cp:"Congé payé",rest:"Repos",recovery:"Récupération",absence:"Absence"};const rows=a.leaveRecords.slice().sort((x,y)=>y.date.localeCompare(x.date));$("leaveList").innerHTML=rows.length?rows.map(r=>`<div class="v6-listitem"><div class="v6-listmain"><div class="v6-listtitle">${new Date(r.date+"T12:00:00").toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})} · ${names[r.type]||r.type}</div><div class="v6-listmeta">${formatDays(r.days)} jour${r.days>1?"s":""}${r.note?` · ${escapeHtml(r.note)}`:""}</div></div><div class="v6-listactions"><button class="mini-btn" onclick="deleteLeaveRecord('${r.id}')">SUPPRIMER</button></div></div>`).join(""):`<div class="v6-empty">Aucun congé, repos ou récupération saisi depuis la fiche de référence.</div>`}
+function saveLeaveRecord(){const date=$("leaveDate").value,days=Number($("leaveDays").value)||0,type=$("leaveType").value,note=$("leaveNote").value.trim();if(!date||days<=0){toast("Date et nombre de jours obligatoires");return}getAppState().leaveRecords.push({id:crypto.randomUUID(),date,days,type,note});recordChange("Congé / repos ajouté",date,`${type} · ${days} j`);saveAppState();$("leaveNote").value="";renderLeave();toast("Ajouté")}
+function deleteLeaveRecord(id){const a=getAppState(),r=a.leaveRecords.find(x=>x.id===id);if(!r)return;a.leaveRecords=a.leaveRecords.filter(x=>x.id!==id);recordChange("Congé / repos supprimé",r.date,`${r.type} · ${r.days} j`);saveAppState();renderLeave()}
+function saveLeaveReference(){const l=getAppState().leave;l.n1Balance=Number($("leaveN1").value)||0;l.nBalance=Number($("leaveN").value)||0;l.referenceDate=$("leaveRefDate").value||dayKey(new Date());l.accrualRate=Number($("leaveRate").value)||2.5;recordChange("Solde congés mis à jour",l.referenceDate,`${l.n1Balance+l.nBalance} j`);saveAppState();renderLeave();toast("Solde officiel mis à jour")}
+
+function buildCorrections(){const out=[],today=dayKey(new Date()),sessions=buildSessions();for(const s of sessions){const ds=dayKey(new Date(s.start.time)),dur=sessionDuration(s,true),pauses=sessionPauses(s);if(!s.stop&&ds<today)out.push({type:"danger",date:ds,title:"Journée sans heure de fin",detail:`Début ${hm(new Date(s.start.time))}`,action:"day"});if(pauses.some(p=>!p.resume)&&ds<today)out.push({type:"danger",date:ds,title:"Pause sans reprise",detail:"Une pause n'a pas de reprise",action:"day"});if(dur>16*3600000)out.push({type:"warn",date:ds,title:"Journée très longue",detail:`${fmt(dur)} enregistrées`,action:"day"})}for(const p of getAppState().planning){if(p.date<today&&dayTotal(p.date)===0&&!getLeaveForDate(p.date).length)out.push({type:"warn",date:p.date,title:"Journée prévue sans pointage",detail:`Prévu ${p.start} → ${p.end}${p.label?` · ${p.label}`:""}`,action:"day"})}return out.sort((a,b)=>b.date.localeCompare(a.date))}
+function renderCorrections(){const rows=buildCorrections();$("correctionSummary").innerHTML=rows.length?`<div class="v6-listtitle">${rows.length} élément${rows.length>1?"s":""} à vérifier</div><div class="v6-muted" style="margin-top:5px">L'appli ne modifie jamais tes heures toute seule.</div>`:`<div class="v6-listtitle">Tout est propre</div><div class="v6-muted" style="margin-top:5px">Aucune journée incomplète ou incohérente détectée.</div>`;$("correctionList").innerHTML=rows.length?rows.map(r=>`<div class="v6-listitem"><div class="v6-listmain"><div class="v6-listtitle">${new Date(r.date+"T12:00:00").toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})} · ${escapeHtml(r.title)}</div><div class="v6-listmeta">${escapeHtml(r.detail)}</div></div><div class="v6-listactions"><button class="mini-btn" onclick="closeOverlay('correctionOverlay');openManual('${r.date}')">CORRIGER</button></div></div>`).join(""):""}
+
+function toggleMonthLock(mk){const a=getAppState();if(a.lockedMonths[mk]){delete a.lockedMonths[mk];recordChange("Mois déverrouillé",mk,"")}else{if(!confirm(`Clôturer ${monthLabel(mk)} ? Les journées ne pourront plus être modifiées tant que tu ne déverrouilles pas le mois.`))return;a.lockedMonths[mk]={closedAt:new Date().toISOString()};recordChange("Mois clôturé",mk,"")}saveAppState();renderReport();renderArchives();toast(a.lockedMonths[mk]?"Mois clôturé":"Mois déverrouillé")}
+function toggleCloseSelectedMonth(){const mk=$("reportMonth").value;if(mk)toggleMonthLock(mk)}
+function openArchives(){renderArchives();openOverlay("archivesOverlay")}
+function renderArchives(){const keys=new Set(buildMonthOptions(false).map(o=>o.value));Object.keys(getAppState().actualPayslips).forEach(k=>keys.add(k));Object.keys(getAppState().lockedMonths).forEach(k=>keys.add(k));const arr=[...keys].sort().reverse();$("archivesList").innerHTML=arr.length?arr.map(mk=>{const[y,m]=mk.split('-').map(Number),total=monthTotal(y,m-1),sal=salaryBreakdown(mk,false),pay=getAppState().actualPayslips[mk],locked=isMonthLocked(mk);return`<div class="v6-listitem"><div class="v6-listmain"><div class="v6-listtitle">${monthLabel(mk)} ${locked?'· 🔒':''}</div><div class="v6-listmeta">${fmt(total)} · net estimé ${money(sal.net)}${pay?` · payé ${money(pay.net)}`:""}</div></div><div class="v6-listactions"><button class="mini-btn" onclick="openArchiveMonth('${mk}')">OUVRIR</button><button class="mini-btn" onclick="toggleMonthLock('${mk}')">${locked?'DÉVERROUILLER':'CLÔTURER'}</button></div></div>`}).join(''):`<div class="v6-empty">Aucune archive.</div>`;const mods=getAppState().modifications.slice(0,20);$("modificationList").innerHTML=mods.length?mods.map(x=>`<div class="v6-listitem"><div class="v6-listmain"><div class="v6-listtitle">${escapeHtml(x.action)}</div><div class="v6-listmeta">${x.date?escapeHtml(x.date)+' · ':''}${new Date(x.at).toLocaleString('fr-FR')}${x.detail?` · ${escapeHtml(x.detail)}`:''}</div></div></div>`).join(''):`<div class="v6-empty">Aucune modification enregistrée.</div>`}
+function openArchiveMonth(mk){closeOverlay('archivesOverlay');openReport();$("reportMonth").value=mk;renderReport()}
+
+function renderCalendarSearch(){const box=$("calendarSearchResults"),q=($("calendarSearch")?.value||"").trim().toLowerCase();if(!box)return;if(!q){box.innerHTML="";return}let rows=buildSessions().map(s=>{const d=new Date(s.start.time),ds=dayKey(d),dur=sessionDuration(s,true),text=`${d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'})} ${s.note||''}`.toLowerCase(),night=s.stop&&dayKey(new Date(s.stop.time))!==ds;return{s,d,ds,dur,text,night}});if(q.match(/^>\s*\d+(?:[.,]\d+)?h?$/)){const n=Number(q.replace(/[>h\s]/g,'').replace(',','.'));rows=rows.filter(r=>hoursNum(r.dur)>n)}else if(q==="nuit"||q==="nuits")rows=rows.filter(r=>r.night);else rows=rows.filter(r=>r.text.includes(q));box.innerHTML=rows.length?rows.slice(0,30).map(r=>`<div class="v6-listitem" onclick="openManual('${r.ds}')" style="cursor:pointer"><div class="v6-listmain"><div class="v6-listtitle">${r.d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}</div><div class="v6-listmeta">${r.s.note?escapeHtml(r.s.note):'Aucune note'}${r.night?' · nuit':''}</div></div><div class="row-total">${fmt(r.dur)}</div></div>`).join(''):`<div class="v6-empty">Aucun résultat.</div>`}
+
+function downloadCSV(){const r=reportDataFor($("reportMonth").value);if(!r.rows.length){toast("Aucune heure à exporter");return}const lines=[["Date","Début","Pauses","Fin","Total","Note"],...r.rows.map(x=>[x.date,x.start,x.pauses,x.stop,fmt(x.total),x.note])].map(row=>row.map(v=>`"${String(v??'').replaceAll('"','""')}"`).join(';'));downloadBlob(new Blob(["\ufeff"+lines.join('\n')],{type:"text/csv;charset=utf-8"}),`heures-${safeFileName(r.label)}.csv`)}
+function exportBackup(){const data={version:6,exportedAt:new Date().toISOString(),settings:getSettings(),design:readDesign(),appState:getAppState(),events:events.map(e=>({type:e.type,event_time:e.event_time,note:e.note||null}))};downloadBlob(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),`mon-pointage-sauvegarde-${dayKey(new Date())}.json`)}
+async function restoreBackup(ev){const f=ev.target.files?.[0];if(!f)return;try{const data=JSON.parse(await f.text());if(!data||!data.appState)throw new Error("Fichier de sauvegarde invalide");if(!confirm("Restaurer les réglages et fonctions V6 de cette sauvegarde ?"))return;appState=normalizeAppState(data.appState);localStorage.setItem(APPSTATE_KEY,JSON.stringify(appState));if(data.settings)localStorage.setItem(SETTINGS_KEY,JSON.stringify(data.settings));if(data.design)localStorage.setItem(DESIGN_KEY,JSON.stringify(data.design));if(Array.isArray(data.events)&&data.events.length&&confirm("La sauvegarde contient aussi des pointages. Remplacer TOUS tes pointages en ligne par ceux de la sauvegarde ?")){if(!navigator.onLine)throw new Error("Connexion nécessaire pour restaurer les pointages");await deleteAllPointages();const rows=data.events.map(e=>({user_id:userId(),type:e.type,event_time:e.event_time,note:e.note||null}));if(rows.length)await apiFetch("",{method:"POST",body:JSON.stringify(rows)});await loadEvents(false)}await syncAppStateNow();applyDesign();loadSettingsUI();render();toast("Sauvegarde restaurée")}catch(e){toast(e.message||"Restauration impossible")}finally{ev.target.value=""}}
+async function deleteAllPointages(){const uid=userId();await apiFetch(`?user_id=eq.${encodeURIComponent(uid)}`,{method:"DELETE"})}
+function processLaunchParams(){const p=new URLSearchParams(location.search),o=p.get('open');if(o==='calendar')openCalendar();else if(o==='salary')openSalary();else if(o==='planning')openPlanning();if(o)history.replaceState({},'',location.pathname)}
+
 function openStats(){const opts=buildMonthOptions(false);$("statsMonth").innerHTML=opts.map(o=>`<option value="${o.value}">${o.label}</option>`).join("");renderStats();openOverlay("statsOverlay")}
 function renderStats(){
-  const val=$("statsMonth").value;if(!val)return;const[y,m]=val.split("-").map(Number),ss=monthSessions(y,m-1),total=ss.reduce((a,s)=>a+sessionDuration(s,true),0),days=new Set(ss.map(s=>dayKey(new Date(s.start.time)))).size,avg=days?total/days:0,longest=ss.reduce((a,s)=>Math.max(a,sessionDuration(s,true)),0),settings=getSettings(),target=settings.monthlyTarget*3600000,diff=total-target,prevDate=new Date(y,m-2,1),prev=monthTotal(prevDate.getFullYear(),prevDate.getMonth()),compare=total-prev;
-  $("statsTotal").textContent=fmt(total);$("statsDays").textContent=days;$("statsAvg").textContent=fmt(avg);$("statsLongest").textContent=fmt(longest);$("statsOvertime").textContent=`${diff>=0?"+":"-"}${fmt(Math.abs(diff))}`;$("statsCompare").textContent=`${compare>=0?"+":"-"}${fmt(Math.abs(compare))}`
+  const val=$("statsMonth").value;if(!val)return;const[y,m]=val.split("-").map(Number),ss=monthSessions(y,m-1),total=ss.reduce((a,s)=>a+sessionDuration(s,true),0),days=new Set(ss.map(s=>dayKey(new Date(s.start.time)))).size,avg=days?total/days:0,longest=ss.reduce((a,s)=>Math.max(a,sessionDuration(s,true)),0),prevDate=new Date(y,m-2,1),prev=monthTotal(prevDate.getFullYear(),prevDate.getMonth()),compare=total-prev,sal=salaryBreakdown(val,false),overtime=msHours(sal.ot10+sal.ot20+sal.ot50);
+  $("statsTotal").textContent=fmt(total);$("statsDays").textContent=days;$("statsAvg").textContent=fmt(avg);$("statsLongest").textContent=fmt(longest);$("statsOvertime").textContent=fmt(overtime);$("statsCompare").textContent=`${compare>=0?"+":"-"}${fmt(Math.abs(compare))}`
 }
 
 function openSettings(){loadSettingsUI();openOverlay("settingsOverlay")}
@@ -820,8 +1027,8 @@ function removeBackground(){const d=readDesign();delete d.background;saveDesign(
 function applyDesign(){const d=readDesign(),accent=d.accent||"#ff8a1f",opacity=(d.opacity??80)/100;document.documentElement.style.setProperty("--accent",accent);document.documentElement.style.setProperty("--accent-soft",hexToRgba(accent,.16));document.documentElement.style.setProperty("--card-alpha",opacity);document.body.style.backgroundImage=d.background?`linear-gradient(rgba(6,8,12,.42),rgba(6,8,12,.74)),url(${d.background})`:"";["start","pause","resume","stop"].forEach(id=>{const b=$(id);if(!b)return;b.style.backgroundImage="";b.style.backgroundColor="";if(d[id]){b.style.backgroundImage=`linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.18)),url(${d[id]})`;b.style.backgroundColor="transparent"}})}
 function hexToRgba(hex,a){const h=hex.replace("#",""),r=parseInt(h.slice(0,2),16),g=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);return`rgba(${r},${g},${b},${a})`}
 function resetDesign(){if(confirm("Réinitialiser toute la personnalisation ?")){localStorage.removeItem(DESIGN_KEY);location.reload()}}
-function loadSettingsUI(){const s=getSettings(),d=readDesign();$("profileName").value=s.profileName||"";$("weeklyTarget").value=s.weeklyTarget;$("monthlyTarget").value=s.monthlyTarget;$("reminderEnabled").checked=!!s.reminderEnabled;$("reminderTime").value=s.reminderTime||"03:30";$("accentPicker").value=d.accent||"#ff8a1f";$("accentPreview").style.background=d.accent||"#ff8a1f";$("cardOpacity").value=d.opacity??80}
-function saveSettingField(){const s=getSettings();s.profileName=$("profileName").value.trim();s.weeklyTarget=Number($("weeklyTarget").value)||39;s.monthlyTarget=Number($("monthlyTarget").value)||169;s.reminderTime=$("reminderTime").value||"03:30";saveSettings(s)}
+function loadSettingsUI(){const s=getSettings(),d=readDesign(),a=getAppState();$("profileName").value=s.profileName||"";$("weeklyTarget").value=s.weeklyTarget;$("monthlyTarget").value=s.monthlyTarget;$("dailyTarget").value=s.dailyTarget||8;$("reminderEnabled").checked=!!s.reminderEnabled;$("reminderTime").value=s.reminderTime||"03:30";$("accentPicker").value=d.accent||"#ff8a1f";$("accentPreview").style.background=d.accent||"#ff8a1f";$("cardOpacity").value=d.opacity??80;if($("salaryHourlyRate"))$("salaryHourlyRate").value=a.salary.hourlyRate;if($("salaryNetRatio"))$("salaryNetRatio").value=a.salary.netRatio;if($("salaryMealRate"))$("salaryMealRate").value=a.salary.mealRate;updateCloudStatus()}
+function saveSettingField(){const s=getSettings();s.profileName=$("profileName").value.trim();s.weeklyTarget=Number($("weeklyTarget").value)||39;s.monthlyTarget=Number($("monthlyTarget").value)||169;s.dailyTarget=Number($("dailyTarget")?.value)||8;s.reminderTime=$("reminderTime").value||"03:30";saveSettings(s)}
 async function toggleReminder(){const s=getSettings();s.reminderEnabled=$("reminderEnabled").checked;saveSettings(s);if(s.reminderEnabled&&"Notification"in window&&Notification.permission==="default"){const p=await Notification.requestPermission();if(p!=="granted"){s.reminderEnabled=false;$("reminderEnabled").checked=false;saveSettings(s);toast("Notifications non autorisées")}}}
 async function checkReminder(){
   const s=getSettings();if(!s.reminderEnabled)return;const state=currentState();if(!["work","pause"].includes(state))return;const session=buildSessions().at(-1);if(!session||session.stop)return;
@@ -842,7 +1049,7 @@ async function installApp(){
 }
 
 function tick(){const d=new Date();if($("clock"))$("clock").textContent=d.toLocaleTimeString("fr-FR");if($("date"))$("date").textContent=d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});if(!$("app").classList.contains("hidden"))render()}
-window.addEventListener("online",()=>{setSync("Connexion retrouvée, synchronisation...");flushQueue()});
+window.addEventListener("online",()=>{setSync("Connexion retrouvée, synchronisation...");flushQueue();syncAppStateNow()});
 window.addEventListener("offline",()=>{setSync(`Hors connexion · ${queue().length} en attente`,"err")});
 
 boot();

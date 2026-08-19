@@ -1,8 +1,8 @@
 {
   "name": "Mon Pointage",
   "short_name": "Pointage",
-  "description": "Pointage personnel et récapitulatif des heures de travail",
-  "start_url": "./",
+  "description": "Pointage personnel, planning, salaire, congés et récapitulatifs",
+  "start_url": "./?v=6",
   "scope": "./",
   "display": "standalone",
   "background_color": "#090b0f",
@@ -20,6 +20,41 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Calendrier",
+      "short_name": "Calendrier",
+      "url": "./?open=calendar",
+      "icons": [
+        {
+          "src": "./icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Salaire",
+      "short_name": "Salaire",
+      "url": "./?open=salary",
+      "icons": [
+        {
+          "src": "./icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Planning",
+      "short_name": "Planning",
+      "url": "./?open=planning",
+      "icons": [
+        {
+          "src": "./icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }
