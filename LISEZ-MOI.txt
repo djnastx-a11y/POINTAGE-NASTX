@@ -1,20 +1,12 @@
-MON POINTAGE V5 — INSTALLATION GITHUB PAGES
+MON POINTAGE V7
 
-1. Décompressez le ZIP.
-2. Déposez tous les fichiers contenus dans le dossier Mon-Pointage-V5 à la racine du dépôt GitHub.
-3. Dans GitHub : Settings > Pages.
-4. Choisissez Deploy from a branch, branche main, dossier /(root), puis Save.
-5. Ouvrez ensuite l’adresse GitHub Pages sur Android avec Chrome.
-6. Utilisez « INSTALLER L’APPLI » ou le menu Chrome > Ajouter à l’écran d’accueil.
+Remplacez sur GitHub Pages les fichiers index.html, manifest.webmanifest et sw.js.
+Conservez les deux icônes fournies.
 
-La V5 réutilise la même configuration Supabase et les mêmes clés de stockage que la V4.
-Les comptes, le PIN local, les réglages et les heures existantes restent donc compatibles.
+AUCUN SQL SUPPLÉMENTAIRE N'EST NÉCESSAIRE.
+La V7 réutilise sans modification les tables POINTAGES et APP_DATA de la V6.
+Toutes les nouvelles données sont ajoutées dans le payload JSON de APP_DATA.
+Aucune table, colonne, politique ou donnée existante n'est supprimée.
 
-Fichiers indispensables :
-- index.html
-- manifest.webmanifest
-- sw.js
-- icon-192.png
-- icon-512.png
-
-Version : V5 Sidebar Pro noir et or — priorité Android.
+Après le téléversement, fermez complètement l'application puis rouvrez-la.
+Le nouveau cache V7 force la mise à jour de la PWA.
