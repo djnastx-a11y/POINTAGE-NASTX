@@ -5,6 +5,11 @@ MISE À JOUR V7.1
 - Les heures sont affichées semaine par semaine dans Calendrier.
 - Le code PIN a été supprimé. La connexion Supabase reste active.
 
+MISE À JOUR V7.2
+- Nouvelle interface claire, colorée et plus ludique.
+- Navigation mobile permanente en bas de l’écran.
+- Cartes plus simples, actions mieux visibles et lisibilité améliorée.
+
 Remplacez sur GitHub Pages les fichiers index.html, manifest.webmanifest et sw.js.
 Conservez les deux icônes fournies.
 
