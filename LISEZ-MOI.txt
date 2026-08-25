@@ -10,6 +10,11 @@ MISE À JOUR V7.2
 - Navigation mobile permanente en bas de l’écran.
 - Cartes plus simples, actions mieux visibles et lisibilité améliorée.
 
+MISE À JOUR V7.3
+- Style plus sobre et premium, avec une palette bleu ardoise.
+- Menu latéral mobile restauré avec défilement visible.
+- Suppression de la barre mobile horizontale qui masquait une partie du menu.
+
 Remplacez sur GitHub Pages les fichiers index.html, manifest.webmanifest et sw.js.
 Conservez les deux icônes fournies.
 
