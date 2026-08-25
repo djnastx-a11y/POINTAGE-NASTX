@@ -20,6 +20,11 @@ MISE À JOUR V7.4
 - Le total des heures effectuées s'affiche immédiatement pour la semaine choisie.
 - Boutons semaine précédente, semaine suivante et aujourd'hui ajoutés.
 
+MISE À JOUR V7.5
+- Les pointages récents sont regroupés semaine par semaine sur l'accueil.
+- Le total de chaque semaine est affiché au-dessus du détail des journées.
+- Dans Mes pointages, les totaux hebdomadaires apparaissent avant le calendrier.
+
 Remplacez sur GitHub Pages les fichiers index.html, manifest.webmanifest et sw.js.
 Conservez les deux icônes fournies.
 
