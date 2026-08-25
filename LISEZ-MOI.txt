@@ -15,6 +15,11 @@ MISE À JOUR V7.3
 - Menu latéral mobile restauré avec défilement visible.
 - Suppression de la barre mobile horizontale qui masquait une partie du menu.
 
+MISE À JOUR V7.4
+- Les statistiques permettent maintenant de choisir directement n'importe quelle semaine.
+- Le total des heures effectuées s'affiche immédiatement pour la semaine choisie.
+- Boutons semaine précédente, semaine suivante et aujourd'hui ajoutés.
+
 Remplacez sur GitHub Pages les fichiers index.html, manifest.webmanifest et sw.js.
 Conservez les deux icônes fournies.
 
