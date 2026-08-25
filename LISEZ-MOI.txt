@@ -1,5 +1,10 @@
 MON POINTAGE V7
 
+MISE À JOUR V7.1
+- Une journée en cours peut être modifiée et enregistrée sans heure de fin.
+- Les heures sont affichées semaine par semaine dans Calendrier.
+- Le code PIN a été supprimé. La connexion Supabase reste active.
+
 Remplacez sur GitHub Pages les fichiers index.html, manifest.webmanifest et sw.js.
 Conservez les deux icônes fournies.
 
