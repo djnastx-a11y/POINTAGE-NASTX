@@ -2,7 +2,7 @@
   "name": "Mon Pointage",
   "short_name": "Pointage",
   "description": "Pointage personnel, planning, salaire, congés et récapitulatifs",
-  "start_url": "./?v=7",
+  "start_url": "./?v=7.1",
   "scope": "./",
   "display": "standalone",
   "background_color": "#090b0f",
