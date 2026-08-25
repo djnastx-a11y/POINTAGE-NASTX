@@ -10,7 +10,7 @@
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./icon-192.png">
-<title>Mon Pointage · V7</title>
+<title>Mon Pointage · V7.1</title>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
 <style>
 :root{
@@ -265,6 +265,7 @@ body::before{
 .v7-week-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.v7-summarybox{padding:12px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.025)}.v7-summarybox b{display:block;font:500 22px Georgia,serif}.v7-summarybox span{font-size:9px;color:var(--muted);letter-spacing:.09em}.v7-planner{display:grid;grid-template-columns:repeat(7,minmax(112px,1fr));gap:8px;overflow-x:auto;padding:2px 1px 8px}.v7-day{min-height:150px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(150deg,#14171b,#0b0d10);padding:11px;cursor:pointer;text-align:left;color:var(--text);position:relative}.v7-day.today{border-color:var(--accent)}.v7-day.has-plan{background:linear-gradient(150deg,rgba(200,138,61,.18),#0b0d10)}.v7-day.ok{box-shadow:inset 0 -3px 0 var(--good)}.v7-day.alert{box-shadow:inset 0 -3px 0 #c65b50}.v7-dow{font-size:9px;color:var(--muted);font-weight:850;letter-spacing:.12em}.v7-date{font:500 24px Georgia,serif;margin:4px 0 12px}.v7-shift{font-weight:850;font-size:13px}.v7-type{font-size:11px;color:var(--accent2);margin-top:5px}.v7-real{font-size:10px;color:var(--muted);margin-top:7px;line-height:1.35}.v7-plus{position:absolute;right:8px;top:8px;width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:rgba(200,138,61,.15);color:var(--accent2)}
 .v7-month{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.v7-monthday{min-height:82px;border:1px solid var(--line);border-radius:12px;background:#111419;color:white;padding:8px;text-align:left;cursor:pointer}.v7-monthday.empty{visibility:hidden}.v7-monthday.today{border-color:var(--accent)}.v7-monthday b{font-size:13px}.v7-monthday small{display:block;color:var(--accent2);font-size:9px;margin-top:8px}.v7-fab{position:sticky;bottom:10px;margin-left:auto;width:52px;height:52px;border:0;border-radius:50%;background:linear-gradient(145deg,#e2a652,#a96720);color:#fff;font-size:28px;box-shadow:0 12px 30px rgba(0,0,0,.45);cursor:pointer;display:grid;place-items:center;z-index:6}
 .v7-chart{display:grid;grid-template-columns:repeat(12,1fr);align-items:end;gap:6px;height:180px;margin:18px 0 6px;padding-top:20px}.v7-barcol{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px}.v7-bar{width:100%;min-height:2px;border-radius:7px 7px 2px 2px;background:linear-gradient(180deg,var(--accent2),var(--accent));position:relative}.v7-bar.salary{background:linear-gradient(180deg,#72dda0,#238b59)}.v7-barcol small{font-size:8px;color:var(--muted)}.v7-annual-table{width:100%;border-collapse:collapse;font-size:12px}.v7-annual-table th,.v7-annual-table td{text-align:right;padding:9px 5px;border-bottom:1px solid var(--line)}.v7-annual-table th:first-child,.v7-annual-table td:first-child{text-align:left}.v7-paid{display:grid;grid-template-columns:1.2fr repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:15px;overflow:hidden;margin-top:12px}.v7-paid>*{background:#111419;padding:10px;font-size:11px}.v7-paid .head{color:var(--muted);font-size:9px;font-weight:850}
+.v7-week-list{display:grid;gap:8px;margin-top:10px}.v7-week-row{border:1px solid var(--line);border-radius:15px;padding:12px;background:rgba(255,255,255,.025);display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px}.v7-week-row.current{border-color:rgba(200,138,61,.55);background:linear-gradient(145deg,rgba(200,138,61,.12),rgba(255,255,255,.02))}.v7-week-dates{font-weight:800;font-size:13px}.v7-week-goal{font-size:10px;color:var(--muted);margin-top:4px}.v7-week-hours{font:500 23px Georgia,serif;color:var(--accent2);white-space:nowrap}
 @media(max-width:760px){.v7-planner{display:flex;flex-direction:column;overflow:visible}.v7-day{min-height:112px}.v7-monthday{min-height:65px;padding:6px}.v7-week-summary{grid-template-columns:1fr 1fr 1fr}.v7-paid{grid-template-columns:1.2fr repeat(4,minmax(72px,1fr));overflow:auto}.v7-chart{gap:3px;height:145px}}
 </style>
 </head>
@@ -285,22 +286,6 @@ body::before{
     <input id="authPassword" type="password" autocomplete="current-password" placeholder="8 caractères minimum">
     <div class="form-actions one"><button id="authButton" class="action" onclick="submitAuth()">SE CONNECTER</button></div>
     <div id="authMsg" class="sync"></div>
-  </div>
-</div>
-
-<div id="pinScreen" class="pin-screen hidden">
-  <div class="pin-box">
-    <div class="auth-logo">●</div>
-    <div id="pinTitle" class="auth-title">Code PIN</div>
-    <div id="pinSub" class="auth-sub">Entre ton code à 4 chiffres.</div>
-    <div class="pin-dots"><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div></div>
-    <div class="pin-keypad">
-      <button class="pin-key" onclick="pinPress('1')">1</button><button class="pin-key" onclick="pinPress('2')">2</button><button class="pin-key" onclick="pinPress('3')">3</button>
-      <button class="pin-key" onclick="pinPress('4')">4</button><button class="pin-key" onclick="pinPress('5')">5</button><button class="pin-key" onclick="pinPress('6')">6</button>
-      <button class="pin-key" onclick="pinPress('7')">7</button><button class="pin-key" onclick="pinPress('8')">8</button><button class="pin-key" onclick="pinPress('9')">9</button>
-      <button class="pin-key secondary" onclick="forgotPin()">OUBLIÉ</button><button class="pin-key" onclick="pinPress('0')">0</button><button class="pin-key secondary" onclick="pinBack()">EFFACER</button>
-    </div>
-    <div id="pinMsg" class="sync"></div>
   </div>
 </div>
 
@@ -424,6 +409,7 @@ body::before{
   <div class="calendar-toolbar"><button id="prevMonthBtn" class="cal-nav" onclick="changeCalendarMonth(-1)">‹</button><select id="monthSelect" class="month-select" onchange="chooseCalendarMonth()"></select><button class="cal-nav" onclick="changeCalendarMonth(1)">›</button></div>
   <div class="weekdays"><div>LUN</div><div>MAR</div><div>MER</div><div>JEU</div><div>VEN</div><div>SAM</div><div>DIM</div></div>
   <div id="calendarGrid" class="calendar-grid"></div><div class="calendar-tip">Le total apparaît directement sur les jours travaillés. Les traits indiquent planning ou congé.</div>
+  <div class="v6-sectiontitle">HEURES PAR SEMAINE</div><div id="weeklyBreakdown" class="v7-week-list"></div>
   <div class="v6-sectiontitle">RECHERCHE RAPIDE</div>
   <input id="calendarSearch" type="text" placeholder="Note, dimanche, nuit, >10h…" oninput="renderCalendarSearch()">
   <div id="calendarSearchResults" class="v6-searchresults"></div>
@@ -441,7 +427,7 @@ body::before{
   <button class="mini-btn" onclick="addPauseRow()">+ AJOUTER UNE PAUSE</button>
   <div style="margin-top:15px"><label>Note sur la journée</label><textarea id="manualNote" placeholder="Exemple : Festival, fermeture tardive, remplacement..."></textarea></div>
   <div class="manual-total">Total calculé : <strong id="manualTotal">0h00</strong></div>
-  <div class="note">Tu peux ajouter plusieurs pauses. Si tu finis après minuit, indique simplement l'heure réelle.</div>
+  <div class="note">La fin est facultative tant que ta journée est en cours. Tu peux enregistrer une modification maintenant, puis ajouter l’heure de fin plus tard.</div>
   <div class="v6-card"><div class="v6-listtitle">Dupliquer cette journée</div><div class="form-grid" style="margin-top:9px"><div><label>Nouvelle date</label><input id="duplicateTarget" type="date"></div><div style="display:flex;align-items:end"><button class="mini-btn" style="width:100%;min-height:46px" onclick="duplicateManualDay()">DUPLIQUER</button></div></div></div>
   <div class="form-actions"><button class="action good" onclick="saveManualDay()">ENREGISTRER</button><button class="action danger" onclick="deleteManualDay()">SUPPRIMER</button></div>
   <div id="manualMsg" class="sync"></div>
@@ -458,6 +444,7 @@ body::before{
     <div class="stats-box"><div class="big" id="statsOvertime">0h00</div><div class="cap">HEURES SUP ESTIMÉES</div></div>
     <div class="stats-box"><div class="big" id="statsCompare">0h00</div><div class="cap">VS MOIS PRÉCÉDENT</div></div>
   </div>
+  <div class="v6-sectiontitle">HEURES PAR SEMAINE</div><div id="statsWeeklyList" class="v7-week-list"></div>
   <button class="mini-btn" style="width:100%" onclick="openAnnual()">OUVRIR LA VUE ANNUELLE</button>
 </div></div>
 
@@ -598,7 +585,7 @@ body::before{
     <div class="setting-help">Le backup contient tes réglages V6 et tes pointages. La restauration demande confirmation avant de remplacer les heures en ligne.</div>
   </div>
 
-  <div class="setting-group"><div class="setting-title">Sécurité</div><button class="mini-btn" onclick="changePin()">CHANGER LE CODE PIN</button><button class="mini-btn" style="margin-left:6px" onclick="logout()">DÉCONNEXION</button></div>
+  <div class="setting-group"><div class="setting-title">Compte</div><button class="mini-btn" onclick="logout()">DÉCONNEXION</button></div>
   <div class="setting-group"><button class="reset-btn" onclick="resetDesign()">RÉINITIALISER LE DESIGN</button></div>
 </div></div>
 
@@ -710,38 +697,8 @@ async function submitAuth(){
 }
 async function logout(){try{const s=getSession();if(s?.access_token&&navigator.onLine)await authRequest("logout",null,s.access_token)}catch{}clearSession();localStorage.removeItem(PIN_KEY);location.reload()}
 
-async function hashPin(pin){
-  const uid=userId()||"local";const data=new TextEncoder().encode(`${uid}:${pin}`);
-  const digest=await crypto.subtle.digest("SHA-256",data);
-  return[...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,"0")).join("")
-}
-function showPin(mode="unlock"){
-  pinMode=mode;pinBuffer="";pinFirst="";updatePinDots();
-  $("pinTitle").textContent=mode==="unlock"?"Code PIN":"Créer ton code PIN";
-  $("pinSub").textContent=mode==="unlock"?"Entre ton code à 4 chiffres.":"Choisis 4 chiffres. Tu les utiliseras pour ouvrir l'appli.";
-  $("pinMsg").textContent="";$("pinScreen").classList.remove("hidden")
-}
-function pinPress(n){if(pinBuffer.length>=4)return;pinBuffer+=n;updatePinDots();if(pinBuffer.length===4)setTimeout(processPin,120)}
-function pinBack(){pinBuffer=pinBuffer.slice(0,-1);updatePinDots()}
-function updatePinDots(){document.querySelectorAll(".pin-dot").forEach((e,i)=>e.classList.toggle("filled",i<pinBuffer.length))}
-async function processPin(){
-  if(pinMode==="unlock"){
-    const h=await hashPin(pinBuffer);
-    if(h===localStorage.getItem(PIN_KEY)){sessionStorage.setItem("pointage_unlocked","1");$("pinScreen").classList.add("hidden");showApp()}
-    else{$("pinMsg").textContent="Code incorrect.";$("pinMsg").className="sync err";pinBuffer="";updatePinDots()}
-  }else if(pinMode==="create"){
-    if(!pinFirst){pinFirst=pinBuffer;pinBuffer="";updatePinDots();$("pinSub").textContent="Retape le même code pour confirmer.";return}
-    if(pinFirst!==pinBuffer){$("pinMsg").textContent="Les deux codes ne correspondent pas.";$("pinMsg").className="sync err";pinFirst="";pinBuffer="";updatePinDots();$("pinSub").textContent="Choisis 4 chiffres.";return}
-    localStorage.setItem(PIN_KEY,await hashPin(pinBuffer));sessionStorage.setItem("pointage_unlocked","1");$("pinScreen").classList.add("hidden");showApp()
-  }
-}
-function forgotPin(){if(confirm("Pour réinitialiser le PIN, tu vas devoir te reconnecter avec ton email et ton mot de passe.")){localStorage.removeItem(PIN_KEY);clearSession();location.reload()}}
-function changePin(){localStorage.removeItem(PIN_KEY);closeOverlay("settingsOverlay");showPin("create")}
-
 async function afterAuthenticated(){
-  if(localStorage.getItem(PIN_KEY)){
-    if(sessionStorage.getItem("pointage_unlocked")==="1")showApp();else showPin("unlock")
-  }else showPin("create")
+  localStorage.removeItem(PIN_KEY);sessionStorage.removeItem("pointage_unlocked");await showApp()
 }
 async function boot(){
   applyDesign();registerPWA();const s=await ensureSession();
@@ -890,7 +847,8 @@ function calendarMonthOptions(){const now=new Date(),opts=[];for(let i=-24;i<=18
 function openCalendar(){const now=new Date();const opts=calendarMonthOptions();$("monthSelect").innerHTML=opts.map(o=>`<option value="${o.value}">${o.label}</option>`).join("");$("monthSelect").value=`${calendarMonth.getFullYear()}-${pad(calendarMonth.getMonth()+1)}`;renderCalendar();openOverlay("calendarOverlay")}
 function chooseCalendarMonth(){const[y,m]=$("monthSelect").value.split("-").map(Number);calendarMonth=new Date(y,m-1,1);renderCalendar()}
 function changeCalendarMonth(delta){const next=new Date(calendarMonth.getFullYear(),calendarMonth.getMonth()+delta,1);calendarMonth=next;const v=`${calendarMonth.getFullYear()}-${pad(calendarMonth.getMonth()+1)}`;if([...$("monthSelect").options].some(o=>o.value===v))$("monthSelect").value=v;renderCalendar()}
-function renderCalendar(){const now=new Date();$("prevMonthBtn").disabled=false;const y=calendarMonth.getFullYear(),m=calendarMonth.getMonth(),first=new Date(y,m,1),last=new Date(y,m+1,0).getDate(),offset=(first.getDay()+6)%7,today=dayKey(now);let cells="";for(let i=0;i<offset;i++)cells+=`<button class="cal-day empty"></button>`;for(let day=1;day<=last;day++){const d=new Date(y,m,day,12),key=dayKey(d),total=dayTotal(key),plan=getPlansForDate(key).length>0,leave=getLeaveForDate(key).length>0,classes=["cal-day"];if(key===today)classes.push("today");if(key===selectedDate)classes.push("selected");if(total>0)classes.push("has-hours");cells+=`<button class="${classes.join(" ")}" onclick="selectCalendarDay('${key}')"><div class="cal-num">${day}${isMonthLocked(key.slice(0,7))?` <span class="v6-lock">•</span>`:""}</div>${total>0?`<div class="cal-dot"></div><div class="cal-hours ${plan||leave?"has-extra":""}">${fmt(total)}</div>`:""}${plan?`<i class="cal-marker plan"></i>`:""}${leave?`<i class="cal-marker leave"></i>`:""}</button>`}$("calendarGrid").innerHTML=cells}
+function renderCalendar(){const now=new Date();$("prevMonthBtn").disabled=false;const y=calendarMonth.getFullYear(),m=calendarMonth.getMonth(),first=new Date(y,m,1),last=new Date(y,m+1,0).getDate(),offset=(first.getDay()+6)%7,today=dayKey(now);let cells="";for(let i=0;i<offset;i++)cells+=`<button class="cal-day empty"></button>`;for(let day=1;day<=last;day++){const d=new Date(y,m,day,12),key=dayKey(d),total=dayTotal(key),plan=getPlansForDate(key).length>0,leave=getLeaveForDate(key).length>0,classes=["cal-day"];if(key===today)classes.push("today");if(key===selectedDate)classes.push("selected");if(total>0)classes.push("has-hours");cells+=`<button class="${classes.join(" ")}" onclick="selectCalendarDay('${key}')"><div class="cal-num">${day}${isMonthLocked(key.slice(0,7))?` <span class="v6-lock">•</span>`:""}</div>${total>0?`<div class="cal-dot"></div><div class="cal-hours ${plan||leave?"has-extra":""}">${fmt(total)}</div>`:""}${plan?`<i class="cal-marker plan"></i>`:""}${leave?`<i class="cal-marker leave"></i>`:""}</button>`}$("calendarGrid").innerHTML=cells;renderWeeklyBreakdown()}
+function renderWeeklyBreakdown(){const box=$("weeklyBreakdown");if(!box)return;const y=calendarMonth.getFullYear(),m=calendarMonth.getMonth(),monthStart=new Date(y,m,1),monthEnd=new Date(y,m+1,0,23,59,59,999),cursor=startOfWeek(monthStart),current=dayKey(startOfWeek(new Date())),target=Number(getSettings().weeklyTarget||39)*3600000,rows=[];while(cursor<=monthEnd){const start=new Date(cursor),end=new Date(start);end.setDate(end.getDate()+7);const total=sumSessions(s=>{const d=new Date(s.start.time);return d>=start&&d<end}),delta=total-target,endLabel=new Date(end);endLabel.setDate(endLabel.getDate()-1);rows.push(`<div class="v7-week-row ${dayKey(start)===current?'current':''}"><div><div class="v7-week-dates">Du ${start.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})} au ${endLabel.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}</div><div class="v7-week-goal">Objectif ${Number(getSettings().weeklyTarget||39).toLocaleString('fr-FR')} h · ${delta>=0?`avance ${fmt(delta)}`:`reste ${fmt(-delta)}`}</div></div><div class="v7-week-hours">${fmt(total)}</div></div>`);cursor.setDate(cursor.getDate()+7)}box.innerHTML=rows.join('')}
 function selectCalendarDay(ds){selectedDate=ds;renderCalendar();openManual(ds)}
 
 function addPauseRow(pause="",resume=""){const id=++pauseCounter,row=document.createElement("div");row.className="pause-line";row.dataset.pauseId=id;row.innerHTML=`<div><label>Début pause</label><input type="time" class="pause-start" value="${pause}" oninput="updateManualPreview()"></div><div><label>Reprise</label><input type="time" class="pause-end" value="${resume}" oninput="updateManualPreview()"></div><button class="pause-remove" onclick="removePauseRow(${id})">✕</button>`;$("pauseList").appendChild(row);updateManualPreview()}
@@ -909,12 +867,12 @@ function manualFields(){
   return{ds,start,stop,note,pauses}
 }
 function buildManualEvents(){
-  const f=manualFields();if(!f.ds)throw new Error("Choisis une date.");if(!f.start)throw new Error("L'heure de début est obligatoire.");if(!f.stop)throw new Error("L'heure de fin est obligatoire.");
-  const seq=[["start",f.start,f.note]];for(const p of f.pauses){if(!p.pause||!p.resume)throw new Error("Chaque pause doit avoir un début et une reprise.");seq.push(["pause",p.pause,null],["resume",p.resume,null])}seq.push(["stop",f.stop,null]);
+  const f=manualFields();if(!f.ds)throw new Error("Choisis une date.");if(!f.start)throw new Error("L'heure de début est obligatoire.");
+  const seq=[["start",f.start,f.note]];for(let i=0;i<f.pauses.length;i++){const p=f.pauses[i];if(!p.pause)throw new Error("Indique le début de chaque pause.");if(!p.resume&&(f.stop||i<f.pauses.length-1))throw new Error("Ajoute la reprise de la pause avant de saisir la suite.");seq.push(["pause",p.pause,null]);if(p.resume)seq.push(["resume",p.resume,null])}if(f.stop)seq.push(["stop",f.stop,null]);
   const out=[];let prev=null,off=0;for(const[type,time,note]of seq){let d=new Date(`${f.ds}T${time}:00`);d.setDate(d.getDate()+off);if(prev&&d.getTime()<=prev){off++;d=new Date(`${f.ds}T${time}:00`);d.setDate(d.getDate()+off)}prev=d.getTime();out.push({user_id:userId(),type,event_time:d.toISOString(),note:note||null})}return out
 }
-function previewManualDuration(){try{const rows=buildManualEvents().map((r,i)=>({id:i,type:r.type,time:new Date(r.event_time).getTime(),event_time:r.event_time,note:r.note||""})),ss=buildSessions(rows);return ss.length?sessionDuration(ss[0],false):0}catch{return 0}}
-function updateManualPreview(){$("manualTotal").textContent=fmt(previewManualDuration())}
+function previewManualDuration(){try{const rows=buildManualEvents().map((r,i)=>({id:i,type:r.type,time:new Date(r.event_time).getTime(),event_time:r.event_time,note:r.note||""})),ss=buildSessions(rows);return ss.length?sessionDuration(ss[0],!manualFields().stop):0}catch{return 0}}
+function updateManualPreview(){const f=manualFields(),value=fmt(previewManualDuration());$("manualTotal").textContent=f.start&&!f.stop?`${value} · en cours`:value}
 async function saveManualDay(){
   if(loading)return;try{const ds=$("manualDate").value;if(isMonthLocked(ds.slice(0,7)))throw new Error("Ce mois est clôturé. Déverrouille-le dans Archives avant de modifier cette journée.");const rows=buildManualEvents();setLoading(true);manualMsg("Enregistrement...");
     if(!navigator.onLine){replaceLocalDay(ds,rows);enqueue({kind:"replaceDay",date:ds,rows});manualMsg("Enregistré hors connexion. Synchronisation automatique plus tard.","ok");toast("Journée enregistrée hors ligne")}
@@ -922,7 +880,7 @@ async function saveManualDay(){
     recordChange("Journée enregistrée",ds,`${fmt(previewManualDuration())}`);scheduleAppStateSync()
   }catch(e){manualMsg(e.message||"Erreur pendant l'enregistrement.","err");console.error(e)}finally{setLoading(false);render()}
 }
-async function duplicateManualDay(){const target=$("duplicateTarget").value,source=$("manualDate").value;if(!target){toast("Choisis la nouvelle date");return}if(target===source){toast("Choisis une autre date");return}if(isMonthLocked(target.slice(0,7))){toast("Le mois de destination est clôturé");return}if(daySessions(target).length&&!confirm("Cette date contient déjà des heures. Les remplacer par cette journée dupliquée ?"))return;const original=$("manualDate").value;try{$("manualDate").value=target;const rows=buildManualEvents();$("manualDate").value=original;if(!navigator.onLine){replaceLocalDay(target,rows);enqueue({kind:"replaceDay",date:target,rows})}else{await serverDeleteDay(target);await apiFetch("",{method:"POST",body:JSON.stringify(rows)});await loadEvents(false)}recordChange("Journée dupliquée",target,`Depuis ${source}`);scheduleAppStateSync();toast("Journée dupliquée");render()}catch(e){$("manualDate").value=original;toast(e.message||"Duplication impossible")}}
+async function duplicateManualDay(){const target=$("duplicateTarget").value,source=$("manualDate").value;if(!manualFields().stop){toast("Termine d’abord la journée avant de la dupliquer");return}if(!target){toast("Choisis la nouvelle date");return}if(target===source){toast("Choisis une autre date");return}if(isMonthLocked(target.slice(0,7))){toast("Le mois de destination est clôturé");return}if(daySessions(target).length&&!confirm("Cette date contient déjà des heures. Les remplacer par cette journée dupliquée ?"))return;const original=$("manualDate").value;try{$("manualDate").value=target;const rows=buildManualEvents();$("manualDate").value=original;if(!navigator.onLine){replaceLocalDay(target,rows);enqueue({kind:"replaceDay",date:target,rows})}else{await serverDeleteDay(target);await apiFetch("",{method:"POST",body:JSON.stringify(rows)});await loadEvents(false)}recordChange("Journée dupliquée",target,`Depuis ${source}`);scheduleAppStateSync();toast("Journée dupliquée");render()}catch(e){$("manualDate").value=original;toast(e.message||"Duplication impossible")}}
 
 async function deleteManualDay(){
   const ds=$("manualDate").value;if(!ds)return;if(isMonthLocked(ds.slice(0,7))){manualMsg("Ce mois est clôturé. Déverrouille-le dans Archives.","err");return}if(!daySessions(ds).length){manualMsg("Aucune journée à supprimer.");return}if(!confirm("Supprimer tous les pointages de cette journée ?"))return;
@@ -1038,8 +996,9 @@ function processLaunchParams(){const p=new URLSearchParams(location.search),o=p.
 function openStats(){const opts=buildMonthOptions(false);$("statsMonth").innerHTML=opts.map(o=>`<option value="${o.value}">${o.label}</option>`).join("");renderStats();openOverlay("statsOverlay")}
 function renderStats(){
   const val=$("statsMonth").value;if(!val)return;const[y,m]=val.split("-").map(Number),ss=monthSessions(y,m-1),total=ss.reduce((a,s)=>a+sessionDuration(s,true),0),days=new Set(ss.map(s=>dayKey(new Date(s.start.time)))).size,avg=days?total/days:0,longest=ss.reduce((a,s)=>Math.max(a,sessionDuration(s,true)),0),prevDate=new Date(y,m-2,1),prev=monthTotal(prevDate.getFullYear(),prevDate.getMonth()),compare=total-prev,sal=salaryBreakdown(val,false),overtime=msHours(sal.ot10+sal.ot20+sal.ot50);
-  $("statsTotal").textContent=fmt(total);$("statsDays").textContent=days;$("statsAvg").textContent=fmt(avg);$("statsLongest").textContent=fmt(longest);$("statsOvertime").textContent=fmt(overtime);$("statsCompare").textContent=`${compare>=0?"+":"-"}${fmt(Math.abs(compare))}`
+  $("statsTotal").textContent=fmt(total);$("statsDays").textContent=days;$("statsAvg").textContent=fmt(avg);$("statsLongest").textContent=fmt(longest);$("statsOvertime").textContent=fmt(overtime);$("statsCompare").textContent=`${compare>=0?"+":"-"}${fmt(Math.abs(compare))}`;renderStatsWeeks(val)
 }
+function renderStatsWeeks(mk){const box=$("statsWeeklyList");if(!box||!mk)return;const[y,m]=mk.split('-').map(Number),monthStart=new Date(y,m-1,1),monthEnd=new Date(y,m,0,23,59,59,999),cursor=startOfWeek(monthStart),current=dayKey(startOfWeek(new Date())),targetHours=Number(getSettings().weeklyTarget||39),target=targetHours*3600000,rows=[];while(cursor<=monthEnd){const start=new Date(cursor),end=new Date(start);end.setDate(end.getDate()+7);const total=sumSessions(s=>{const d=new Date(s.start.time);return d>=start&&d<end}),delta=total-target,endLabel=new Date(end);endLabel.setDate(endLabel.getDate()-1);rows.push(`<div class="v7-week-row ${dayKey(start)===current?'current':''}"><div><div class="v7-week-dates">Du ${start.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})} au ${endLabel.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}</div><div class="v7-week-goal">Objectif ${targetHours.toLocaleString('fr-FR')} h · ${delta>=0?`avance ${fmt(delta)}`:`reste ${fmt(-delta)}`}</div></div><div class="v7-week-hours">${fmt(total)}</div></div>`);cursor.setDate(cursor.getDate()+7)}box.innerHTML=rows.join('')}
 
 function openSettings(){loadSettingsUI();openOverlay("settingsOverlay")}
 function readDesign(){try{return JSON.parse(localStorage.getItem(DESIGN_KEY)||"{}")}catch{return{}}}
