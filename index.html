@@ -10,7 +10,7 @@
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./icon-192.png">
-<title>Mon Pointage · V7.4</title>
+<title>Mon Pointage · V7.5</title>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
 <style>
 :root{
@@ -279,12 +279,13 @@ html{background:#f5f7fb}body{color:var(--text);background:radial-gradient(circle
 @media(max-width:820px){.v5-main{padding:16px 13px 112px}.v5-mobile-menu{display:none}.v5-sidebar{top:auto;bottom:0;left:0;width:100%;height:auto;max-height:none;padding:7px 7px calc(7px + env(safe-area-inset-bottom));transform:none!important;border:0;border-top:1px solid rgba(33,48,79,.08);box-shadow:0 -12px 35px rgba(64,78,113,.12);z-index:900}.v5-logo,.v5-sideprofile{display:none}.v5-nav{display:flex;gap:3px;overflow-x:auto;scrollbar-width:none}.v5-nav::-webkit-scrollbar{display:none}.v5-navbtn{min-width:76px;min-height:61px;padding:7px 5px;display:flex;flex-direction:column;justify-content:center;gap:4px;text-align:center;font-size:9px;border-radius:13px}.v5-navbtn.active{box-shadow:none;background:#f0efff;border-color:transparent}.v5-navicon{width:auto;font-size:19px}.v5-backdrop{display:none!important}.v5-gridtop{grid-template-columns:1fr}.v5-clock{font-size:55px}.v5-links{grid-template-columns:1fr 1fr}.sheet{padding-bottom:calc(105px + env(safe-area-inset-bottom))}}
 @media(max-width:480px){.v5-title{font-size:26px}.v5-hero{padding:24px 20px}.v5-clock{font-size:51px}.v5-actions{grid-template-columns:1fr 1fr}.v5-action{min-height:72px;padding:10px}.v5-links{grid-template-columns:1fr}.v6-homeinsights{grid-template-columns:1fr 1fr}.v7-week-summary{gap:6px}.v7-summarybox{padding:10px 7px}.v7-summarybox b{font-size:18px}}
 
-/* ===== V7.4 STUDIO — PLUS SOBRE + MENU DÉFILANT RESTAURÉ ===== */
+/* ===== V7.5 STUDIO — PLUS SOBRE + MENU DÉFILANT RESTAURÉ ===== */
 :root{--accent:#3568d4;--accent2:#5b82dd;--accent-soft:rgba(53,104,212,.1);--bg1:#f1f3f7;--bg2:#e9edf3;--panel:#fff;--panel2:#f7f8fa;--text:#1b2433;--muted:#6f7888;--line:rgba(29,42,63,.1)}
 html{overflow-y:scroll;scrollbar-color:#aeb6c5 #edf0f4;scrollbar-width:thin}body{background:linear-gradient(145deg,#f4f5f7,#e9edf2 60%,#f2f4f7);color:var(--text)}
 .v5-sidebar{background:rgba(250,251,252,.97);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#aeb6c5 transparent}.v5-sidebar::-webkit-scrollbar{width:7px}.v5-sidebar::-webkit-scrollbar-thumb{background:#aeb6c5;border-radius:99px}.v5-monogram,.v5-avatar{background:linear-gradient(145deg,#426fce,#2855b4);box-shadow:0 9px 22px rgba(41,82,173,.2)}.v5-navbtn.active{color:#2859bd;background:rgba(53,104,212,.09);box-shadow:inset 3px 0 0 #3568d4}.v5-progress i,.v5-goalbar i{background:#3568d4}
 .v5-hero{background:linear-gradient(135deg,#263b66,#3568b9);box-shadow:0 18px 38px rgba(35,65,117,.2)}.v5-action.primary{background:#3568d4;box-shadow:0 10px 24px rgba(53,104,212,.2)}.v5-action.primary .ico{background:rgba(255,255,255,.16)}.v6-insight,.v6-insight:nth-child(1),.v6-insight:nth-child(2),.v6-insight:nth-child(3),.v6-insight:nth-child(4){background:#fff}.v5-link .li{background:#edf2fc;color:#3568d4}.v7-fab{background:#3568d4;box-shadow:0 12px 27px rgba(53,104,212,.26)}.v7-week-hours,.v7-type,.v6-hero-number{color:#3568d4}.v7-week-row.current,.v7-day.has-plan{background:linear-gradient(145deg,#eef3fc,#fff);border-color:rgba(53,104,212,.28)}.v7-segment button.active{color:#2859bd}.action.good{background:#168a69}.action.danger{background:#d64f5c}.auth-logo{background:linear-gradient(145deg,#426fce,#2855b4)}
 .stats-week-focus{margin:10px 0 18px;padding:16px;border:1px solid rgba(53,104,212,.18);border-radius:18px;background:linear-gradient(145deg,#eef3fc,#fff);box-shadow:0 9px 24px rgba(45,75,130,.08)}.stats-week-controls{display:grid;grid-template-columns:minmax(150px,1fr) auto;gap:10px;align-items:end}.stats-week-nav{display:flex;gap:7px}.stats-week-result{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}.stats-week-dates{font-weight:850;font-size:14px}.stats-week-detail{font-size:11px;color:var(--muted);margin-top:5px}.stats-week-total{text-align:right}.stats-week-total strong{display:block;font-size:31px;line-height:1;color:#2859bd}.stats-week-total span{display:block;margin-top:5px;font-size:9px;font-weight:850;letter-spacing:.08em;color:var(--muted)}
+.pointage-week-group{margin:12px 0 16px;border:1px solid var(--line);border-radius:17px;overflow:hidden;background:#fff;box-shadow:0 8px 22px rgba(45,75,130,.06)}.pointage-week-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;background:#eef3fc;border-bottom:1px solid rgba(53,104,212,.12)}.pointage-week-head span{display:block;font-size:10px;font-weight:850;letter-spacing:.07em;color:#667188}.pointage-week-head b{display:block;margin-top:3px;font-size:13px;color:#263147}.pointage-week-head strong{font-size:24px;white-space:nowrap;color:#2859bd}.pointage-week-group .row{margin:0;border:0;border-bottom:1px solid var(--line);border-radius:0;background:#fff;box-shadow:none}.pointage-week-group .row:last-child{border-bottom:0}
 @media(max-width:820px){
   .v5-main{padding:16px 14px 34px}.v5-mobile-menu{display:grid}.v5-backdrop{display:none!important}.v5-backdrop.open{display:block!important;position:fixed;inset:0;background:rgba(20,29,44,.42);z-index:79;backdrop-filter:blur(2px)}
   .v5-sidebar{top:0;bottom:auto;left:0;width:278px;height:100vh;max-height:100vh;padding:25px 16px calc(20px + env(safe-area-inset-bottom));transform:translateX(-103%)!important;border-right:1px solid var(--line);border-top:0;box-shadow:28px 0 55px rgba(29,42,63,.2);z-index:80}
@@ -420,7 +421,7 @@ html{overflow-y:scroll;scrollbar-color:#aeb6c5 #edf0f4;scrollbar-width:thin}body
         </button>
 
         <section class="v5-historybox">
-          <div class="section-title"><b>Derniers pointages</b><button class="mini-btn" onclick="openCalendar()">VOIR TOUT</button></div>
+          <div class="section-title"><b>Pointages semaine par semaine</b><button class="mini-btn" onclick="openCalendar()">VOIR TOUT</button></div>
           <div id="history" class="small">Chargement...</div>
         </section>
       </div>
@@ -429,11 +430,12 @@ html{overflow-y:scroll;scrollbar-color:#aeb6c5 #edf0f4;scrollbar-width:thin}body
 </div>
 
 <div id="calendarOverlay" class="overlay hidden" onclick="overlayClose(event,'calendarOverlay')"><div class="sheet">
-  <div class="sheet-head"><div class="sheet-title">Calendrier</div><button class="close-btn" onclick="closeOverlay('calendarOverlay')">✕</button></div>
+  <div class="sheet-head"><div><div class="sheet-title">Mes pointages</div><div class="small">Totaux semaine par semaine et détail par jour</div></div><button class="close-btn" onclick="closeOverlay('calendarOverlay')">✕</button></div>
   <div class="calendar-toolbar"><button id="prevMonthBtn" class="cal-nav" onclick="changeCalendarMonth(-1)">‹</button><select id="monthSelect" class="month-select" onchange="chooseCalendarMonth()"></select><button class="cal-nav" onclick="changeCalendarMonth(1)">›</button></div>
+  <div class="v6-sectiontitle">TOTAL PAR SEMAINE</div><div id="weeklyBreakdown" class="v7-week-list"></div>
+  <div class="v6-sectiontitle">DÉTAIL JOUR PAR JOUR</div>
   <div class="weekdays"><div>LUN</div><div>MAR</div><div>MER</div><div>JEU</div><div>VEN</div><div>SAM</div><div>DIM</div></div>
   <div id="calendarGrid" class="calendar-grid"></div><div class="calendar-tip">Le total apparaît directement sur les jours travaillés. Les traits indiquent planning ou congé.</div>
-  <div class="v6-sectiontitle">HEURES PAR SEMAINE</div><div id="weeklyBreakdown" class="v7-week-list"></div>
   <div class="v6-sectiontitle">RECHERCHE RAPIDE</div>
   <input id="calendarSearch" type="text" placeholder="Note, dimanche, nuit, >10h…" oninput="renderCalendarSearch()">
   <div id="calendarSearchResults" class="v6-searchresults"></div>
@@ -841,8 +843,7 @@ function render(){
   $("goal").textContent=diff>=0?`Objectif ${settings.weeklyTarget}h atteint, +${fmt(diff)}`:`Objectif ${settings.weeklyTarget}h, il reste ${fmt(-diff)}`;
   const cms=monthSessions(now.getFullYear(),now.getMonth()),workedDays=new Set(cms.map(s=>dayKey(new Date(s.start.time)))).size;
   const calendarSummaryEl=$("calendarSummary");if(calendarSummaryEl)calendarSummaryEl.textContent=`${now.toLocaleDateString("fr-FR",{month:"long",year:"numeric"})} · ${workedDays} jour${workedDays>1?"s":""} travaillé${workedDays>1?"s":""}`;
-  const ss=buildSessions().slice().reverse().slice(0,8);
-  $("history").innerHTML=ss.length?ss.map(s=>{const d=new Date(s.start.time),det=[`Début ${hm(d)}`];for(const p of sessionPauses(s)){det.push(`pause ${hm(new Date(p.pause.time))}${p.resume?` → ${hm(new Date(p.resume.time))}`:""}`)}if(s.stop)det.push(`fin ${hm(new Date(s.stop.time))}`);else det.push("en cours");if(s.note)det.push(`note : ${escapeHtml(s.note)}`);return`<div class="row" onclick="openManual('${dayKey(d)}')" style="cursor:pointer"><div class="row-main"><div class="row-date">${d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}${s.events.some(e=>e.pending)?" · à synchroniser":""}</div><div class="row-detail">${det.join(" · ")}</div></div><div class="row-total">${fmt(sessionDuration(s,true))}</div></div>`}).join(""):"Aucun pointage.";
+  renderPointageHistory();
   renderForgotten();
   renderExtra();
   if(!$("calendarOverlay").classList.contains("hidden")){renderCalendar();renderCalendarSearch()}
@@ -854,6 +855,7 @@ function render(){
   if(!$("correctionOverlay").classList.contains("hidden"))renderCorrections();
   if(!$("archivesOverlay").classList.contains("hidden"))renderArchives()
 }
+function renderPointageHistory(){const box=$("history");if(!box)return;const sessions=buildSessions().slice().sort((a,b)=>b.start.time-a.start.time);if(!sessions.length){box.innerHTML="Aucun pointage.";return}const groups=new Map();for(const s of sessions){const start=startOfWeek(new Date(s.start.time)),key=dayKey(start);if(!groups.has(key))groups.set(key,{start,sessions:[]});groups.get(key).sessions.push(s)}const keys=[...groups.keys()].sort().reverse().slice(0,8);box.innerHTML=keys.map(key=>{const group=groups.get(key),end=new Date(group.start);end.setDate(end.getDate()+6);const total=group.sessions.reduce((sum,s)=>sum+sessionDuration(s,true),0),rows=group.sessions.map(s=>{const d=new Date(s.start.time),det=[`Début ${hm(d)}`];for(const p of sessionPauses(s)){det.push(`pause ${hm(new Date(p.pause.time))}${p.resume?` → ${hm(new Date(p.resume.time))}`:""}`)}if(s.stop)det.push(`fin ${hm(new Date(s.stop.time))}`);else det.push("en cours");if(s.note)det.push(`note : ${escapeHtml(s.note)}`);return`<div class="row" onclick="openManual('${dayKey(d)}')" style="cursor:pointer"><div class="row-main"><div class="row-date">${d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}${s.events.some(e=>e.pending)?" · à synchroniser":""}</div><div class="row-detail">${det.join(" · ")}</div></div><div class="row-total">${fmt(sessionDuration(s,true))}</div></div>`}).join("");return`<section class="pointage-week-group"><div class="pointage-week-head"><div><span>SEMAINE</span><b>Du ${group.start.toLocaleDateString("fr-FR",{day:"numeric",month:"short"})} au ${end.toLocaleDateString("fr-FR",{day:"numeric",month:"short",year:"numeric"})}</b></div><strong>${fmt(total)}</strong></div>${rows}</section>`}).join("")}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 async function act(type){
   if(loading)return;if(isMonthLocked(monthKeyFromDate(new Date()))){toast("Ce mois est clôturé. Déverrouille-le dans Archives.");return}const row={user_id:userId(),type,event_time:new Date().toISOString(),note:null};
