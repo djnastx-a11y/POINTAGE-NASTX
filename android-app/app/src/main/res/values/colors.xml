@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pointage_background">#F5F7FB</color>
+    <color name="pointage_blue">#3568D4</color>
+    <color name="pointage_white">#FFFFFF</color>
+</resources>
