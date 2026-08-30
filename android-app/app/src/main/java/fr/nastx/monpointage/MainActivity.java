@@ -1,6 +1,7 @@
 package fr.nastx.monpointage;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -14,6 +15,8 @@ import android.util.Base64;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
+import android.webkit.JsResult;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -26,7 +29,7 @@ import java.io.OutputStream;
 
 public class MainActivity extends Activity {
 
-    private static final String APP_URL = "https://djnastx-a11y.github.io/POINTAGE-NASTX/?native=1";
+    private static final String APP_URL = "https://djnastx-a11y.github.io/POINTAGE-NASTX/?native=2";
     private static final String APP_HOST = "djnastx-a11y.github.io";
     private WebView webView;
 
@@ -43,7 +46,7 @@ public class MainActivity extends Activity {
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setDatabaseEnabled(true);
-        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setAllowFileAccess(false);
         settings.setAllowContentAccess(true);
         settings.setBuiltInZoomControls(false);
@@ -58,6 +61,23 @@ public class MainActivity extends Activity {
 
         WebView.setWebContentsDebuggingEnabled(false);
         webView.addJavascriptInterface(new AndroidDownloader(), "AndroidDownloader");
+
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
+                runOnUiThread(() -> {
+                    AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                            .setMessage(message)
+                            .setCancelable(false)
+                            .setPositiveButton("OK", (d, which) -> result.confirm())
+                            .setNegativeButton("ANNULER", (d, which) -> result.cancel())
+                            .create();
+                    dialog.setOnCancelListener(d -> result.cancel());
+                    dialog.show();
+                });
+                return true;
+            }
+        });
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -75,18 +95,21 @@ public class MainActivity extends Activity {
                 super.onPageFinished(view, url);
                 if (url != null && url.startsWith("https://" + APP_HOST + "/POINTAGE-NASTX/")) {
                     installNativeDownloadBridge(view);
+                    view.postDelayed(() -> installNativeDownloadBridge(view), 500);
+                    view.postDelayed(() -> installNativeDownloadBridge(view), 1500);
                 }
             }
 
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                if (failingUrl != null && failingUrl.startsWith(APP_URL.substring(0, APP_URL.indexOf("?")))) {
+                if (failingUrl != null && failingUrl.startsWith("https://" + APP_HOST + "/POINTAGE-NASTX/")) {
                     Toast.makeText(MainActivity.this, "Connexion impossible. Vérifie Internet puis relance Mon Pointage.", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
         if (savedInstanceState == null) {
+            webView.clearCache(true);
             webView.loadUrl(APP_URL);
         } else {
             webView.restoreState(savedInstanceState);
@@ -94,13 +117,16 @@ public class MainActivity extends Activity {
     }
 
     private void installNativeDownloadBridge(WebView view) {
+        if (view == null) return;
         String js = "(function(){"
-                + "if(!window.AndroidDownloader){return;}"
+                + "if(typeof AndroidDownloader==='undefined'){return;}"
+                + "window.__MON_POINTAGE_NATIVE__=true;"
                 + "window.downloadBlob=function(blob,name){"
                 + "try{"
+                + "if(!blob){AndroidDownloader.showError('Fichier vide');return;}"
                 + "var reader=new FileReader();"
                 + "reader.onloadend=function(){"
-                + "try{AndroidDownloader.saveBase64File(reader.result,name||'mon-pointage.pdf');}catch(e){console.error(e);}"
+                + "try{AndroidDownloader.saveBase64File(String(reader.result||''),name||'mon-pointage.pdf');}catch(e){AndroidDownloader.showError(e.message||'Téléchargement impossible');}"
                 + "};"
                 + "reader.onerror=function(){try{AndroidDownloader.showError('Impossible de préparer le fichier');}catch(e){}};"
                 + "reader.readAsDataURL(blob);"
@@ -113,7 +139,7 @@ public class MainActivity extends Activity {
     public class AndroidDownloader {
         @JavascriptInterface
         public void saveBase64File(String dataUrl, String fileName) {
-            if (dataUrl == null || fileName == null) {
+            if (dataUrl == null || dataUrl.isEmpty() || fileName == null) {
                 showError("Fichier invalide");
                 return;
             }
@@ -150,6 +176,8 @@ public class MainActivity extends Activity {
     }
 
     private void saveToDownloads(byte[] bytes, String fileName, String mimeType) throws Exception {
+        if (bytes == null || bytes.length == 0) throw new Exception("Le fichier est vide");
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ContentResolver resolver = getContentResolver();
             ContentValues values = new ContentValues();
@@ -161,7 +189,7 @@ public class MainActivity extends Activity {
             Uri uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
             if (uri == null) throw new Exception("Impossible de créer le fichier");
 
-            try (OutputStream out = resolver.openOutputStream(uri)) {
+            try (OutputStream out = resolver.openOutputStream(uri, "w")) {
                 if (out == null) throw new Exception("Impossible d'écrire le fichier");
                 out.write(bytes);
                 out.flush();
@@ -240,6 +268,7 @@ public class MainActivity extends Activity {
             webView.loadUrl("about:blank");
             webView.stopLoading();
             webView.removeJavascriptInterface("AndroidDownloader");
+            webView.setWebChromeClient(null);
             webView.setWebViewClient(null);
             webView.destroy();
             webView = null;
