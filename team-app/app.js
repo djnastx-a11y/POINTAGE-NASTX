@@ -1,0 +1,1 @@
+(async()=>{for(const src of ['./app1.js','./app2.js','./app3.js','./app4.js']){await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.onload=resolve;s.onerror=reject;document.body.appendChild(s)})}})().catch(e=>{console.error(e);const m=document.getElementById('authMsg');if(m)m.textContent='Impossible de charger l’application.'});
