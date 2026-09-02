@@ -66,7 +66,7 @@
       <h2>Connexion équipe</h2>
       <p>Connecte-toi avec ton identifiant personnel. Ton compte restera enregistré sur ce téléphone.</p>
       <label>Identifiant ou email</label><input id="teamUsername" name="as-team-user" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Ex. JB" maxlength="80"/>
-      <label style="margin-top:12px">Code personnel</label><input id="teamPin" name="as-team-code" autocomplete="current-password" inputmode="numeric" pattern="[0-9]*" type="password" placeholder="••••••••" maxlength="64"/>
+      <label style="margin-top:12px">Code personnel</label><input id="teamPin" name="as-team-code" autocomplete="current-password" type="password" placeholder="••••••••" maxlength="64"/>
       <button class="btn3d light" id="teamLoginBtn">SE CONNECTER</button>
       <div class="sync" id="teamLoginMsg" style="margin-top:12px;text-align:center"></div>
     </div>`;
