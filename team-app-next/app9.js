@@ -11,13 +11,22 @@
     #auth.accountAuth label{color:#51483f!important}
     #auth.accountAuth input{background:#fff!important;color:#181512!important;border-color:#d8c9b7!important}
     #auth.accountAuth .sync{color:#8a2f2f!important}
+    .teamLoginLogo{width:184px;height:84px;overflow:hidden;margin:0 auto 24px;display:flex;align-items:flex-start;justify-content:center;background:transparent!important}
+    .teamLoginLogo img{width:184px!important;height:114px!important;max-width:none!important;object-fit:cover!important;object-position:center top!important;background:transparent!important;border-radius:0!important;display:block!important}
   `;
   document.head.appendChild(css);
 
-  function emailForUsername(username){
-    const u=String(username||'').trim().toLowerCase();
-    if(u==='jb')return 'djnastx@gmail.com';
-    return `${u}@${TEAM_EMAIL_DOMAIN}`;
+  function authEmailForIdentifier(identifier){
+    const raw=String(identifier||'').trim().toLowerCase();
+    if(raw.includes('@'))return raw;
+    if(raw==='jb')return 'djnastx@gmail.com';
+    return `${raw}@${TEAM_EMAIL_DOMAIN}`;
+  }
+
+  function validIdentifier(identifier){
+    const raw=String(identifier||'').trim().toLowerCase();
+    if(/^[a-z0-9._-]{2,32}$/.test(raw))return true;
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(raw);
   }
 
   async function teamMemberForSession(){
@@ -53,30 +62,33 @@
     const auth=$('auth');
     auth.className='auth accountAuth';
     auth.innerHTML=`<div class="authBox">
-      <img alt="Australia Street" src="./logo-clean.svg?v=220"/>
+      <div class="teamLoginLogo"><img alt="Australia Street" src="./logo.jpg?v=230"/></div>
       <h2>Connexion équipe</h2>
       <p>Connecte-toi avec ton identifiant personnel. Ton compte restera enregistré sur ce téléphone.</p>
-      <label>Identifiant</label><input id="teamUsername" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="Ex. louella" maxlength="32"/>
-      <label style="margin-top:12px">Code personnel</label><input id="teamPin" autocomplete="current-password" inputmode="numeric" pattern="[0-9]*" type="password" placeholder="••••••••" maxlength="20"/>
+      <label>Identifiant</label><input id="teamUsername" name="as-team-user" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Ex. JB" maxlength="80"/>
+      <label style="margin-top:12px">Code personnel</label><input id="teamPin" name="as-team-code" autocomplete="current-password" inputmode="numeric" pattern="[0-9]*" type="password" placeholder="••••••••" maxlength="64"/>
       <button class="btn3d light" id="teamLoginBtn">SE CONNECTER</button>
       <div class="sync" id="teamLoginMsg" style="margin-top:12px;text-align:center"></div>
     </div>`;
+    $('teamUsername').value='';
+    $('teamPin').value='';
     $('teamLoginBtn').onclick=loginPersonalAccount;
     $('teamPin').addEventListener('keydown',e=>{if(e.key==='Enter')loginPersonalAccount()});
   }
 
   async function loginPersonalAccount(){
-    const username=$('teamUsername')?.value.trim().toLowerCase()||'';
+    const identifier=$('teamUsername')?.value.trim().toLowerCase()||'';
     const pin=$('teamPin')?.value||'';
     const msg=$('teamLoginMsg');
-    if(!/^[a-z0-9._-]{2,32}$/.test(username)){msg.textContent='Identifiant incorrect.';return}
+    if(!validIdentifier(identifier)){msg.textContent='Entre ton identifiant, par exemple JB.';return}
     if(pin.length<8){msg.textContent='Le code personnel doit contenir au moins 8 caractères.';return}
     const btn=$('teamLoginBtn');btn.disabled=true;msg.textContent='Connexion…';
     try{
-      const j=await authRequest('token?grant_type=password',{email:emailForUsername(username),password:pin});
+      const j=await authRequest('token?grant_type=password',{email:authEmailForIdentifier(identifier),password:pin});
       saveSession({access_token:j.access_token,refresh_token:j.refresh_token,expires_at:Date.now()+((j.expires_in||3600)*1000),user:j.user});
       const member=await teamMemberForSession();
-      if(!member||member.username!==username||!applyMember(member)){
+      const identifierIsEmail=identifier.includes('@');
+      if(!member||(!identifierIsEmail&&member.username!==identifier)||!applyMember(member)){
         clearAppSession();
         throw new Error('Ce compte n’est pas autorisé pour l’application équipe.');
       }
@@ -86,7 +98,8 @@
       if(typeof loadCloud==='function')await loadCloud();
       originalStartApp();
     }catch(e){
-      msg.textContent=e?.message==='Invalid login credentials'?'Identifiant ou code incorrect.':(e?.message||'Connexion impossible.');
+      const raw=String(e?.message||'');
+      msg.textContent=/invalid login credentials/i.test(raw)?'Identifiant ou code incorrect.':(raw||'Connexion impossible.');
     }finally{btn.disabled=false}
   }
 
