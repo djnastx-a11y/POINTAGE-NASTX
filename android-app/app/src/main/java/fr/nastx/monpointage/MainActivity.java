@@ -31,17 +31,19 @@ import java.util.Set;
 
 public class MainActivity extends Activity {
 
-    private static final String APP_URL = "https://djnastx-a11y.github.io/POINTAGE-NASTX/?native=4";
+    private static final String APP_URL = "https://djnastx-a11y.github.io/POINTAGE-NASTX/?native=5";
     private static final String APP_HOST = "djnastx-a11y.github.io";
     private static final String APP_PATH_PREFIX = "/POINTAGE-NASTX/";
-    private static final String NATIVE_UI_CSS = "https://djnastx-a11y.github.io/POINTAGE-NASTX/native-v8.css?v=1.2.0";
+    private static final String NATIVE_UI_CSS = "https://djnastx-a11y.github.io/POINTAGE-NASTX/native-v8.css?v=1.2.1";
     private static final int FILE_CHOOSER_REQUEST_CODE = 4102;
     private static final int MAX_DATA_URL_LENGTH = 32 * 1024 * 1024;
     private static final Set<String> ALLOWED_EXPORT_MIME_TYPES = Set.of(
             "application/pdf",
             "image/png",
             "application/json",
-            "text/json"
+            "text/json",
+            "text/csv",
+            "text/calendar"
     );
 
     private WebView webView;
@@ -53,8 +55,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         webView = new WebView(this);
-        webView.setBackgroundColor(Color.rgb(11, 13, 16));
+        webView.setBackgroundColor(Color.rgb(238, 229, 216));
         webView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        webView.setVerticalScrollBarEnabled(true);
+        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         setContentView(webView);
 
         WebSettings settings = webView.getSettings();
@@ -174,7 +178,7 @@ public class MainActivity extends Activity {
                 + "if(typeof AndroidDownloader==='undefined'){return;}"
                 + "window.__MON_POINTAGE_NATIVE__=true;"
                 + "document.documentElement.classList.add('native-v8');"
-                + "var theme=document.querySelector('meta[name=theme-color]');if(theme){theme.setAttribute('content','#0b0d10');}"
+                + "var theme=document.querySelector('meta[name=theme-color]');if(theme){theme.setAttribute('content','#eee5d8');}"
                 + "if(!document.getElementById('mon-pointage-native-v8')){"
                 + "var link=document.createElement('link');link.id='mon-pointage-native-v8';link.rel='stylesheet';link.href='" + NATIVE_UI_CSS + "';document.head.appendChild(link);"
                 + "}"
