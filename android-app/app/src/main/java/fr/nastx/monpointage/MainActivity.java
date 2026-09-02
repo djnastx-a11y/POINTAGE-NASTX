@@ -16,6 +16,7 @@ import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -26,12 +27,25 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.Set;
 
 public class MainActivity extends Activity {
 
-    private static final String APP_URL = "https://djnastx-a11y.github.io/POINTAGE-NASTX/?native=2";
+    private static final String APP_URL = "https://djnastx-a11y.github.io/POINTAGE-NASTX/?native=3";
     private static final String APP_HOST = "djnastx-a11y.github.io";
+    private static final String APP_PATH_PREFIX = "/POINTAGE-NASTX/";
+    private static final int FILE_CHOOSER_REQUEST_CODE = 4102;
+    private static final int MAX_DATA_URL_LENGTH = 32 * 1024 * 1024;
+    private static final Set<String> ALLOWED_EXPORT_MIME_TYPES = Set.of(
+            "application/pdf",
+            "image/png",
+            "application/json",
+            "text/json"
+    );
+
     private WebView webView;
+    private ValueCallback<Uri[]> filePathCallback;
+    private volatile boolean trustedPage = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +60,7 @@ public class MainActivity extends Activity {
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setDatabaseEnabled(true);
-        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         settings.setAllowFileAccess(false);
         settings.setAllowContentAccess(true);
         settings.setBuiltInZoomControls(false);
@@ -54,10 +68,13 @@ public class MainActivity extends Activity {
         settings.setSupportZoom(false);
         settings.setMediaPlaybackRequiresUserGesture(false);
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            settings.setSafeBrowsingEnabled(true);
+        }
 
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
-        cookieManager.setAcceptThirdPartyCookies(webView, true);
+        cookieManager.setAcceptThirdPartyCookies(webView, false);
 
         WebView.setWebContentsDebuggingEnabled(false);
         webView.addJavascriptInterface(new AndroidDownloader(), "AndroidDownloader");
@@ -65,6 +82,10 @@ public class MainActivity extends Activity {
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
+                if (!isTrustedAppUrl(url)) {
+                    result.cancel();
+                    return true;
+                }
                 runOnUiThread(() -> {
                     AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
                             .setMessage(message)
@@ -77,9 +98,39 @@ public class MainActivity extends Activity {
                 });
                 return true;
             }
+
+            @Override
+            public boolean onShowFileChooser(
+                    WebView webView,
+                    ValueCallback<Uri[]> newFilePathCallback,
+                    FileChooserParams fileChooserParams
+            ) {
+                if (!trustedPage) {
+                    newFilePathCallback.onReceiveValue(null);
+                    return false;
+                }
+                if (filePathCallback != null) {
+                    filePathCallback.onReceiveValue(null);
+                }
+                filePathCallback = newFilePathCallback;
+                try {
+                    startActivityForResult(fileChooserParams.createIntent(), FILE_CHOOSER_REQUEST_CODE);
+                    return true;
+                } catch (Exception e) {
+                    filePathCallback = null;
+                    Toast.makeText(MainActivity.this, "Impossible d'ouvrir le sélecteur de fichier", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            }
         });
 
         webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageStarted(WebView view, String url, android.graphics.Bitmap favicon) {
+                trustedPage = isTrustedAppUrl(url);
+                super.onPageStarted(view, url, favicon);
+            }
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 return handleNavigation(request.getUrl());
@@ -93,7 +144,8 @@ public class MainActivity extends Activity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                if (url != null && url.startsWith("https://" + APP_HOST + "/POINTAGE-NASTX/")) {
+                trustedPage = isTrustedAppUrl(url);
+                if (trustedPage) {
                     installNativeDownloadBridge(view);
                     view.postDelayed(() -> installNativeDownloadBridge(view), 500);
                     view.postDelayed(() -> installNativeDownloadBridge(view), 1500);
@@ -102,14 +154,13 @@ public class MainActivity extends Activity {
 
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                if (failingUrl != null && failingUrl.startsWith("https://" + APP_HOST + "/POINTAGE-NASTX/")) {
-                    Toast.makeText(MainActivity.this, "Connexion impossible. Vérifie Internet puis relance Mon Pointage.", Toast.LENGTH_LONG).show();
+                if (isTrustedAppUrl(failingUrl)) {
+                    Toast.makeText(MainActivity.this, "Connexion impossible. Les données locales restent disponibles si elles ont déjà été chargées.", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
         if (savedInstanceState == null) {
-            webView.clearCache(true);
             webView.loadUrl(APP_URL);
         } else {
             webView.restoreState(savedInstanceState);
@@ -117,7 +168,7 @@ public class MainActivity extends Activity {
     }
 
     private void installNativeDownloadBridge(WebView view) {
-        if (view == null) return;
+        if (view == null || !trustedPage) return;
         String js = "(function(){"
                 + "if(typeof AndroidDownloader==='undefined'){return;}"
                 + "window.__MON_POINTAGE_NATIVE__=true;"
@@ -139,8 +190,16 @@ public class MainActivity extends Activity {
     public class AndroidDownloader {
         @JavascriptInterface
         public void saveBase64File(String dataUrl, String fileName) {
+            if (!trustedPage) {
+                showError("Téléchargement refusé hors de Mon Pointage");
+                return;
+            }
             if (dataUrl == null || dataUrl.isEmpty() || fileName == null) {
                 showError("Fichier invalide");
+                return;
+            }
+            if (dataUrl.length() > MAX_DATA_URL_LENGTH) {
+                showError("Fichier trop volumineux");
                 return;
             }
 
@@ -154,7 +213,10 @@ public class MainActivity extends Activity {
                 int typeStart = header.indexOf(':');
                 int typeEnd = header.indexOf(';');
                 if (typeStart >= 0 && typeEnd > typeStart) {
-                    mimeType = header.substring(typeStart + 1, typeEnd);
+                    mimeType = header.substring(typeStart + 1, typeEnd).toLowerCase();
+                }
+                if (!ALLOWED_EXPORT_MIME_TYPES.contains(mimeType)) {
+                    throw new IllegalArgumentException("Type de fichier non autorisé");
                 }
 
                 byte[] bytes = Base64.decode(base64Data, Base64.DEFAULT);
@@ -168,6 +230,23 @@ public class MainActivity extends Activity {
         public void showError(String message) {
             runOnUiThread(() -> Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show());
         }
+    }
+
+    private boolean isTrustedAppUrl(String url) {
+        if (url == null) return false;
+        try {
+            return isTrustedAppUri(Uri.parse(url));
+        } catch (Exception ignored) {
+            return false;
+        }
+    }
+
+    private boolean isTrustedAppUri(Uri uri) {
+        if (uri == null) return false;
+        return "https".equalsIgnoreCase(uri.getScheme())
+                && APP_HOST.equalsIgnoreCase(uri.getHost())
+                && uri.getPath() != null
+                && uri.getPath().startsWith(APP_PATH_PREFIX);
     }
 
     private String sanitizeFileName(String name) {
@@ -204,7 +283,7 @@ public class MainActivity extends Activity {
 
             runOnUiThread(() -> Toast.makeText(
                     MainActivity.this,
-                    "Récap téléchargé dans Téléchargements > Mon Pointage",
+                    "Fichier enregistré dans Téléchargements > Mon Pointage",
                     Toast.LENGTH_LONG
             ).show());
         } else {
@@ -220,7 +299,7 @@ public class MainActivity extends Activity {
 
             runOnUiThread(() -> Toast.makeText(
                     MainActivity.this,
-                    "Récap téléchargé : " + file.getAbsolutePath(),
+                    "Fichier téléchargé : " + file.getAbsolutePath(),
                     Toast.LENGTH_LONG
             ).show());
         }
@@ -228,23 +307,25 @@ public class MainActivity extends Activity {
 
     private boolean handleNavigation(Uri uri) {
         if (uri == null) return false;
-
-        String scheme = uri.getScheme();
-        String host = uri.getHost();
-
-        if (("https".equalsIgnoreCase(scheme) || "http".equalsIgnoreCase(scheme))
-                && host != null
-                && host.equals(APP_HOST)) {
-            return false;
-        }
+        if (isTrustedAppUri(uri)) return false;
 
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
             return true;
-        } catch (Exception ignored) {
-            return false;
+        } catch (Exception e) {
+            Toast.makeText(this, "Impossible d'ouvrir ce lien", Toast.LENGTH_SHORT).show();
+            return true;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != FILE_CHOOSER_REQUEST_CODE || filePathCallback == null) return;
+        Uri[] results = WebChromeClient.FileChooserParams.parseResult(resultCode, data);
+        filePathCallback.onReceiveValue(results);
+        filePathCallback = null;
     }
 
     @Override
@@ -264,6 +345,11 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onDestroy() {
+        trustedPage = false;
+        if (filePathCallback != null) {
+            filePathCallback.onReceiveValue(null);
+            filePathCallback = null;
+        }
         if (webView != null) {
             webView.loadUrl("about:blank");
             webView.stopLoading();
