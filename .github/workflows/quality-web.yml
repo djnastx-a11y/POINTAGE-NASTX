@@ -1,0 +1,62 @@
+name: Quality checks
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'index.html'
+      - 'sw.js'
+      - 'manifest.webmanifest'
+      - '.github/workflows/quality-web.yml'
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'sw.js'
+      - 'manifest.webmanifest'
+
+permissions:
+  contents: read
+
+jobs:
+  web-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate manifest JSON
+        run: node -e "JSON.parse(require('fs').readFileSync('manifest.webmanifest','utf8')); console.log('manifest OK')"
+
+      - name: Validate service worker syntax
+        run: node --check sw.js
+
+      - name: Validate inline JavaScript syntax
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          html = Path('index.html').read_text(encoding='utf-8')
+          scripts = re.findall(r'<script(?![^>]*\bsrc=)[^>]*>(.*?)</script>', html, flags=re.S|re.I)
+          if not scripts:
+              raise SystemExit('Aucun script inline trouvé')
+          for i, script in enumerate(scripts, 1):
+              Path(f'/tmp/inline-{i}.js').write_text(script, encoding='utf-8')
+          print(f'{len(scripts)} script(s) inline extrait(s)')
+          PY
+          for f in /tmp/inline-*.js; do node --check "$f"; done
+
+      - name: Reject unresolved merge markers
+        shell: bash
+        run: |
+          if grep -R -n -E '^(<<<<<<<|=======|>>>>>>>)' index.html sw.js manifest.webmanifest; then
+            echo 'Marqueur de conflit Git détecté'
+            exit 1
+          fi
