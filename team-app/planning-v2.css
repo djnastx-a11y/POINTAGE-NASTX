@@ -1,0 +1,25 @@
+/* Planning admin V2, priorité mobile */
+#view-planningAdmin .pageSub{max-width:620px}
+#view-planningAdmin .palette.planningTopPalette{position:sticky;top:8px;z-index:70;margin:10px 0 12px;padding:11px 10px 12px;background:rgba(13,15,18,.97);border:1px solid #343941;border-radius:16px;box-shadow:0 12px 28px rgba(0,0,0,.38);backdrop-filter:blur(18px)}
+#view-planningAdmin .palette.planningTopPalette h3{margin:0 0 8px;font-size:10px;letter-spacing:.10em;color:#c7cbd1}
+#view-planningAdmin .chips{display:flex;gap:7px;flex-wrap:nowrap;overflow-x:auto;padding:1px 1px 7px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#view-planningAdmin .chips::-webkit-scrollbar{display:none}
+#view-planningAdmin .personChip{flex:0 0 auto;min-height:42px;padding:0 14px;border-radius:10px;background:linear-gradient(180deg,#343840,#1b1e23);border:1px solid #464b54;box-shadow:0 4px 0 #090a0c,0 7px 12px rgba(0,0,0,.26);font-size:12px}
+#view-planningAdmin .personChip.selectedPerson{background:#f1f2f3;color:#111318;border-color:#fff;box-shadow:0 4px 0 #aeb3b9,0 7px 12px rgba(0,0,0,.22)}
+#view-planningAdmin .planningWrap{padding:9px;border-radius:18px;background:#e6e8ea}
+#view-planningAdmin #adminPlanning{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;align-items:stretch}
+#view-planningAdmin #adminPlanning .dayBlock{margin:0;min-width:0;min-height:150px;padding:9px;border-radius:11px;border:1px solid #c9cdd2;background:#f8f9fa;display:flex;flex-direction:column}
+#view-planningAdmin #adminPlanning .dayHead{min-height:39px;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid #d8dbe0}
+#view-planningAdmin #adminPlanning .dayHead b{font-size:12px;letter-spacing:.03em}
+#view-planningAdmin #adminPlanning .dayHead span{font-size:9px}
+#view-planningAdmin #adminPlanning .dayList{flex:1;min-height:88px;display:flex;flex-direction:column;gap:5px}
+#view-planningAdmin #adminPlanning .dropHint{min-height:72px;flex:1;display:grid;place-items:center;padding:8px;border-radius:8px;font-size:10px;line-height:1.25}
+#view-planningAdmin #adminPlanning .shiftCard{grid-template-columns:minmax(0,1fr) 28px;padding:8px 7px;border-radius:8px;margin:0;box-shadow:0 2px 0 #b9bec4,0 4px 8px rgba(0,0,0,.08)}
+#view-planningAdmin #adminPlanning .shiftName{font-size:12px}
+#view-planningAdmin #adminPlanning .shiftMeta{font-size:9px}
+#view-planningAdmin #adminPlanning .shiftTime{grid-column:1/2;text-align:left;font-size:9px;white-space:normal;color:#50555c}
+#view-planningAdmin #adminPlanning .shiftEdit{grid-column:2;grid-row:1/3;width:28px;height:34px;border-radius:7px}
+#view-planningAdmin .publishBar{position:sticky;bottom:calc(74px + env(safe-area-inset-bottom));z-index:65;background:rgba(8,9,11,.94);padding:9px;margin:12px -3px 0;border:1px solid #30343a;border-radius:16px;backdrop-filter:blur(18px)}
+#view-planningAdmin .planningTapHint{font-size:10px;color:#8f959d;margin-top:7px;line-height:1.35}
+@media(min-width:680px){#view-planningAdmin #adminPlanning{grid-template-columns:repeat(4,minmax(0,1fr))}#view-planningAdmin #adminPlanning .dayBlock{min-height:180px}}
+@media(max-width:360px){#view-planningAdmin #adminPlanning{grid-template-columns:1fr 1fr;gap:6px}#view-planningAdmin #adminPlanning .dayBlock{padding:7px;min-height:142px}#view-planningAdmin .personChip{padding:0 11px}}
