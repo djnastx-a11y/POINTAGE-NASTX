@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<meta content="#090a0c" name="theme-color"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<link href="./manifest.webmanifest" rel="manifest"/>
+<title>Australia Street · Équipe</title>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+<link href="./styles.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="splash" id="splash">
+<div class="splashInner">
+<img alt="Australia Street" class="splashLogo" src="./logo.svg"/>
+<img alt="Koala Australia Street" class="splashKoala" src="./koala.svg"/>
+<h1>Application équipe</h1><p>Pointage et planning Australia Street</p>
+<button class="btn3d light" id="enterBtn">OUVRIR L’APPLICATION</button>
+</div>
+</div>
+<div class="auth hidden" id="auth"><div class="authBox">
+<img alt="Australia Street" src="./logo.svg"/>
+<h2>Connexion équipe</h2><p>La connexion technique est mémorisée sur l’appareil. Le code PIN est demandé uniquement pour l’administration.</p>
+<label>Email</label><input autocomplete="email" id="authEmail" placeholder="adresse@email.fr" type="email"/>
+<label style="margin-top:10px">Mot de passe</label><input autocomplete="current-password" id="authPassword" placeholder="••••••••" type="password"/>
+<button class="btn3d light" id="authBtn">SE CONNECTER</button><div class="sync" id="authMsg" style="margin-top:12px;text-align:center"></div>
+</div></div>
+<div class="auth hidden" id="profileScreen"><div class="authBox">
+<img alt="Australia Street" src="./logo.svg"/><h2>Qui utilise l’application ?</h2><p>Choisis ton prénom. Il restera enregistré sur ce téléphone.</p><div class="profileGrid" id="profileGrid"></div>
+</div></div>
+<div class="hidden" id="app">
+<div class="backdrop" id="backdrop"></div>
+<aside class="drawer" id="drawer"><div class="drawerScroll">
+<div class="drawerBrand"><img alt="Logo" src="./logo.svg"/><div><b>Australia Street</b><small>Application équipe</small></div></div>
+<div class="menuSection">ÉQUIPE</div>
+<button class="menuItem" data-view="home"><span class="ico">⌂</span>Accueil</button>
+<button class="menuItem" data-view="point"><span class="ico">◷</span>Pointer</button>
+<button class="menuItem" data-view="planning"><span class="ico">▦</span>Planning</button>
+<button class="menuItem" data-view="hours"><span class="ico">≡</span>Mes heures</button>
+<button class="menuItem" data-view="recap"><span class="ico">▤</span>Récap mensuel</button>
+<div class="hidden" id="adminMenuGroup"><div class="menuSection">ADMINISTRATION</div>
+<button class="menuItem locked" data-admin="planningAdmin"><span class="ico">✣</span>Créer planning</button>
+<button class="menuItem locked" data-admin="corrections"><span class="ico">✎</span>Corriger pointages</button>
+<button class="menuItem locked" data-admin="audit"><span class="ico">↺</span>Historique modifications</button>
+</div>
+<div class="drawerProfile"><b id="drawerName">Utilisateur</b><small id="drawerRole">Équipe</small><button id="switchProfile">Changer d’utilisateur</button></div>
+</div></aside>
+<main class="shell">
+<div class="topbar"><button class="menuBtn" id="menuBtn">☰</button><div class="brandMini"><b id="topTitle">Accueil</b><span id="syncStatus">Connexion…</span></div><button class="roundBtn" id="profileBtn">●</button></div>
+<section class="view active" id="view-home">
+<div class="hero"><img alt="Australia Street" class="heroLogo" src="./logo.svg"/><div class="heroRow"><div class="heroCopy"><div class="eyebrow">AUSTRALIA STREET · ÉQUIPE</div><h1 id="helloName">Bonjour</h1><p>Ton pointage, ton planning et tes heures dans une seule application.</p></div></div><img alt="Koala" class="koalaMini" src="./koala.svg"/></div>
+<div class="statusCard"><div class="statusTop"><div><div class="statusTitle">Maintenant</div><div class="clock" id="homeClock">00:00</div></div><div class="statePill" id="homeState">Pas encore pointé</div></div><div class="nextShift" id="homeNext">Aucun horaire publié aujourd’hui</div><div class="actionGrid"><button class="btn3d" id="homeMainAction">POINTER</button><button class="btn3d light" data-view-jump="planning">PLANNING</button></div></div>
+<div class="section"><div class="sectionHead"><h2>Derniers pointages</h2><small>heures réelles</small></div><div class="card" id="homeHistory"></div></div>
+</section>
+<section class="view" id="view-point"><h1 class="pageTitle">Pointer</h1><div class="pageSub">Les heures enregistrées sont les heures réelles. Les corrections sont réservées aux administrateurs.</div><div class="statusCard"><div class="statusTop"><div><div class="statusTitle">Heure actuelle</div><div class="clock" id="pointClock">00:00</div></div><div class="statePill" id="pointState">Pas encore pointé</div></div><div class="actionGrid"><button class="btn3d light" id="startBtn">ARRIVÉE</button><button class="btn3d" id="stopBtn">DÉPART</button><button class="btn3d" id="pauseBtn">PAUSE</button><button class="btn3d" id="resumeBtn">REPRENDRE</button></div></div><div class="section"><div class="sectionHead"><h2>Aujourd’hui</h2></div><div class="card" id="todayDetail"></div></div></section>
+<section class="view" id="view-planning"><h1 class="pageTitle">Planning</h1><div class="pageSub">Planning publié pour toute l’équipe. Aucun total d’heures prévues n’est affiché.</div><div class="weekControl"><button class="smallBtn" data-week="-1">‹</button><div class="weekLabel" id="publicWeekLabel"></div><button class="smallBtn" data-week="1">›</button></div><div class="planningWrap"><div class="planningGridDesktop" id="publicPlanning"></div></div></section>
+<section class="view" id="view-hours"><h1 class="pageTitle">Mes heures</h1><div class="pageSub">Uniquement les heures réellement pointées.</div><div class="monthGrid" id="hoursMetrics"></div><div class="section"><div class="sectionHead"><h2>Détail</h2></div><div class="card" id="hoursList"></div></div></section>
+<section class="view" id="view-recap"><h1 class="pageTitle">Récap mensuel</h1><div class="pageSub">Télécharge ton récapitulatif sans information de salaire.</div><div class="card"><label>Mois</label><select id="recapMonth"></select><div class="monthGrid" id="recapMetrics" style="margin-top:12px"></div><div class="toolbar" style="margin-top:14px"><button class="smallBtn light" id="csvBtn">Télécharger CSV</button><button class="smallBtn" id="pdfBtn">Télécharger PDF</button></div></div><div class="section"><div class="card" id="recapList"></div></div></section>
+<section class="view" id="view-planningAdmin"><h1 class="pageTitle">Créer le planning</h1><div class="pageSub">Glisse les prénoms dans les journées. Sur mobile, tu peux maintenir puis déplacer une carte.</div><div class="weekControl"><button class="smallBtn" data-admin-week="-1">‹</button><div class="weekLabel" id="adminWeekLabel"></div><button class="smallBtn" data-admin-week="1">›</button></div><div class="toolbar" style="margin-bottom:10px"><button class="smallBtn" id="copyWeekBtn">Copier semaine précédente</button><button class="smallBtn light" id="addExtraBtn">+ Extra</button></div><div class="planningWrap"><div class="planningGridDesktop" id="adminPlanning"></div></div><div class="palette"><h3>ÉQUIPE DISPONIBLE · GLISSER DANS UNE JOURNÉE</h3><div class="chips" id="peoplePalette"></div><div class="chips" id="extrasPalette" style="margin-top:8px"></div></div><div class="publishBar"><button class="btn3d" id="saveDraftBtn">ENREGISTRER</button><button class="btn3d light" id="publishBtn">PUBLIER LE PLANNING</button></div></section>
+<section class="view" id="view-corrections"><h1 class="pageTitle">Corriger les pointages</h1><div class="pageSub">Ajouter, modifier ou supprimer une journée. Chaque modification reste dans l’historique.</div><div class="toolbar"><select id="correctionEmployee" style="width:auto;min-width:150px"></select><button class="smallBtn light" id="addManualBtn">+ Ajouter une journée</button></div><div class="card" id="correctionList" style="margin-top:12px"></div></section>
+<section class="view" id="view-audit"><h1 class="pageTitle">Historique</h1><div class="pageSub">Modifications administratives enregistrées.</div><div class="card" id="auditList"></div></section>
+</main>
+<nav class="bottomNav"><button class="navBtn active" data-view="home"><span>⌂</span>Accueil</button><button class="navBtn" data-view="point"><span>◷</span>Pointer</button><button class="navBtn" data-view="planning"><span>▦</span>Planning</button><button class="navBtn" data-view="hours"><span>≡</span>Mes heures</button></nav>
+</div>
+<div id="modalRoot"></div><div class="toast hidden" id="toast"></div>
+<script src="./app.js"></script></body></html>
