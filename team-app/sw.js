@@ -1,4 +1,4 @@
-const CACHE="australia-team-v1.1.0";
+const CACHE="australia-team-v1.1.1";
 const CORE=["./","./index.html","./styles.css","./planning-v2.css","./app.js","./app1.js","./app2.js","./app3.js","./app4.js","./app5.js","./logo.svg","./koala.svg","./manifest.webmanifest","../icon-192.png","../icon-512.png"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).catch(()=>{}));self.skipWaiting()});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE&&k.startsWith("australia-team-")).map(k=>caches.delete(k)))));self.clients.claim()});
