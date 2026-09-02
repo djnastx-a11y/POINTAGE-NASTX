@@ -1,10 +1,10 @@
 const SUPABASE_URL="https://mqgrvddgmfdebpvozipa.supabase.co";
 const SUPABASE_KEY="sb_publishable_gXHAAlDIYLEq6nO-VT1Hag_a7VMElzP";
 const APPDATA_TABLE="APP_DATA";
-const AUTH_KEY="pointage_auth_v4";
-const LOCAL_KEY="australia_team_app_v1";
-const PROFILE_KEY="australia_team_profile_v1";
-const TEAM_NS="teamAppV1";
+const AUTH_KEY="pointage_auth_v4_staging";
+const LOCAL_KEY="australia_team_app_v2_staging";
+const PROFILE_KEY="australia_team_profile_v2_staging";
+const TEAM_NS="teamAppV2Staging";
 const EMPLOYEES=[
  {id:"jb",name:"JB",admin:true},{id:"louella",name:"Louella",admin:false},{id:"gillou",name:"Gillou",admin:false},{id:"cyril",name:"Cyril",admin:false},{id:"chloe",name:"Chloé",admin:false},{id:"caro",name:"Caro",admin:false},{id:"ingrid",name:"Ingrid",admin:true},{id:"coco",name:"Coco",admin:true}
 ];
