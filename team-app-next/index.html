@@ -3,38 +3,47 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
-<meta content="#090a0c" name="theme-color"/>
+<meta content="#f4ecdf" name="theme-color"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
-<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
 <link href="./manifest.webmanifest" rel="manifest"/>
 <title>Australia Street · Équipe</title>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
 <link href="./styles.css" rel="stylesheet"/>
+<link href="./design-v2.css?v=241" rel="stylesheet"/>
+<style>
+html,body{background:#f4ecdf!important}
+body.designV2.noBrandLogo .splashLogo,body.designV2.noBrandLogo .drawerBrand img,body.designV2.noBrandLogo .heroLogo,body.designV2.noBrandLogo #auth .authBox img,body.designV2.noBrandLogo #profileScreen .authBox img{display:none!important}
+body.designV2.noBrandLogo .drawerBrand{min-height:72px;align-items:center!important}
+body.designV2.noBrandLogo .drawerBrand>div{padding-left:2px}
+body.designV2.noBrandLogo .heroCopy{max-width:62%!important}
+body.designV2.noBrandLogo #auth .authBox{padding-top:30px!important}
+body.designV2.noBrandLogo .splashInner{padding-top:10px}
+body.designV2.noBrandLogo .splashKoala{margin-top:0!important}
+</style>
 </head>
-<body>
+<body class="designV2 noBrandLogo">
 <div class="splash" id="splash">
 <div class="splashInner">
-<img alt="Australia Street" class="splashLogo" src="./logo.svg"/>
 <img alt="Koala Australia Street" class="splashKoala" src="./koala.svg"/>
-<h1>Application équipe</h1><p>Pointage et planning Australia Street</p>
+<h1>APPLICATION ÉQUIPE</h1><p>Pointage et planning Australia Street</p>
 <button class="btn3d light" id="enterBtn">OUVRIR L’APPLICATION</button>
 </div>
 </div>
 <div class="auth hidden" id="auth"><div class="authBox">
-<img alt="Australia Street" src="./logo.svg"/>
 <h2>Connexion équipe</h2><p>La connexion technique est mémorisée sur l’appareil. Le code PIN est demandé uniquement pour l’administration.</p>
 <label>Email</label><input autocomplete="email" id="authEmail" placeholder="adresse@email.fr" type="email"/>
 <label style="margin-top:10px">Mot de passe</label><input autocomplete="current-password" id="authPassword" placeholder="••••••••" type="password"/>
 <button class="btn3d light" id="authBtn">SE CONNECTER</button><div class="sync" id="authMsg" style="margin-top:12px;text-align:center"></div>
 </div></div>
 <div class="auth hidden" id="profileScreen"><div class="authBox">
-<img alt="Australia Street" src="./logo.svg"/><h2>Qui utilise l’application ?</h2><p>Choisis ton prénom. Il restera enregistré sur ce téléphone.</p><div class="profileGrid" id="profileGrid"></div>
+<h2>Qui utilise l’application ?</h2><p>Choisis ton prénom. Il restera enregistré sur ce téléphone.</p><div class="profileGrid" id="profileGrid"></div>
 </div></div>
 <div class="hidden" id="app">
 <div class="backdrop" id="backdrop"></div>
 <aside class="drawer" id="drawer"><div class="drawerScroll">
-<div class="drawerBrand"><img alt="Logo" src="./logo.svg"/><div><b>Australia Street</b><small>Application équipe</small></div></div>
+<div class="drawerBrand"><div><b>Australia Street</b><small>Application équipe</small></div></div>
 <div class="menuSection">ÉQUIPE</div>
 <button class="menuItem" data-view="home"><span class="ico">⌂</span>Accueil</button>
 <button class="menuItem" data-view="point"><span class="ico">◷</span>Pointer</button>
@@ -51,7 +60,7 @@
 <main class="shell">
 <div class="topbar"><button class="menuBtn" id="menuBtn">☰</button><div class="brandMini"><b id="topTitle">Accueil</b><span id="syncStatus">Connexion…</span></div><button class="roundBtn" id="profileBtn">●</button></div>
 <section class="view active" id="view-home">
-<div class="hero"><img alt="Australia Street" class="heroLogo" src="./logo.svg"/><div class="heroRow"><div class="heroCopy"><div class="eyebrow">AUSTRALIA STREET · ÉQUIPE</div><h1 id="helloName">Bonjour</h1><p>Ton pointage, ton planning et tes heures dans une seule application.</p></div></div><img alt="Koala" class="koalaMini" src="./koala.svg"/></div>
+<div class="hero"><div class="heroRow"><div class="heroCopy"><div class="eyebrow">AUSTRALIA STREET · ÉQUIPE</div><h1 id="helloName">Bonjour</h1><p>Ton pointage, ton planning et tes heures dans une seule application.</p></div></div><img alt="Koala" class="koalaMini" src="./koala.svg"/></div>
 <div class="statusCard"><div class="statusTop"><div><div class="statusTitle">Maintenant</div><div class="clock" id="homeClock">00:00</div></div><div class="statePill" id="homeState">Pas encore pointé</div></div><div class="nextShift" id="homeNext">Aucun horaire publié aujourd’hui</div><div class="actionGrid"><button class="btn3d" id="homeMainAction">POINTER</button><button class="btn3d light" data-view-jump="planning">PLANNING</button></div></div>
 <div class="section"><div class="sectionHead"><h2>Derniers pointages</h2><small>heures réelles</small></div><div class="card" id="homeHistory"></div></div>
 </section>
@@ -66,4 +75,4 @@
 <nav class="bottomNav"><button class="navBtn active" data-view="home"><span>⌂</span>Accueil</button><button class="navBtn" data-view="point"><span>◷</span>Pointer</button><button class="navBtn" data-view="planning"><span>▦</span>Planning</button><button class="navBtn" data-view="hours"><span>≡</span>Mes heures</button></nav>
 </div>
 <div id="modalRoot"></div><div class="toast hidden" id="toast"></div>
-<script src="./app.js"></script></body></html>
+<script src="./app.js?v=241"></script></body></html>
