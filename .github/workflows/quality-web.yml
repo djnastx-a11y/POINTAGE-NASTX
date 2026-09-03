@@ -9,12 +9,15 @@ on:
       - 'index.html'
       - 'sw.js'
       - 'manifest.webmanifest'
+      - 'team-app-next/**'
       - '.github/workflows/quality-web.yml'
   pull_request:
     paths:
       - 'index.html'
       - 'sw.js'
       - 'manifest.webmanifest'
+      - 'team-app-next/**'
+      - '.github/workflows/quality-web.yml'
 
 permissions:
   contents: read
@@ -31,11 +34,25 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Validate manifest JSON
-        run: node -e "JSON.parse(require('fs').readFileSync('manifest.webmanifest','utf8')); console.log('manifest OK')"
+      - name: Validate manifests
+        shell: bash
+        run: |
+          node -e "JSON.parse(require('fs').readFileSync('manifest.webmanifest','utf8')); console.log('manifest root OK')"
+          node -e "JSON.parse(require('fs').readFileSync('team-app-next/manifest.webmanifest','utf8')); console.log('manifest V2 OK')"
 
-      - name: Validate service worker syntax
-        run: node --check sw.js
+      - name: Validate service workers
+        shell: bash
+        run: |
+          node --check sw.js
+          node --check team-app-next/sw.js
+
+      - name: Validate V2 JavaScript
+        shell: bash
+        run: |
+          for f in team-app-next/app*.js; do
+            echo "Checking $f"
+            node --check "$f"
+          done
 
       - name: Validate inline JavaScript syntax
         shell: bash
@@ -56,7 +73,7 @@ jobs:
       - name: Reject unresolved merge markers
         shell: bash
         run: |
-          if grep -R -n -E '^(<<<<<<<|=======|>>>>>>>)' index.html sw.js manifest.webmanifest; then
+          if grep -R -n -E '^(<<<<<<<|=======|>>>>>>>)' index.html sw.js manifest.webmanifest team-app-next; then
             echo 'Marqueur de conflit Git détecté'
             exit 1
           fi
