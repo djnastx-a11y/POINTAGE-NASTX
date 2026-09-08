@@ -1,0 +1,31 @@
+name: Team App V2 checks
+
+on:
+  push:
+    paths:
+      - 'team-app-next/**'
+      - '.github/workflows/team-app-next-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  javascript-syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          find team-app-next -maxdepth 1 -type f -name '*.js' -print0 | sort -z | xargs -0 -n1 node --check
+      - name: Verify V2 entry modules
+        shell: bash
+        run: |
+          grep -q "role-v2.js" team-app-next/app.js
+          grep -q "app15.js" team-app-next/app.js
+          grep -q "app16.js" team-app-next/app.js
