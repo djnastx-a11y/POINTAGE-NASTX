@@ -1,0 +1,1 @@
+(()=>{window.setInterval(()=>{const view=document.getElementById('view-messages');if(!view||!view.classList.contains('active'))return;const selector=document.getElementById('v15ChatTarget');if(selector&&typeof selector.onchange==='function')selector.onchange()},12000)})();
