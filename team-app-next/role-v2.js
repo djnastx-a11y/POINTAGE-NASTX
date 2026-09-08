@@ -1,0 +1,1 @@
+(()=>{const original=window.currentProfile;const c=EMPLOYEES.find(e=>e.id==='cyril');if(c)c.name='Cyrille';window.currentProfile=function(){const p=original?.();if(!p)return p;p.admin=['jb','coco','ingrid'].includes(p.id);p.creator=p.id==='jb';if(p.id==='cyril')p.name='Cyrille';return p}})();
