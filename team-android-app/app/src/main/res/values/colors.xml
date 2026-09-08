@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="team_background">#F4ECDF</color>
+    <color name="team_charcoal">#1E1D1B</color>
+    <color name="team_cream">#FFF9F0</color>
+</resources>
