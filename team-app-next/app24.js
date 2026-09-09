@@ -1,7 +1,9 @@
 (()=>{
   let staffSortables=[];
   let selectedPerson=null;
+  let dragCandidate=null;
   let suppressStaffClickUntil=0;
+  let lastAssignmentKey='',lastAssignmentAt=0;
 
   const style=document.createElement('style');
   style.textContent=`
@@ -32,13 +34,17 @@
 
   function assignStaff(date,key,name){
     if(!date||!['kitchen','security'].includes(key)||!name)return;
+    const assignmentKey=`${date}|${key}|${name}`;
+    const now=Date.now();
+    if(assignmentKey===lastAssignmentKey&&now-lastAssignmentAt<700)return;
+    lastAssignmentKey=assignmentKey;lastAssignmentAt=now;
     const row=staffingRow(date);
     row[key]=String(name).trim().slice(0,50)||'OFF';
     const label=key==='kitchen'?'CUISINE':'SÉCU';
     try{audit(`${label} planning modifié`,`${fmtDate(date)} · ${row[key]}`)}catch{}
     try{scheduleSave()}catch{}
     suppressStaffClickUntil=Date.now()+900;
-    selectedPerson=null;
+    selectedPerson=null;dragCandidate=null;
     document.querySelectorAll('#peoplePalette .v24Selected,#extrasPalette .v24Selected').forEach(x=>x.classList.remove('v24Selected'));
     renderAdminPlanning();
     try{toast(`${name} ajouté en ${key==='kitchen'?'cuisine':'sécu'}`)}catch{}
@@ -50,6 +56,13 @@
     const name=chip.dataset.name||chip.textContent?.trim()||'';
     if(!name)return null;
     return{id:chip.dataset.person||'',name,chip};
+  }
+
+  function staffAtPoint(x,y){
+    if(!Number.isFinite(x)||!Number.isFinite(y))return null;
+    const els=typeof document.elementsFromPoint==='function'?document.elementsFromPoint(x,y):[document.elementFromPoint(x,y)];
+    for(const el of els){const staff=el?.closest?.('#adminPlanning .v15StaffBtn[data-v15-staff][data-v15-date]');if(staff)return staff}
+    return null;
   }
 
   function bindTapSelection(){
@@ -118,6 +131,22 @@
     setTimeout(postRender,0);
     return out;
   };
+
+  document.addEventListener('pointerdown',e=>{
+    const p=personFromElement(e.target);
+    dragCandidate=p?{id:p.id,name:p.name}:null;
+  },true);
+
+  document.addEventListener('pointerup',e=>{
+    if(!dragCandidate)return;
+    const staff=staffAtPoint(e.clientX,e.clientY);
+    if(!staff){dragCandidate=null;return}
+    e.preventDefault();e.stopPropagation();
+    const p=dragCandidate;dragCandidate=null;
+    assignStaff(staff.dataset.v15Date,staff.dataset.v15Staff,p.name);
+  },true);
+
+  document.addEventListener('pointercancel',()=>{dragCandidate=null},true);
 
   document.addEventListener('click',e=>{
     const staff=e.target.closest?.('#adminPlanning .v15StaffBtn[data-v15-staff][data-v15-date]');
