@@ -8,11 +8,11 @@
     const s=document.createElement('style');
     s.id=STYLE_ID;
     s.textContent=`
-      .v23PasswordTools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:9px 0 4px}
-      .v23PasswordTools button{min-height:38px;padding:8px 12px;border:1px solid #d9ccbb;border-radius:12px;background:#fffaf2;color:#211d19;font:800 11px/1.1 inherit;cursor:pointer;box-shadow:none}
+      .v23PasswordTools{display:flex!important;gap:8px;flex-wrap:wrap;align-items:center;margin:9px 0 4px}
+      .v23PasswordTools button{display:inline-flex!important;align-items:center;justify-content:center;min-height:38px;padding:8px 12px;border:1px solid #d9ccbb;border-radius:12px;background:#fffaf2;color:#211d19;font:800 11px/1.1 inherit;cursor:pointer;box-shadow:none}
       .v23PasswordTools button.v23Forgot{background:#eee5d8}
       .v23PasswordTools button:active{transform:translateY(1px)}
-      @media(max-width:430px){.v23PasswordTools{display:grid;grid-template-columns:1fr 1fr}.v23PasswordTools button{padding:8px 7px;font-size:10px}}
+      @media(max-width:430px){.v23PasswordTools{display:grid!important;grid-template-columns:1fr 1fr}.v23PasswordTools button{width:100%;padding:8px 7px;font-size:10px}}
     `;
     document.head.appendChild(s);
   }
@@ -32,13 +32,19 @@
     return true;
   }
 
+  function loginFields(){
+    return {
+      input:document.getElementById('teamPassword')||document.getElementById('authPassword'),
+      email:document.getElementById('teamEmail')||document.getElementById('authEmail'),
+      msg:document.getElementById('teamLoginMsg')||document.getElementById('authMsg')
+    };
+  }
+
   function mount(){
     scheduled=false;
     ensureStyle();
     const auth=document.getElementById('auth');
-    const input=document.getElementById('authPassword');
-    const email=document.getElementById('authEmail');
-    const msg=document.getElementById('authMsg');
+    const {input,email,msg}=loginFields();
     if(!auth||!input)return;
 
     const old=document.getElementById('authPasswordTools');
@@ -91,4 +97,6 @@
   if(auth){observer=new MutationObserver(schedule);observer.observe(auth,{childList:true,subtree:true})}
   window.addEventListener('pageshow',schedule);
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)schedule()});
+  setTimeout(schedule,250);
+  setTimeout(schedule,1000);
 })();
