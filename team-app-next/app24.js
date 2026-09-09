@@ -4,6 +4,7 @@
   let dragCandidate=null;
   let suppressStaffClickUntil=0;
   let lastAssignmentKey='',lastAssignmentAt=0;
+  let renderTimer=0;
 
   const style=document.createElement('style');
   style.textContent=`
@@ -14,6 +15,32 @@
     #view-planningAdmin .v24PlanningHint{margin-top:7px;font-size:10px;line-height:1.4;color:#7c7064}
   `;
   document.head.appendChild(style);
+
+  function cleanupDragArtifacts(){
+    document.querySelectorAll('.sortable-fallback').forEach(el=>{try{el.remove()}catch{}});
+    document.querySelectorAll('#peoplePalette .personChip,#extrasPalette .personChip').forEach(el=>{
+      el.classList.remove('sortable-chosen','sortable-ghost','sortable-drag');
+      el.style.removeProperty('transform');
+      el.style.removeProperty('position');
+      el.style.removeProperty('top');
+      el.style.removeProperty('left');
+      el.style.removeProperty('width');
+      el.style.removeProperty('height');
+      el.style.removeProperty('z-index');
+      el.style.removeProperty('pointer-events');
+    });
+    document.querySelectorAll('#adminPlanning .v24Over').forEach(el=>el.classList.remove('v24Over'));
+  }
+
+  function scheduleCleanRender(){
+    clearTimeout(renderTimer);
+    cleanupDragArtifacts();
+    renderTimer=setTimeout(()=>{
+      cleanupDragArtifacts();
+      renderAdminPlanning();
+      requestAnimationFrame(()=>cleanupDragArtifacts());
+    },90);
+  }
 
   function destroyStaffSortables(){
     staffSortables.forEach(s=>{try{s.destroy()}catch{}});
@@ -36,7 +63,7 @@
     if(!date||!['kitchen','security'].includes(key)||!name)return;
     const assignmentKey=`${date}|${key}|${name}`;
     const now=Date.now();
-    if(assignmentKey===lastAssignmentKey&&now-lastAssignmentAt<700)return;
+    if(assignmentKey===lastAssignmentKey&&now-lastAssignmentAt<700){scheduleCleanRender();return}
     lastAssignmentKey=assignmentKey;lastAssignmentAt=now;
     const row=staffingRow(date);
     row[key]=String(name).trim().slice(0,50)||'OFF';
@@ -46,7 +73,7 @@
     suppressStaffClickUntil=Date.now()+900;
     selectedPerson=null;dragCandidate=null;
     document.querySelectorAll('#peoplePalette .v24Selected,#extrasPalette .v24Selected').forEach(x=>x.classList.remove('v24Selected'));
-    renderAdminPlanning();
+    scheduleCleanRender();
     try{toast(`${name} ajouté en ${key==='kitchen'?'cuisine':'sécu'}`)}catch{}
   }
 
@@ -61,7 +88,10 @@
   function staffAtPoint(x,y){
     if(!Number.isFinite(x)||!Number.isFinite(y))return null;
     const els=typeof document.elementsFromPoint==='function'?document.elementsFromPoint(x,y):[document.elementFromPoint(x,y)];
-    for(const el of els){const staff=el?.closest?.('#adminPlanning .v15StaffBtn[data-v15-staff][data-v15-date]');if(staff)return staff}
+    for(const el of els){
+      const staff=el?.closest?.('#adminPlanning .v15StaffBtn[data-v15-staff][data-v15-date]');
+      if(staff)return staff;
+    }
     return null;
   }
 
@@ -89,15 +119,17 @@
           group:{name:'team',pull:false,put:true},
           sort:false,
           animation:120,
+          removeCloneOnHide:true,
           onChoose:()=>box.classList.add('v24Over'),
-          onUnchoose:()=>box.classList.remove('v24Over'),
+          onUnchoose:()=>{box.classList.remove('v24Over');setTimeout(cleanupDragArtifacts,80)},
+          onEnd:()=>{box.classList.remove('v24Over');setTimeout(cleanupDragArtifacts,80)},
           onAdd:e=>{
             box.classList.remove('v24Over');
             const item=e.item;
             const name=item?.dataset?.name||item?.querySelector?.('.shiftName')?.textContent?.trim()||'';
             const personId=item?.dataset?.person||'';
             try{item?.remove()}catch{}
-            if(!name||(!personId&&e.from?.id!=='extrasPalette')){renderAdminPlanning();return}
+            if(!name||(!personId&&e.from?.id!=='extrasPalette')){scheduleCleanRender();return}
             assignStaff(box.dataset.v15Date,box.dataset.v15Staff,name);
           }
         });
@@ -119,6 +151,7 @@
   }
 
   function postRender(){
+    cleanupDragArtifacts();
     removeCaroFromPalette();
     updateCopy();
     bindTapSelection();
@@ -138,15 +171,18 @@
   },true);
 
   document.addEventListener('pointerup',e=>{
-    if(!dragCandidate)return;
+    const p=dragCandidate;
+    if(!p){setTimeout(cleanupDragArtifacts,100);return}
     const staff=staffAtPoint(e.clientX,e.clientY);
-    if(!staff){dragCandidate=null;return}
+    dragCandidate=null;
+    if(!staff){setTimeout(cleanupDragArtifacts,100);return}
     e.preventDefault();e.stopPropagation();
-    const p=dragCandidate;dragCandidate=null;
     assignStaff(staff.dataset.v15Date,staff.dataset.v15Staff,p.name);
   },true);
 
-  document.addEventListener('pointercancel',()=>{dragCandidate=null},true);
+  document.addEventListener('pointercancel',()=>{dragCandidate=null;setTimeout(cleanupDragArtifacts,100)},true);
+  document.addEventListener('dragend',()=>setTimeout(cleanupDragArtifacts,100),true);
+  document.addEventListener('drop',()=>setTimeout(cleanupDragArtifacts,100),true);
 
   document.addEventListener('click',e=>{
     const staff=e.target.closest?.('#adminPlanning .v15StaffBtn[data-v15-staff][data-v15-date]');
