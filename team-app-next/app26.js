@@ -1,0 +1,1 @@
+(()=>{try{if(typeof state!=='undefined')window.state=state}catch(e){console.warn('State bridge unavailable',e)}})();
