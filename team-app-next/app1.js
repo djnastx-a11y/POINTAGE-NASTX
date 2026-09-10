@@ -6,7 +6,7 @@ const LOCAL_KEY="australia_team_app_v2_staging";
 const PROFILE_KEY="australia_team_profile_v2_staging";
 const TEAM_NS="teamAppV2Staging";
 const EMPLOYEES=[
- {id:"jb",name:"JB",admin:true},{id:"louella",name:"Louella",admin:false},{id:"gillou",name:"Gillou",admin:false},{id:"cyril",name:"Cyril",admin:false},{id:"chloe",name:"Chloé",admin:false},{id:"ingrid",name:"Ingrid",admin:true},{id:"coco",name:"Coco",admin:true}
+ {id:"jb",name:"JB",admin:true},{id:"louella",name:"Louella",admin:false},{id:"gillou",name:"Gillou",admin:false},{id:"cyril",name:"Cyril",admin:false},{id:"chloe",name:"Chloé",admin:false},{id:"ingrid",name:"Ingrid",admin:true},{id:"coco",name:"Coco",admin:true},{id:"nico",name:"Nico",admin:false}
 ];
 let state=null,profileId=localStorage.getItem(PROFILE_KEY)||"",adminUnlockedUntil=0,pinBuffer="",pinPurpose="unlock",publicWeek=startOfWeek(new Date()),adminWeek=startOfWeek(new Date()),saveTimer=null,cloudBusy=false,sortables=[];
 const $=id=>document.getElementById(id),pad=n=>String(n).padStart(2,"0"),dayKey=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`,hm=d=>`${pad(d.getHours())}:${pad(d.getMinutes())}`,clone=x=>JSON.parse(JSON.stringify(x));
