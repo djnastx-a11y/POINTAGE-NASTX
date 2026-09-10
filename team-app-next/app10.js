@@ -5,9 +5,9 @@
     {id:'gillou',name:'Gillou',role:'member'},
     {id:'cyril',name:'Cyril',role:'member'},
     {id:'chloe',name:'Chloé',role:'member'},
-    {id:'caro',name:'Caro',role:'member'},
     {id:'ingrid',name:'Ingrid',role:'admin'},
-    {id:'coco',name:'Coco',role:'admin'}
+    {id:'coco',name:'Coco',role:'admin'},
+    {id:'nico',name:'Nico',role:'member'}
   ];
 
   async function teamFetch(path,options={}){
