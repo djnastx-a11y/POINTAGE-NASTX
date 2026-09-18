@@ -3,11 +3,11 @@
     {id:'jb',name:'JB',role:'creator_admin'},
     {id:'coco',name:'Coco',role:'admin'},
     {id:'ingrid',name:'Ingrid',role:'admin'},
-    {id:'cyril',name:'Cyrille',role:'member'},
+    {id:'cyril',name:'Cyril',role:'member'},
     {id:'louella',name:'Louella',role:'member'},
-    {id:'caro',name:'Caro',role:'member'},
     {id:'gillou',name:'Gillou',role:'member'},
-    {id:'chloe',name:'Chloé',role:'member'}
+    {id:'chloe',name:'Chloé',role:'member'},
+    {id:'nico',name:'Nico',role:'member'}
   ];
   const ADMIN_IDS=new Set(['jb','coco','ingrid']);
   const CREATOR_ID='jb';
@@ -23,13 +23,13 @@
     renderAll:window.renderAll
   };
 
-  const cyril=EMPLOYEES.find(e=>e.id==='cyril');if(cyril)cyril.name='Cyrille';
+  const cyril=EMPLOYEES.find(e=>e.id==='cyril');if(cyril)cyril.name='Cyril';
   window.currentProfile=function(){
     const p=base.currentProfile?.();
     if(!p)return p;
     p.admin=ADMIN_IDS.has(p.id);
     p.creator=p.id===CREATOR_ID;
-    if(p.id==='cyril')p.name='Cyrille';
+    if(p.id==='cyril')p.name='Cyril';
     return p;
   };
 
