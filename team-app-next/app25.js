@@ -14,6 +14,23 @@
   const todayKey=()=>dayKey(new Date());
   const profile=()=>currentProfile?.()||null;
 
+  async function teamRpc(name,body={}){
+    const s=await ensureSession();if(!s)throw new Error('Session expirée. Reconnecte-toi.');
+    const r=await fetch(`${SUPABASE_URL}/rest/v1/rpc/${name}`,{method:'POST',headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${s.access_token}`,'Content-Type':'application/json'},body:JSON.stringify(body)});
+    const t=await r.text();if(!r.ok)throw new Error(t||`Erreur ${r.status}`);return t?JSON.parse(t):null;
+  }
+  async function loadCoordination(){
+    ensureState();
+    if(!userId())return false;
+    try{
+      const [availability,replacements]=await Promise.all([teamRpc('team_availability_list',{}),teamRpc('team_replacements_list',{})]);
+      state.availabilityRequests=(availability||[]).map(r=>({id:r.id,employeeId:r.username,date:r.work_date,type:r.availability,note:r.note||'',createdAt:r.created_at,updatedAt:r.updated_at}));
+      state.replacementRequests=(replacements||[]).map(r=>({id:r.id,wk:r.week_key,date:r.work_date,assignmentId:r.assignment_id,requesterId:r.requester_username,targetId:r.target_username,range:r.range_text||'',status:r.status,createdAt:r.created_at,updatedAt:r.updated_at}));
+      saveLocal?.();
+      return true;
+    }catch(e){console.warn('Coordination équipe',e);return false}
+  }
+
   function installHistory(){
     const baseSave=window.scheduleSave;
     if(typeof baseSave!=='function'||baseSave.__v25)return;
@@ -54,9 +71,16 @@
   function renderAvailability(){
     const box=document.getElementById('v25AvailabilityList');if(!box||!state)return;ensureState();
     const rows=myAvailability();box.innerHTML=rows.length?rows.map(r=>`<div class="listRow"><div class="listMain"><b>${fmtDate(r.date,{weekday:'long',day:'numeric',month:'long'})}</b><small>${r.type==='unavailable'?'Indisponible':'Disponible'}${r.note?' · '+escapeHtml(r.note):''}</small></div><button class="smallBtn danger" data-v25-del-av="${r.id}">Supprimer</button></div>`).join(''):'<div class="empty">Aucune disponibilité renseignée.</div>';
-    box.querySelectorAll('[data-v25-del-av]').forEach(b=>b.onclick=()=>{state.availabilityRequests=state.availabilityRequests.filter(x=>x.id!==b.dataset.v25DelAv);scheduleSave();renderAvailability();renderAdminPlanning?.()});
+    box.querySelectorAll('[data-v25-del-av]').forEach(b=>b.onclick=async()=>{b.disabled=true;try{await teamRpc('team_availability_delete',{p_id:b.dataset.v25DelAv});await loadCoordination();renderAvailability();renderAdminPlanning?.();toast('Disponibilité supprimée')}catch(e){toast('Suppression impossible')}finally{b.disabled=false}});
   }
-  function saveAvailability(){const p=profile(),date=document.getElementById('v25AvDate')?.value,type=document.getElementById('v25AvType')?.value,note=document.getElementById('v25AvNote')?.value.trim()||'';if(!p||!date){toast('Choisis une date');return}state.availabilityRequests=state.availabilityRequests.filter(r=>!(r.employeeId===p.id&&r.date===date));state.availabilityRequests.push({id:crypto.randomUUID(),employeeId:p.id,date,type,note,createdAt:nowIso()});audit?.('Disponibilité modifiée',`${p.name} · ${fmtDate(date)} · ${type==='unavailable'?'indisponible':'disponible'}`);scheduleSave();renderAvailability();renderAdminPlanning?.();toast('Disponibilité enregistrée')}
+  async function saveAvailability(){
+    const p=profile(),date=document.getElementById('v25AvDate')?.value,type=document.getElementById('v25AvType')?.value,note=document.getElementById('v25AvNote')?.value.trim()||'';
+    if(!p||!date){toast('Choisis une date');return}
+    const btn=document.getElementById('v25SaveAvailability');if(btn)btn.disabled=true;
+    try{await teamRpc('team_availability_save',{p_work_date:date,p_availability:type,p_note:note});await loadCoordination();renderAvailability();renderAdminPlanning?.();toast('Disponibilité enregistrée')}
+    catch(e){toast('Enregistrement impossible')}
+    finally{if(btn)btn.disabled=false}
+  }
   function unavailable(empId,date){return state.availabilityRequests.some(r=>r.employeeId===empId&&r.date===date&&r.type==='unavailable')}
 
   function allPublishedMine(){const p=profile();if(!p)return[];const out=[];Object.entries(state.published||{}).forEach(([wk,pub])=>Object.entries(pub?.days||{}).forEach(([date,items])=>(items||[]).forEach(x=>{if(x.employeeId===p.id&&date>=todayKey())out.push({wk,date,item:x})})));return out.sort((a,b)=>a.date.localeCompare(b.date))}
@@ -73,9 +97,26 @@
     box.querySelectorAll('[data-v25-approve]').forEach(b=>b.onclick=()=>approveReplacement(b.dataset.v25Approve));
     box.querySelectorAll('[data-v25-reject]').forEach(b=>b.onclick=()=>setReplacement(b.dataset.v25Reject,'rejected'));
   }
-  function createReplacement(){const key=document.getElementById('v25ReplacementShift')?.value,targetId=document.getElementById('v25ReplacementTarget')?.value,p=profile();if(!key||!targetId||!p){toast('Choisis le service et la personne');return}const [wk,date,id]=key.split('|'),item=state.published?.[wk]?.days?.[date]?.find(x=>x.id===id);if(!item){toast('Service introuvable');return}state.replacementRequests.push({id:crypto.randomUUID(),wk,date,assignmentId:id,requesterId:p.id,targetId,range:displayRange(item),status:'pending',createdAt:nowIso()});audit?.('Remplacement demandé',`${p.name} → ${employee(targetId)?.name||targetId} · ${fmtDate(date)}`);scheduleSave();renderReplacements();toast('Demande envoyée')}
-  function setReplacement(id,status){const r=state.replacementRequests.find(x=>x.id===id);if(!r)return;r.status=status;r.updatedAt=nowIso();audit?.('Remplacement mis à jour',`${r.id} · ${status}`);scheduleSave();renderReplacements();toast(status==='accepted'?'Demande acceptée':'Demande mise à jour')}
-  function approveReplacement(id){const r=state.replacementRequests.find(x=>x.id===id);if(!r||r.status!=='accepted')return;const pub=state.published?.[r.wk],item=pub?.days?.[r.date]?.find(x=>x.id===r.assignmentId);if(!item){toast('Service publié introuvable');return}item.employeeId=r.targetId;item.name=employee(r.targetId)?.name||r.targetId;const draft=state.drafts?.[r.wk],draftItem=draft?.days?.[r.date]?.find(x=>x.id===r.assignmentId);if(draftItem){draftItem.employeeId=r.targetId;draftItem.name=item.name}r.status='approved';r.updatedAt=nowIso();audit?.('Remplacement validé',`${fmtDate(r.date)} · ${item.name}`);scheduleSave();renderReplacements();renderPublicPlanning?.();renderAdminPlanning?.();toast('Remplacement validé')}
+  async function createReplacement(){
+    const key=document.getElementById('v25ReplacementShift')?.value,targetId=document.getElementById('v25ReplacementTarget')?.value,p=profile();
+    if(!key||!targetId||!p){toast('Choisis le service et la personne');return}
+    const [wk,date,id]=key.split('|'),item=state.published?.[wk]?.days?.[date]?.find(x=>x.id===id);if(!item){toast('Service introuvable');return}
+    const btn=document.getElementById('v25CreateReplacement');if(btn)btn.disabled=true;
+    try{await teamRpc('team_replacement_create',{p_week_key:wk,p_work_date:date,p_assignment_id:id,p_target_username:targetId,p_range_text:displayRange(item)});await loadCoordination();renderReplacements();toast('Demande envoyée')}
+    catch(e){const raw=String(e.message||'');toast(raw.includes('replacement_exists')?'Une demande existe déjà pour ce service':'Demande impossible')}
+    finally{if(btn)btn.disabled=false}
+  }
+  async function setReplacement(id,status){
+    try{
+      if(status==='rejected'){await teamRpc('team_replacement_admin_decide',{p_id:id,p_decision:'rejected'})}
+      else{await teamRpc('team_replacement_respond',{p_id:id,p_status:status})}
+      await loadCoordination();renderReplacements();toast(status==='accepted'?'Demande acceptée':status==='declined'?'Demande refusée':'Demande mise à jour')
+    }catch(e){toast('Mise à jour impossible')}
+  }
+  async function approveReplacement(id){
+    try{await teamRpc('team_replacement_admin_decide',{p_id:id,p_decision:'approved'});await loadCloud?.();await loadCoordination();renderReplacements();renderPublicPlanning?.();renderAdminPlanning?.();toast('Remplacement validé')}
+    catch(e){toast('Validation impossible')}
+  }
 
   function templateEntries(){return Object.entries(state.planningTemplates||{}).sort((a,b)=>(a[1].name||'').localeCompare(b[1].name||''))}
   function renderTemplates(){const box=document.getElementById('v25TemplateList');if(!box||!state)return;ensureState();const list=templateEntries();box.innerHTML=list.length?list.map(([id,t])=>`<div class="listRow"><div class="listMain"><b>${escapeHtml(t.name)}</b><small>Modèle de semaine</small></div><div class="v25ReqActions"><button class="smallBtn light" data-v25-apply-template="${id}">Appliquer</button><button class="smallBtn danger" data-v25-del-template="${id}">Supprimer</button></div></div>`).join(''):'<div class="empty">Aucun modèle enregistré.</div>';box.querySelectorAll('[data-v25-apply-template]').forEach(b=>b.onclick=()=>applyTemplate(b.dataset.v25ApplyTemplate));box.querySelectorAll('[data-v25-del-template]').forEach(b=>b.onclick=()=>{delete state.planningTemplates[b.dataset.v25DelTemplate];scheduleSave();renderTemplates()})}
@@ -100,14 +141,14 @@
     addView('view-v25-availability','Mes disponibilités','Indique les jours où tu es disponible ou indisponible. Les admins le voient pendant la préparation du planning.',`<div class="card v25Form"><div class="v25FormRow"><div><label>Date</label><input id="v25AvDate" type="date"></div><div><label>Statut</label><select id="v25AvType"><option value="unavailable">Indisponible</option><option value="available">Disponible</option></select></div></div><div><label>Note facultative</label><input id="v25AvNote" maxlength="120" placeholder="Ex. cours jusqu’à 20h"></div><button class="smallBtn light" id="v25SaveAvailability">ENREGISTRER</button></div><div class="card" id="v25AvailabilityList"></div>`);
     addView('view-v25-replacements','Remplacements','Demande à un collègue de reprendre un service. Le collègue accepte, puis un admin valide.',`<div class="card v25Form"><div><label>Mon service</label><select id="v25ReplacementShift"></select></div><div><label>Demander à</label><select id="v25ReplacementTarget"></select></div><button class="smallBtn light" id="v25CreateReplacement">ENVOYER LA DEMANDE</button></div><div class="card" id="v25ReplacementList"></div>`);
     addView('view-v25-templates','Modèles de planning','Enregistre une semaine type puis applique-la en un clic à une autre semaine.',`<div class="card v25Form"><div><label>Nom du modèle</label><input id="v25TemplateName" maxlength="50" placeholder="Ex. Semaine normale"></div><button class="smallBtn light" id="v25SaveTemplate">ENREGISTRER LA SEMAINE ACTUELLE</button></div><div class="card" id="v25TemplateList"></div>`);
-    addMenu('v25AvailabilityMenu','Mes disponibilités',()=>{activate('view-v25-availability','Mes disponibilités');renderAvailability()});
-    addMenu('v25ReplacementMenu','Remplacements',()=>{activate('view-v25-replacements','Remplacements');renderReplacements()});
+    addMenu('v25AvailabilityMenu','Mes disponibilités',()=>{activate('view-v25-availability','Mes disponibilités');loadCoordination().then(()=>{renderAvailability();renderAdminPlanning?.()})});
+    addMenu('v25ReplacementMenu','Remplacements',()=>{activate('view-v25-replacements','Remplacements');loadCoordination().then(renderReplacements)});
     document.getElementById('v25SaveAvailability').onclick=saveAvailability;document.getElementById('v25CreateReplacement').onclick=createReplacement;document.getElementById('v25SaveTemplate').onclick=saveTemplate;
     installAdminToolbar();
   }
 
-  function wrapPlanning(){const baseRender=window.renderAdminPlanning;if(typeof baseRender==='function'&&!baseRender.__v25){const w=function(...args){const out=baseRender.apply(this,args);setTimeout(()=>{installAdminToolbar();decoratePlanning()},0);return out};w.__v25=true;window.renderAdminPlanning=w}const basePublish=window.publishWeek;if(typeof basePublish==='function'&&!basePublish.__v25){const w=function(...args){const out=basePublish.apply(this,args);setTimeout(renderStatus,0);return out};w.__v25=true;window.publishWeek=w}}
+  function wrapPlanning(){const baseRender=window.renderAdminPlanning;if(typeof baseRender==='function'&&!baseRender.__v25){const w=function(...args){const out=baseRender.apply(this,args);setTimeout(()=>{installAdminToolbar();loadCoordination().then(()=>decoratePlanning())},0);return out};w.__v25=true;window.renderAdminPlanning=w}const basePublish=window.publishWeek;if(typeof basePublish==='function'&&!basePublish.__v25){const w=function(...args){const out=basePublish.apply(this,args);setTimeout(renderStatus,0);return out};w.__v25=true;window.publishWeek=w}}
 
-  function boot(){if(!window.state){setTimeout(boot,100);return}ensureState();installHistory();installUI();wrapPlanning();decoratePlanning();renderAvailability();renderReplacements();renderTemplates()}
+  function boot(){if(!window.state){setTimeout(boot,100);return}ensureState();installHistory();installUI();wrapPlanning();loadCoordination().finally(()=>{decoratePlanning();renderAvailability();renderReplacements();renderTemplates()})}
   setTimeout(boot,250);
 })();
