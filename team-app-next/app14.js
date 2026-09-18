@@ -31,7 +31,7 @@
     plannerRevision=Number(p.revision||0);
     if(currentProfile()?.admin){
       let unlocked=false;try{unlocked=(await rpc('team_is_admin',{}))===true}catch{}
-      if(unlocked){state.drafts=p.drafts&&typeof p.drafts==='object'?p.drafts:{};state.weekExtras=p.weekExtras&&typeof p.weekExtras==='object'?p.weekExtras:{};adminUnlockedUntil=Date.now()+9*60*1000}
+      if(unlocked){state.drafts=p.drafts&&typeof p.drafts==='object'?p.drafts:{};state.weekExtras=p.weekExtras&&typeof p.weekExtras==='object'?p.weekExtras:{};state.planningTemplates=p.planningTemplates&&typeof p.planningTemplates==='object'?p.planningTemplates:{};adminUnlockedUntil=Date.now()+9*60*1000}
     }
   }
 
@@ -44,7 +44,7 @@
   };
   window.saveCloudNow=async function(){
     if(saveBusy||!userId())return false;window.saveLocal();if(!currentProfile()?.admin||Date.now()>adminUnlockedUntil)return true;saveBusy=true;
-    try{if(await rpc('team_is_admin',{})!==true)return false;const data={drafts:state.drafts||{},published:state.published||{},weekExtras:state.weekExtras||{}};const next=await rpc('team_save_planner',{data,expected_revision:plannerRevision});plannerRevision=Number(next||plannerRevision);setSync('Synchronisé','ok');return true}
+    try{if(await rpc('team_is_admin',{})!==true)return false;const data={drafts:state.drafts||{},published:state.published||{},weekExtras:state.weekExtras||{},planningTemplates:state.planningTemplates||{}};const next=await rpc('team_save_planner',{data,expected_revision:plannerRevision});plannerRevision=Number(next||plannerRevision);setSync('Synchronisé','ok');return true}
     catch(e){console.error(e);if(String(e.message||'').includes('planning_changed_reload')){toast('Planning modifié ailleurs. Recharge la page.');await loadPlanner();renderPublicPlanning()}else setSync('À synchroniser','err');return false}
     finally{saveBusy=false}
   };
