@@ -69,5 +69,12 @@
       }catch(e){msg.textContent=e.message||'Création impossible.';btn.disabled=false}
     };
   }
+  function enhanceGenericSignup(){
+    if(new URLSearchParams(location.search).get('invite'))return;
+    const b=document.getElementById('teamSignupBtn'),msg=document.getElementById('teamLoginMsg');if(!b||b.dataset.inviteMode==='1')return;
+    b.dataset.inviteMode='1';b.textContent='CRÉER MON COMPTE · SUR INVITATION';
+    b.onclick=()=>{if(msg)msg.textContent='Pour créer ton compte, utilise le lien d’invitation envoyé par JB, Coco ou Ingrid.'};
+  }
+  setInterval(enhanceGenericSignup,500);
   setTimeout(showInvite,300);
 })();
